@@ -1,14 +1,14 @@
 
-# Energia MSP430 Core and platform.
+# Theia Space's ESAT boards
 # ------------------------------
 #
 # For more info:
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
 
-name=Energia MSP430 boards
-version=1.0.1
+name=Theia Space's ESAT boards
+version=1.0.0
 
-# AVR compile variables
+# compile variables
 # --------------------- 
 
 compiler.warning_flags=-w
@@ -51,7 +51,7 @@ compiler.ar.extra_flags=
 compiler.objcopy.eep.extra_flags=
 compiler.elf2hex.extra_flags=
 
-# AVR compile patterns
+# compile patterns
 # --------------------
 
 ## Compile c files
@@ -89,8 +89,11 @@ recipe.preproc.includes="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags}
 
 preproc.macros.flags=-w -x c++ -E -CC
 recipe.preproc.macros="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {preproc.macros.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DENERGIA={runtime.ide.version} -DENERGIA_{build.board} -DENERGIA_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{preprocessed_file_path}"
-# msp430 Uploader/Programmers tools
+
+# Uploader/Programmers tools
 # -----------------------------------
-tools.msp430-tool.cmd=msp430-tool
-tools.msp430-tool.cmd.windows=msp430-tool.exe
 tools.msp430-tool.path={runtime.tools.msp430-tool.path}
+tools.msp430-tool.cmd.path={path}/msp430-tool
+tools.msp430-tool.upload.params.quiet=
+tools.msp430-tool.upload.params.verbose=
+tools.msp430-tool.upload.pattern={cmd.path} bsl5.hid -e {build.path}/{build.project_name}.cpp.hex

@@ -13,6 +13,7 @@ ESAT-OBC.build.f_cpu=25000000L
 ESAT-OBC.build.variant=ESAT-OBC
 ESAT-OBC.build.board=ESAT-OBC
 
+ESAT-OBC.upload.tool=msp430-tool
 ESAT-OBC.upload.protocol=msp430-tool
 ESAT-OBC.upload.maximum_size=131072
 ESAT-OBC.upload.maximum_ram_size=1024
