@@ -1,0 +1,2 @@
+msp430-tool.name=msp430-tool
+msp430-tool.protocol=msp430-tool
