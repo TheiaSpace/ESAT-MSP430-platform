@@ -1,0 +1,60 @@
+{
+  "packages": [
+    {
+      "name": "ESAT",
+      "maintainer": "Theia Space",
+      "websiteURL": "http://www.theiaspace.com/",
+      "email": "example@example.com",
+      "platforms": [
+        {
+          "name": "Theia Space's ESAT boards",
+          "architecture": "msp430",
+          "version": "1.0.0",
+          "category": "Theia Space",
+          "url": "http://www.theia-space.com/downloads/esat-energia-1.0.0.tar.bz2",
+          "archiveFileName": "esat-energia-1.0.0.tar.bz2",
+          "checksum": "SHA-256:3d687d768013a46a580f0b24fb7e7458bc7175e9a60ecb212ea7cb4bfcd80261",
+          "size": "2115215",
+          "boards": [
+            {"name": "ESAT-OBC"},
+            {"name": "ESAT-EPS"}
+          ],
+          "toolsDependencies": [
+            {
+
+              "packager":"energia",
+              "name":"msp430-gcc",
+              "version":"4.6.3"
+            },
+            {
+              "packager":"energia",
+              "name":"dslite",
+              "version":"6.2.1.1594"
+            },
+            {
+              "packager":"energia",
+              "name":"mspdebug",
+              "version":"0.22"
+            }
+         ]
+        }
+      ],
+      "tools": [
+        {
+          "name":"msp430-tool",
+          "version":"0.6",
+          "systems":
+          [
+            {
+              "host":"i686-mingw32",
+              "url":"http://www.theia-space.com/msp430-tool-0.6.zip",
+              "archiveFileName":"msp430-tool-0.6.zip",
+              "checksum":"SHA-256:8b477e3b4134dc3f92334d33d93c50e1af15565d7ac6712411321dbf4ee852fd",
+              "size":"2513756"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
