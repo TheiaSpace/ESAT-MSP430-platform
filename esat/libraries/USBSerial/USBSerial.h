@@ -29,7 +29,7 @@ USBSerial.h (formerly NewSoftSerial.h) -
  ******************************************************************************/
 
 
-class USBSerial_ : public Stream {
+class USBSerial : public Stream {
 private:
 
 
@@ -39,8 +39,8 @@ private:
 
 public:
   // public methods
-  USBSerial_(uint16_t port);
-  ~USBSerial_();
+  USBSerial(uint16_t port);
+  ~USBSerial();
   void begin();
   void end();
   virtual int available(void);
@@ -55,6 +55,6 @@ public:
   // public only for easy access by interrupt handlers
   static inline void handle_interrupt();
 };
-extern USBSerial_ USB;
+extern USBSerial USB;
 #endif
 

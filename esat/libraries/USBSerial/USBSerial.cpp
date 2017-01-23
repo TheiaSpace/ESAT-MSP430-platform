@@ -1,7 +1,7 @@
 /*
  (Ported from Arduino to Energia)
 
-USBSerial_.cpp (formerly NewSoftSerial.cpp) - 
+USBSerial.cpp (formerly NewSoftSerial.cpp) - 
  Multi-instance USB serial library for Arduino/Wiring
   
  This library is free software; you can redistribute it and/or
@@ -27,7 +27,7 @@ USBSerial_.cpp (formerly NewSoftSerial.cpp) -
 //#include <avr/pgmspace.h>
 //#include "Arduino.h"
 #include "Energia.h"
-#include "USBSerial_.h"
+#include "USBSerial.h"
 
 #include "descriptors.h"
 
@@ -63,21 +63,21 @@ WORD count;
 //
 
 /* static */
-void USBSerial_::handle_interrupt()
+void USBSerial::handle_interrupt()
 {
 }
 
 //
 // Constructor
 //
-USBSerial_::USBSerial_(uint16_t port)
+USBSerial::USBSerial(uint16_t port)
 {
 }
 
 //
 // Destructor
 //
-USBSerial_::~USBSerial_()
+USBSerial::~USBSerial()
 {
   end();
 }
@@ -87,7 +87,7 @@ USBSerial_::~USBSerial_()
 // Public methods
 //
 
-void USBSerial_::begin()
+void USBSerial::begin()
 {
     __disable_interrupt();                           //Enable interrupts globally
     //Initialization of clock module
@@ -129,14 +129,14 @@ SELECT_SMCLK(SELS__XT2CLK); */
     __enable_interrupt();                           //Enable interrupts globally
 }
 
-void USBSerial_::end()
+void USBSerial::end()
 {
   USB_disable();
 }
 
 
 // Read data from buffer
-int USBSerial_::read()
+int USBSerial::read()
 {
   WORD count; 
   BYTE dataBuffer = 0;  
@@ -155,13 +155,13 @@ int USBSerial_::read()
   return (int)dataBuffer;
 }
 
-int USBSerial_::available()
+int USBSerial::available()
 {
   if ( (USB_connectionState() == ST_ENUM_ACTIVE) && (USBCDC_bytesInUSBBuffer(CDC0_INTFNUM) > 0) ) return 1;
   return 0;
 }
 
-size_t USBSerial_::write(uint8_t b)
+size_t USBSerial::write(uint8_t b)
 {
 
   if (cdcSendDataWaitTilDone((BYTE*)&b,1,CDC0_INTFNUM,0)){  	//send char to the Host
@@ -171,7 +171,7 @@ size_t USBSerial_::write(uint8_t b)
 }
 
 
-size_t USBSerial_::write(const uint8_t *buffer, size_t size)
+size_t USBSerial::write(const uint8_t *buffer, size_t size)
 {
 
   if (cdcSendDataWaitTilDone((BYTE*)buffer,size,CDC0_INTFNUM,0)){  	//send char to the Host
@@ -180,12 +180,12 @@ size_t USBSerial_::write(const uint8_t *buffer, size_t size)
   return 1;
 }
 
-void USBSerial_::flush()
+void USBSerial::flush()
 {
   while (USBCDC_bytesInUSBBuffer(CDC0_INTFNUM) > 0);            // wait till all send
 }
 
-int USBSerial_::peek()
+int USBSerial::peek()
 {
 
   // Empty buffer?
@@ -228,4 +228,4 @@ static void UNMI_ISR(void)
             USB_disable();                                      //Disable
     }
 }
-USBSerial_ USB(1);
+USBSerial USB(1);

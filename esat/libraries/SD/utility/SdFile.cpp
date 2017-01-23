@@ -18,7 +18,7 @@
  * <http://www.gnu.org/licenses/>.
  */
 #include "SdFat.h"
-#include "USBSerial_.h"
+#include "USBSerial.h"
 //#ifdef __AVR__
 //#include <avr/pgmspace.h>
 //#endif

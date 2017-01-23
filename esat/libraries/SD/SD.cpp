@@ -53,8 +53,8 @@
  
  */
 
-#include "SD_.h"
-#include "USBSerial_.h"
+#include "SD.h"
+#include "USBSerial.h"
 
 // Used by `getNextPathComponent`
 #define MAX_COMPONENT_LEN 12 // What is max length?
