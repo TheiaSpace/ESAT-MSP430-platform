@@ -9,7 +9,7 @@ name=Theia Space's ESAT boards
 version=1.0.0
 
 # compile variables
-# --------------------- 
+# ---------------------
 
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w
