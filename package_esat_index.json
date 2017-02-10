@@ -4,17 +4,17 @@
       "name": "ESAT",
       "maintainer": "Theia Space",
       "websiteURL": "http://www.theiaspace.com/",
-      "email": "example@example.com",
+      "email": "info@theiaspace.com",
       "platforms": [
         {
           "name": "Theia Space's ESAT boards",
           "architecture": "msp430",
           "version": "1.0.0",
           "category": "Theia Space",
-          "url": "http://www.theia-space.com/downloads/esat-energia-1.0.0.tar.bz2",
-          "archiveFileName": "esat-energia-1.0.0.tar.bz2",
-          "checksum": "SHA-256:3d687d768013a46a580f0b24fb7e7458bc7175e9a60ecb212ea7cb4bfcd80261",
-          "size": "2115215",
+          "url": "http://www.theiaspace.com/wp-content/uploads/ESAT/esat-platform-1.0.0.tar.gz",
+          "archiveFileName": "esat-platform-1.0.0.tar.gz",
+          "checksum": "SHA-256:557809643e206f960a2d748eee2a8e709313e7b9cd9b791f8d56f6ab863eb76e",
+          "size": "170445",
           "boards": [
             {"name": "ESAT-OBC"},
             {"name": "ESAT-EPS"}
@@ -27,14 +27,9 @@
               "version":"4.6.3"
             },
             {
-              "packager":"energia",
-              "name":"dslite",
-              "version":"6.2.1.1594"
-            },
-            {
-              "packager":"energia",
-              "name":"mspdebug",
-              "version":"0.22"
+              "packager":"ESAT",
+              "name":"msp430-tool",
+              "version":"0.6"
             }
          ]
         }
@@ -47,10 +42,10 @@
           [
             {
               "host":"i686-mingw32",
-              "url":"http://www.theia-space.com/msp430-tool-0.6.zip",
+              "url":"http://www.theiaspace.com/wp-content/uploads/ESAT/msp430-tool-0.6.zip",
               "archiveFileName":"msp430-tool-0.6.zip",
-              "checksum":"SHA-256:8b477e3b4134dc3f92334d33d93c50e1af15565d7ac6712411321dbf4ee852fd",
-              "size":"2513756"
+              "checksum":"SHA-256:96a69ae8fcec5af25cbcbadc1bdc1a0960a81efe725fd760af6fc09c01bbaedd",
+              "size":"2514736"
             }
           ]
         }
