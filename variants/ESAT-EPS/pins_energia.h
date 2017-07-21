@@ -76,12 +76,12 @@ static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #endif
 
 /* Current and voltage sensor pins */
-static const uint8_t I_12 = 77;     /* 12V line current */
-static const uint8_t V_12 = 78;     /* 12V line voltage */
-static const uint8_t I_5 = 80;      /* 5V line current */
-static const uint8_t V_5 = 1;       /* 5V line voltage */
-static const uint8_t I_3 = 2;       /* 3V3 line current */
-static const uint8_t V_3 = 3;       /* 3V3 line voltage */
+static const uint8_t I_12V = 77;    /* 12V line current */
+static const uint8_t V_12V = 78;    /* 12V line voltage */
+static const uint8_t I_5V = 80;     /* 5V line current */
+static const uint8_t V_5V = 1;      /* 5V line voltage */
+static const uint8_t I_3V = 2;      /* 3V3 line current */
+static const uint8_t V_3V = 3;      /* 3V3 line voltage */
 static const uint8_t I_IN = 4;      /* Input current to power stage */
 static const uint8_t V_IN = 79;     /* Input voltage (battery/USB) */
 static const uint8_t I_P1_IN = 7;   /* Solar panel 1 input current */
