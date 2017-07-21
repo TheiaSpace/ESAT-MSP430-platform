@@ -75,6 +75,47 @@ static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define USE_USCI_A1
 #endif
 
+/* Current and voltage sensor pins */
+static const uint8_t I_12 = 77;     /* 12V line current */
+static const uint8_t V_12 = 78;     /* 12V line voltage */
+static const uint8_t I_5 = 80;      /* 5V line current */
+static const uint8_t V_5 = 1;       /* 5V line voltage */
+static const uint8_t I_3 = 2;       /* 3V3 line current */
+static const uint8_t V_3 = 3;       /* 3V3 line voltage */
+static const uint8_t I_IN = 4;      /* Input current to power stage */
+static const uint8_t V_IN = 79;     /* Input voltage (battery/USB) */
+static const uint8_t I_P1_IN = 7;   /* Solar panel 1 input current */
+static const uint8_t I_P1_OUT = 6;  /* Solar panel 1 output current */
+static const uint8_t V_P1 = 5;      /* Solar panel 1 voltage */
+static const uint8_t I_P2_IN = 8;   /* Solar panel 2 input current */
+static const uint8_t I_P2_OUT = 10; /* Solar panel 2 output current */
+static const uint8_t V_P2 = 9;      /* Solar panel 2 voltage */
+
+/* Switches */
+static const uint8_t EN5V = 58;  /* Enable the 5V line */
+static const uint8_t EN3V3 = 60; /* Enable the 3V3 line */
+
+/* PWM control for maximum power point tracking */
+static const uint8_t PWM1 = 23; /* PWM signal for MPPT 1 */
+static const uint8_t PWM2 = 24; /* PWM signal for MPPT 2 */
+
+/* Overcurrent detection */
+static const uint8_t OC5V = 33;  /* Overcurrent on the 5V line */
+static const uint8_t OC3V3 = 34; /* Overcurrent on the 3V3 line */
+
+/* EPS interrupt line */
+static const uint8_t EMG = 28;
+
+/* I2C bus */
+static const uint8_t SCL_0 = 38; /* SCL, OBC I2C bus */
+static const uint8_t SDA_0 = 37; /* SDA, OBC I2C bus */
+static const uint8_t SCL_E = 47; /* SCL, EPS I2C bus */
+static const uint8_t SDA_E = 46; /* SDA, EPS I2C bus */
+
+/* Spy-Bi-Wire debugging interface */
+static const uint8_t TEST_E = 71;
+static const uint8_t RST_E = 76;
+
 /* Analog pin names (datasheet) */
 static const uint8_t A0 = 77;
 static const uint8_t A1 = 78;
