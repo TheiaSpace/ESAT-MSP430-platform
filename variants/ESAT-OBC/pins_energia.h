@@ -77,6 +77,57 @@ static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define USE_USCI_A1
 #endif
 
+/* Analog inputs */
+static const uint8_t ADC12 = 5;
+static const uint8_t ADC13 = 6;
+static const uint8_t ADC14 = 7;
+static const uint8_t ADC15 = 8;
+
+/* Wifi module control */
+static const uint8_t ESPRST = 36;
+static const uint8_t ESP_SLEEP = 25;
+static const uint8_t ESP0 = 35;
+static const uint8_t RX0 = 52; /* Receive data from the Wifi module */
+static const uint8_t TX0 = 51; /* Send data to the Wifi module */
+
+/* General purpose IO */
+static const uint8_t GPIO0 = 28;
+static const uint8_t GPIO1 = 29;
+static const uint8_t GPIO2 = 30;
+
+/* Coarse sun sensors */
+static const uint8_t CSSXMINUS = 4;
+static const uint8_t CSSXPLUS = 10;
+static const uint8_t CSSYMINUS = 3;
+static const uint8_t CSSYPLUS = 9;
+
+/* Magnetorquer pins */
+static const uint8_t ENMTQX = 79; /* Enable magnetorquer (X axis) */
+static const uint8_t ENMTQY = 78; /* Enable magnetorquer (Y axis) */
+static const uint8_t MTQX = 80; /* Magnetorquer polarity (X axis) */
+static const uint8_t MTQY = 1; /* Magnetorquer polarity (Y axis) */
+
+/* Wheel and tachometer pins */
+static const uint8_t PWM = 23; /* Wheel control */
+static const uint8_t TCH = 34; /* Tachometer */
+
+/* EPS interrupt line */
+static const uint8_t EMG = 33;
+
+/* I2C bus */
+static const uint8_t SCL_0 = 38;
+static const uint8_t SDA_0 = 37;
+
+/* SPI bus */
+static const uint8_t CLK_0 = 48;
+static const uint8_t CS_0 = 59;
+static const uint8_t MISO_0 = 47;
+static const uint8_t MOSI_0 = 46;
+
+/* Spy-Bi-Wire debugging interface */
+static const uint8_t TEST_0 = 71;
+static const uint8_t RST_0 = 76;
+
 static const uint8_t A0  = 77;
 static const uint8_t A1  = 78;
 static const uint8_t A2  = 79;
