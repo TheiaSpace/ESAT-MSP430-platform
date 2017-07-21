@@ -1,18 +1,16 @@
 /*
-  ************************************************************************
-  *	pins_energia.h
-  *
-  *	Energia core files for MSP430
-  *		Copyright (c) 2012 Robert Wessels. All right reserved.
-  *
-  *     Contribution: Rei VILO
-  *
-  ***********************************************************************
-  Derived from:
-  pins_arduino.h - Pin definition functions for Arduino
-  Part of Arduino - http://www.arduino.cc/
+  pins_energia.h - Pin definition functions for Energia.
+  Part of Theia Space's ESAT EPS (MSP430) core for Energia.
+  Modified for Theia Space's ESAT EPS (MSP430) by Theia Space.
+  Copyright (c) 2017 Theia Space.
 
-  Copyright (c) 2007 David A. Mellis
+  Original file: pins_energia.h, part of the Energia platform.
+  Copyright (c) 2012 Robert Wessels.
+  Contribution: Rei VILO.
+
+  Original pins_energia.h derived from:
+  pins_arduino.h - Pin definition functions for Arduino.
+  Copyright (c) 2007 David A. Mellis.
 
   This library is free software; you can redistribute it and/or
   modify it under the terms of the GNU Lesser General Public
