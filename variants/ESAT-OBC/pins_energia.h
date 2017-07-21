@@ -126,26 +126,25 @@ static const uint8_t MOSI_0 = 46;
 static const uint8_t TEST_0 = 71;
 static const uint8_t RST_0 = 76;
 
-static const uint8_t A0  = 77;
-static const uint8_t A1  = 78;
-static const uint8_t A2  = 79;
-static const uint8_t A3  = 80;
-static const uint8_t A4  = 1;
-static const uint8_t A5  = 2;
-static const uint8_t A6  = 3;
-static const uint8_t A7  = 4; 
-static const uint8_t A8  = 9;
-static const uint8_t A9  = 10; 
-static const uint8_t A10 = 128 + 10; // special. This is the internal temp sensor
-static const uint8_t A11  = 128 + 11; // special. This is Vcc/2
-static const uint8_t A12  = 5; 
-static const uint8_t A13  = 6; 
-static const uint8_t A14  = 7; 
-static const uint8_t A15  = 8; 
+static const uint8_t A0 = 77;
+static const uint8_t A1 = 78;
+static const uint8_t A2 = 79;
+static const uint8_t A3 = 80;
+static const uint8_t A4 = 1;
+static const uint8_t A5 = 2;
+static const uint8_t A6 = 3;
+static const uint8_t A7 = 4;
+static const uint8_t A8 = 9;
+static const uint8_t A9 = 10;
+static const uint8_t A10 = 128 + 10; /* special. This is the internal temp sensor */
+static const uint8_t A11 = 128 + 11; /* special. This is Vcc/2 */
+static const uint8_t A12 = 5;
+static const uint8_t A13 = 6;
+static const uint8_t A14 = 7;
+static const uint8_t A15 = 8;
 
 
 /* Pin names (datasheet) */
-
 static const uint8_t P6_4 = 1;
 static const uint8_t P6_5 = 2;
 static const uint8_t P6_6 = 3;
