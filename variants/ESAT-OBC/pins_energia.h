@@ -126,7 +126,88 @@ static const uint8_t MOSI_0 = 46;
 static const uint8_t TEST_0 = 71;
 static const uint8_t RST_0 = 76;
 
-/* Internal thermometer */
+static const uint8_t A0  = 77;
+static const uint8_t A1  = 78;
+static const uint8_t A2  = 79;
+static const uint8_t A3  = 80;
+static const uint8_t A4  = 1;
+static const uint8_t A5  = 2;
+static const uint8_t A6  = 3;
+static const uint8_t A7  = 4; 
+static const uint8_t A8  = 9;
+static const uint8_t A9  = 10; 
+static const uint8_t A10 = 128 + 10; // special. This is the internal temp sensor
+static const uint8_t A11  = 128 + 11; // special. This is Vcc/2
+static const uint8_t A12  = 5; 
+static const uint8_t A13  = 6; 
+static const uint8_t A14  = 7; 
+static const uint8_t A15  = 8; 
+
+
+/* Pin names (datasheet) */
+
+static const uint8_t P6_4 = 1;
+static const uint8_t P6_5 = 2;
+static const uint8_t P6_6 = 3;
+static const uint8_t P6_7 = 4;
+static const uint8_t P7_0 = 5;
+static const uint8_t P7_1 = 6;
+static const uint8_t P7_2 = 7;
+static const uint8_t P7_3 = 8;
+static const uint8_t P5_0 = 9;
+static const uint8_t P5_1 = 10;
+static const uint8_t P5_4 = 12;
+static const uint8_t P5_5 = 13;
+static const uint8_t P8_0 = 15;
+static const uint8_t P8_1 = 16;
+static const uint8_t P8_2 = 17;
+static const uint8_t P1_0 = 21;
+static const uint8_t P1_1 = 22;
+static const uint8_t P1_2 = 23;
+static const uint8_t P1_3 = 24;
+static const uint8_t P1_4 = 25;
+static const uint8_t P1_5 = 26;
+static const uint8_t P1_6 = 27;
+static const uint8_t P1_7 = 28;
+static const uint8_t P2_0 = 29;
+static const uint8_t P2_1 = 30;
+
+static const uint8_t P2_2 = 31;
+static const uint8_t P2_3 = 32;
+static const uint8_t P2_4 = 33;
+static const uint8_t P2_5 = 34;
+static const uint8_t P2_6 = 35;
+static const uint8_t P2_7 = 36;
+static const uint8_t P3_0 = 37;
+static const uint8_t P3_1 = 38;
+static const uint8_t P3_2 = 39;
+static const uint8_t P3_3 = 40;
+
+static const uint8_t P3_4 = 41;
+static const uint8_t P3_5 = 42;
+static const uint8_t P3_6 = 43;
+static const uint8_t P3_7 = 44;
+static const uint8_t P4_0 = 45;
+static const uint8_t P4_1 = 46;
+static const uint8_t P4_2 = 47;
+static const uint8_t P4_3 = 48;
+static const uint8_t P4_4 = 51;
+static const uint8_t P4_5 = 52;
+static const uint8_t P4_6 = 53;
+static const uint8_t P4_7 = 54;
+static const uint8_t P5_6 = 55;
+static const uint8_t P5_7 = 56;
+static const uint8_t P7_4 = 57;
+static const uint8_t P7_5 = 58;
+static const uint8_t P7_6 = 59;
+static const uint8_t P7_7 = 60;
+static const uint8_t P5_2 = 69;
+static const uint8_t P5_3 = 70;
+static const uint8_t P6_0 = 77;
+static const uint8_t P6_1 = 78;
+static const uint8_t P6_2 = 79;
+static const uint8_t P6_3 = 80;
+
 static const uint8_t TEMPSENSOR = 128 + 10;
 
 #ifdef ARDUINO_MAIN
