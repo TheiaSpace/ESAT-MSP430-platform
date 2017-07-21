@@ -126,7 +126,7 @@ static const uint8_t MOSI_0 = 46;
 static const uint8_t TEST_0 = 71;
 static const uint8_t RST_0 = 76;
 
-
+/* Internal thermometer */
 static const uint8_t TEMPSENSOR = 128 + 10;
 
 #ifdef ARDUINO_MAIN
