@@ -107,8 +107,8 @@ static const uint8_t OC3V3 = 34; /* Overcurrent on the 3V3 line */
 static const uint8_t EMG = 28;
 
 /* I2C bus */
-static const uint8_t SCL_0 = 38; /* SCL, OBC I2C bus */
-static const uint8_t SDA_0 = 37; /* SDA, OBC I2C bus */
+static const uint8_t SCL_O = 38; /* SCL, OBC I2C bus */
+static const uint8_t SDA_O = 37; /* SDA, OBC I2C bus */
 static const uint8_t SCL_E = 47; /* SCL, EPS I2C bus */
 static const uint8_t SDA_E = 46; /* SDA, EPS I2C bus */
 
