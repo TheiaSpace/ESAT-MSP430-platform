@@ -113,18 +113,18 @@ static const uint8_t TCH = 34; /* Tachometer */
 static const uint8_t EMG = 33;
 
 /* I2C bus */
-static const uint8_t SCL_0 = 38;
-static const uint8_t SDA_0 = 37;
+static const uint8_t SCL_O = 38;
+static const uint8_t SDA_O = 37;
 
 /* SPI bus */
-static const uint8_t CLK_0 = 48;
-static const uint8_t CS_0 = 59;
-static const uint8_t MISO_0 = 47;
-static const uint8_t MOSI_0 = 46;
+static const uint8_t CLK_O = 48;
+static const uint8_t CS_O = 59;
+static const uint8_t MISO_O = 47;
+static const uint8_t MOSI_O = 46;
 
 /* Spy-Bi-Wire debugging interface */
-static const uint8_t TEST_0 = 71;
-static const uint8_t RST_0 = 76;
+static const uint8_t TEST_O = 71;
+static const uint8_t RST_O = 76;
 
 /* Analog pin names (datasheet) */
 static const uint8_t A0 = 77;
