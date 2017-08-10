@@ -76,8 +76,6 @@ static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #endif
 
 /* Current and voltage sensor pins */
-static const uint8_t I_12V = 77;    /* 12V line current */
-static const uint8_t V_12V = 78;    /* 12V line voltage */
 static const uint8_t I_5V = 80;     /* 5V line current */
 static const uint8_t V_5V = 1;      /* 5V line voltage */
 static const uint8_t I_3V3 = 2;     /* 3V3 line current */
