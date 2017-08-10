@@ -84,12 +84,12 @@ static const uint8_t I_3V3 = 2;     /* 3V3 line current */
 static const uint8_t V_3V3 = 3;     /* 3V3 line voltage */
 static const uint8_t I_IN = 4;      /* Input current to power stage */
 static const uint8_t V_IN = 79;     /* Input voltage (battery/USB) */
-static const uint8_t I_P1_IN = 7;   /* Solar panel 1 input current */
-static const uint8_t I_P1_OUT = 6;  /* Solar panel 1 output current */
-static const uint8_t V_P1 = 5;      /* Solar panel 1 voltage */
-static const uint8_t I_P2_IN = 8;   /* Solar panel 2 input current */
-static const uint8_t I_P2_OUT = 10; /* Solar panel 2 output current */
-static const uint8_t V_P2 = 9;      /* Solar panel 2 voltage */
+static const uint8_t I_P1_IN = 10;  /* Solar panel 1 input current */
+static const uint8_t I_P1_OUT = 8;  /* Solar panel 1 output current */
+static const uint8_t V_P1 = 9;      /* Solar panel 1 voltage */
+static const uint8_t I_P2_IN = 5;   /* Solar panel 2 input current */
+static const uint8_t I_P2_OUT = 7;  /* Solar panel 2 output current */
+static const uint8_t V_P2 = 6;      /* Solar panel 2 voltage */
 
 /* Switches */
 static const uint8_t EN5V = 58;  /* Enable the 5V line */
