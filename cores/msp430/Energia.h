@@ -215,13 +215,13 @@ void detachInterrupt(uint8_t);
 extern const uint8_t digital_pin_to_timer[];
 extern const uint8_t digital_pin_to_port[];
 extern const uint8_t digital_pin_to_bit_mask[];
-extern const uint16_t port_to_sel0[];
-extern const uint16_t port_to_sel1[];
-extern const uint16_t port_to_sel2[];
-extern const uint16_t port_to_input[];
-extern const uint16_t port_to_output[];
-extern const uint16_t port_to_ren[];
-extern const uint16_t port_to_pmap[];
+extern const uint8_t* port_to_sel0[];
+extern const uint8_t* port_to_sel1[];
+extern const uint8_t* port_to_sel2[];
+extern const uint8_t* port_to_input[];
+extern const uint8_t* port_to_output[];
+extern const uint8_t* port_to_ren[];
+extern const uint8_t* port_to_pmap[];
 extern const uint32_t digital_pin_to_analog_in[];
 
 #define digitalPinToPort(P)    ( digital_pin_to_port[P] )
