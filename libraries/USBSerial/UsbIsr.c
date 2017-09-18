@@ -68,8 +68,8 @@ BOOL PHDCIsReceiveInProgress(BYTE);
 /*----------------------------------------------------------------------------+
 | General Subroutines                                                         |
 +----------------------------------------------------------------------------*/
-#pragma vector=USB_UBM_VECTOR
-__interrupt VOID iUsbInterruptHandler(VOID)
+__attribute__((interrupt(USB_UBM_VECTOR)))
+VOID iUsbInterruptHandler(VOID)
 {
     BYTE bWakeUp = FALSE;
     //Check if the setup interrupt is pending.
