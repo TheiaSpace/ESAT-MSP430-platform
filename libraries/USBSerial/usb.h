@@ -43,7 +43,6 @@ extern "C"
 #ifdef __GNUC__
 #define __no_init
 #define __data16
-#define __get_SR_register() __read_status_register()
 #define __even_in_range(a,b) (a)
 #endif // __GNUC__
 
