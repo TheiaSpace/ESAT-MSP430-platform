@@ -455,12 +455,12 @@ unsigned long micros()
 
 	// disable interrupts to ensure consistent readings
 	// safe SREG to avoid issues if interrupts were already disabled
-	uint16_t oldSREG = READ_SR;
+	const __istate_t state = __get_interrupt_state();
 	__dint();
 
 	m = wdt_overflow_count;
 
-	WRITE_SR(oldSREG);	// safe to enable interrupts again
+	__set_interrupt_state(state); // safe to enable interrupts again
 
 	// MSP430 does not give read access to current WDT, so we
 	// have to approximate microseconds from overflows and
@@ -477,12 +477,12 @@ unsigned long millis()
 
 	// disable interrupts to ensure consistent readings
 	// safe SREG to avoid issues if interrupts were already disabled
-	uint16_t oldSREG = READ_SR;
+	const __istate_t state = __get_interrupt_state();
 	__dint();
 
 	m = wdt_millis;
 
-	WRITE_SR(oldSREG);	// safe to enable interrupts again
+	__set_interrupt_state(state); // safe to enable interrupts again
 
  	return m;
 }
