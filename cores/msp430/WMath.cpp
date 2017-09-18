@@ -27,8 +27,6 @@ extern "C" {
   #include "stdlib.h"
   /* Using interal random and srandom in file random.c 
    * until msp430-libc adds supports for random and srandom */
-  extern long random(void);
-  extern void srandom(unsigned long __seed);
 }
 
 void randomSeed(unsigned int seed)

@@ -72,19 +72,3 @@ random_r(unsigned long *ctx)
 {
 	return do_random(ctx);
 }
-
-
-static unsigned long next = 1;
-
-long
-random(void)
-{
-	return do_random(&next);
-}
-
-void
-srandom(unsigned long seed)
-{
-	next = seed;
-}
-
