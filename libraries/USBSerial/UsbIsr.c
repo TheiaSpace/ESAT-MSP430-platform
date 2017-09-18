@@ -49,17 +49,6 @@
 +----------------------------------------------------------------------------*/
 extern BYTE  bFunctionSuspended;
 
-#ifdef __GNUC__
-extern tDEVICE_REQUEST tSetupPacket  __asm__("0x2380");
-extern tEDB0 tEndPoint0DescriptorBlock __asm__("0x0920");
-extern tEDB tInputEndPointDescriptorBlock[7] __asm__("0x23C8");
-extern tEDB tOutputEndPointDescriptorBlock[7] __asm__("0x2388");
-#else
-extern __no_init tEDB0 __data16 tEndPoint0DescriptorBlock;
-extern __no_init tEDB __data16 tInputEndPointDescriptorBlock[];
-extern __no_init tEDB __data16 tOutputEndPointDescriptorBlock[];
-#endif
-
 extern volatile BYTE bHostAsksUSBData;
 extern volatile BYTE bTransferInProgress;
 extern volatile BYTE bSecondUartTxDataCounter[];
