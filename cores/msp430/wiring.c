@@ -653,7 +653,7 @@ void suspend(void)
 		/* Halt all clocks; millis and micros will quit advancing, only
 		 * a user ISR may wake it up using wakeup().
 		 */
-		__bis_status_register(LPM4_bits+GIE);
+		_bis_SR_register(LPM4_bits+GIE);
 	}
 
 	sleeping = false;
@@ -671,7 +671,7 @@ void delay(uint32_t milliseconds)
 			milliseconds--;
 			start += 1000;
 		}
-		__bis_status_register(LPM0_bits+GIE);
+		_bis_SR_register(LPM0_bits+GIE);
 	}
 }
 
@@ -695,5 +695,5 @@ void watchdog_isr (void)
 	wdt_overflow_count++;
 
         /* Exit from LMP3 on reti (this includes LMP0) */
-        __bic_status_register_on_exit(LPM3_bits);
+        _bic_SR_register_on_exit(LPM3_bits);
 }
