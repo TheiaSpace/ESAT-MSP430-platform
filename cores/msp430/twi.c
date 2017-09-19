@@ -79,63 +79,63 @@ static uint8_t twi_my_addr;
 #if defined(__MSP430_HAS_USCI_B0__) || defined(__MSP430_HAS_EUSCI_B0__) || defined(__MSP430_HAS_USCI_B1__) || defined(__MSP430_HAS_EUSCI_B1__)
 
 #if defined(__MSP430_HAS_USCI_B0__) || defined(__MSP430_HAS_EUSCI_B0__)
-#define UCB0_BASE ((uint16_t)&UCB0CTLW0)
+#define UCB0_BASE ((ptrdiff_t) &UCB0CTLW0)
 #endif
 #if defined(__MSP430_HAS_USCI_B1__) || defined(__MSP430_HAS_EUSCI_B1__)
-#define UCB1_BASE ((uint16_t)&UCB1CTLW0)
+#define UCB1_BASE ((ptrdiff_t) &UCB1CTLW0)
 #endif
   
-#define UCBxCTLW0     (*((volatile uint16_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0CTLW0)  - UCB0_BASE))))
-#define UCBxCTLW1     (*((volatile uint16_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0CTLW1)  - UCB0_BASE))))
-#define UCBxCTL0      (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0CTLW0)+1- UCB0_BASE))))
-#define UCBxCTL1      (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0CTLW0)  - UCB0_BASE))))
-#define UCBxBRW       (*((volatile uint16_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0BRW)    - UCB0_BASE))))
-#define UCBxBR0       (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0BRW)    - UCB0_BASE))))
-#define UCBxBR1       (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0BRW)+1  - UCB0_BASE))))
-#define UCBxMCTL      (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0MCTL)   - UCB0_BASE))))
-#define UCBxMCTLW     (*((volatile uint16_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0MCTLW)  - UCB0_BASE))))
-#define UCBxSTAT      (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0STAT)   - UCB0_BASE))))
-#define UCBxTBCNT     (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0TBCNT)  - UCB0_BASE))))
-#define UCBxRXBUF     (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0RXBUF)  - UCB0_BASE))))
-#define UCBxTXBUF     (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0TXBUF)  - UCB0_BASE))))
-#define UCBxABCTL     (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0ABCTL)  - UCB0_BASE))))
-#define UCBxIRCTL     (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0IRCTL)  - UCB0_BASE))))
-#define UCBxIRTCTL    (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0IRTCTL) - UCB0_BASE))))
-#define UCBxIRRCTL    (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0IRRCTL0 - UCB0_BASE))))
-#define UCBxICTL      (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0ICTL)   - UCB0_BASE))))
-#define UCBxI2COA     (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0I2COA)  - UCB0_BASE))))
-#define UCBxI2COA0    (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0I2COA0) - UCB0_BASE))))
-#define UCBxI2CSA     (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0I2CSA)  - UCB0_BASE))))
+#define UCBxCTLW0     (*((volatile uint16_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0CTLW0)  - UCB0_BASE))))
+#define UCBxCTLW1     (*((volatile uint16_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0CTLW1)  - UCB0_BASE))))
+#define UCBxCTL0      (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0CTLW0)+1- UCB0_BASE))))
+#define UCBxCTL1      (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0CTLW0)  - UCB0_BASE))))
+#define UCBxBRW       (*((volatile uint16_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0BRW)    - UCB0_BASE))))
+#define UCBxBR0       (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0BRW)    - UCB0_BASE))))
+#define UCBxBR1       (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0BRW)+1  - UCB0_BASE))))
+#define UCBxMCTL      (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0MCTL)   - UCB0_BASE))))
+#define UCBxMCTLW     (*((volatile uint16_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0MCTLW)  - UCB0_BASE))))
+#define UCBxSTAT      (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0STAT)   - UCB0_BASE))))
+#define UCBxTBCNT     (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0TBCNT)  - UCB0_BASE))))
+#define UCBxRXBUF     (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0RXBUF)  - UCB0_BASE))))
+#define UCBxTXBUF     (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0TXBUF)  - UCB0_BASE))))
+#define UCBxABCTL     (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0ABCTL)  - UCB0_BASE))))
+#define UCBxIRCTL     (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0IRCTL)  - UCB0_BASE))))
+#define UCBxIRTCTL    (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0IRTCTL) - UCB0_BASE))))
+#define UCBxIRRCTL    (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0IRRCTL0 - UCB0_BASE))))
+#define UCBxICTL      (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0ICTL)   - UCB0_BASE))))
+#define UCBxI2COA     (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0I2COA)  - UCB0_BASE))))
+#define UCBxI2COA0    (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0I2COA0) - UCB0_BASE))))
+#define UCBxI2CSA     (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0I2CSA)  - UCB0_BASE))))
 #if defined(UCB0ICTL_)
-#define UCBxIE        (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0ICTL)   - UCB0_BASE))))
-#define UCBxIFG       (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0ICTL)+1 - UCB0_BASE))))
+#define UCBxIE        (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0ICTL)   - UCB0_BASE))))
+#define UCBxIFG       (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0ICTL)+1 - UCB0_BASE))))
 #else
-#define UCBxIE        (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0IE)     - UCB0_BASE))))
-#define UCBxIFG       (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0IFG)    - UCB0_BASE))))
+#define UCBxIE        (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0IE)     - UCB0_BASE))))
+#define UCBxIFG       (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0IFG)    - UCB0_BASE))))
 #endif
-#define UCBxI2CIE     (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0I2CIE)  - UCB0_BASE))))
-#define UCBxIV        (*((volatile uint8_t  *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0IV)     - UCB0_BASE))))
+#define UCBxI2CIE     (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0I2CIE)  - UCB0_BASE))))
+#define UCBxIV        (*((volatile uint8_t  *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0IV)     - UCB0_BASE))))
 
 #else // #if defined(__MSP430_HAS_USCI_B0__) || defined(__MSP430_HAS_EUSCI_B0__) || defined(__MSP430_HAS_USCI_B1__) || defined(__MSP430_HAS_EUSCI_B1__)
 
 #if defined(__MSP430_HAS_USCI__)
-#define UCB0_BASE ((uint16_t)&UCB0CTL0)
-#define UCB1_BASE ((uint16_t)&UCB1CTL0)
+#define UCB0_BASE (&UCB0CTL0)
+#define UCB1_BASE (&UCB1CTL0)
 
-#define UCBxCTL0      (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0CTL0)   - UCB0_BASE))))
-#define UCBxCTL1      (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0CTL1)   - UCB0_BASE))))
-#define UCBxBR0       (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0BR0)    - UCB0_BASE))))
-#define UCBxBR1       (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0BR1)    - UCB0_BASE))))
-//#define UCBxMCTL      (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0MCT)   - UCB0_BASE))))
-#define UCBxSTAT      (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0STAT)   - UCB0_BASE))))
-#define UCBxRXBUF     (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0RXBUF)  - UCB0_BASE))))
-#define UCBxTXBUF     (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0TXBUF)  - UCB0_BASE))))
-//#define UCBxICTL      (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0ICTL)   - UCB0_BASE))))
-#define UCBxI2COA     (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0I2COA)  - UCB0_BASE))))
-#define UCBxI2CSA     (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0I2CSA)  - UCB0_BASE))))
+#define UCBxCTL0      (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0CTL0)   - UCB0_BASE))))
+#define UCBxCTL1      (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0CTL1)   - UCB0_BASE))))
+#define UCBxBR0       (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0BR0)    - UCB0_BASE))))
+#define UCBxBR1       (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0BR1)    - UCB0_BASE))))
+//#define UCBxMCTL      (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0MCT)   - UCB0_BASE))))
+#define UCBxSTAT      (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0STAT)   - UCB0_BASE))))
+#define UCBxRXBUF     (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0RXBUF)  - UCB0_BASE))))
+#define UCBxTXBUF     (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0TXBUF)  - UCB0_BASE))))
+//#define UCBxICTL      (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0ICTL)   - UCB0_BASE))))
+#define UCBxI2COA     (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0I2COA)  - UCB0_BASE))))
+#define UCBxI2CSA     (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0I2CSA)  - UCB0_BASE))))
 
 #define UCxIE         UC0IE
-#define UCBxI2CIE     (*((volatile uint8_t *)((uint16_t)(I2C_baseAddress + ((uint16_t)&UCB0I2CIE)  - UCB0_BASE))))
+#define UCBxI2CIE     (*((volatile uint8_t *)((ptrdiff_t)(I2C_baseAddress + ((ptrdiff_t)&UCB0I2CIE)  - UCB0_BASE))))
 #define UCxIFG        UC0IFG
 #if defined(UCB1RXIE)
 #define UCBxRXIE      UCB0RXIE  ? (I2C_baseAddress == UCB0_BASE) : UCB1RXIE
@@ -157,13 +157,13 @@ static uint8_t twi_my_addr;
 
 
 #if DEFAULT_I2C == -1 // SW I2C implementation on default port
-uint16_t I2C_baseAddress = -1;
+ptrdiff_t I2C_baseAddress = -1;
 #endif
 #if DEFAULT_I2C == 0
-uint16_t I2C_baseAddress = UCB0_BASE;
+ptrdiff_t I2C_baseAddress = UCB0_BASE;
 #endif
 #if DEFAULT_I2C == 1
-uint16_t I2C_baseAddress = UCB1_BASE;
+ptrdiff_t I2C_baseAddress = UCB1_BASE;
 #endif
 
 
