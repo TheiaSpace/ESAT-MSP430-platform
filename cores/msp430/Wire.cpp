@@ -28,39 +28,99 @@
   Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
 */
 
+#include "Energia.h"
+
 extern "C" {
   #include <stdlib.h>
   #include <string.h>
   #include <inttypes.h>
-  #include "twi.h"
+  #include "usci_isr_handler.h"
 }
 
 #include "Wire.h"
 
-// Initialize Class Variables //////////////////////////////////////////////////
-
-uint8_t TwoWire::rxBuffer[BUFFER_LENGTH];
-uint8_t TwoWire::rxBufferIndex = 0;
-uint8_t TwoWire::rxBufferLength = 0;
-
-uint8_t TwoWire::txAddress = 0;
-uint8_t TwoWire::txBuffer[BUFFER_LENGTH];
-uint8_t TwoWire::txBufferIndex = 0;
-uint8_t TwoWire::txBufferLength = 0;
-
-uint8_t TwoWire::transmitting = 0;
-void (*TwoWire::user_onRequest)(void);
-void (*TwoWire::user_onReceive)(int);
-
-// Constructors ////////////////////////////////////////////////////////////////
-
-TwoWire::TwoWire()
+static void empty_onRequest(void)
 {
 }
 
-TwoWire::TwoWire(uint8_t module)
+static void empty_onReceive(int)
 {
-   twi_setModule(module);
+}
+
+void TwoWire::onRequestService0(void)
+{
+  Wire.onRequestService();
+}
+
+void TwoWire::onRequestService1(void)
+{
+  Wire1.onRequestService();
+}
+
+void TwoWire::onReceiveService0(uint8_t* inBytes, int numBytes)
+{
+  Wire.onReceiveService(inBytes, numBytes);
+}
+
+void TwoWire::onReceiveService1(uint8_t* inBytes, int numBytes)
+{
+  Wire1.onReceiveService(inBytes, numBytes);
+}
+
+// Constructors ////////////////////////////////////////////////////////////////
+
+TwoWire::TwoWire(): TwoWire(0)
+{
+}
+
+TwoWire::TwoWire(uint8_t i2cModule):
+  module(i2cModule),
+  rxBufferIndex(0),
+  rxBufferLength(0),
+  txAddress(0),
+  txBufferIndex(0),
+  txBufferLength(0),
+  transmitting(0),
+  user_onRequest(empty_onRequest),
+  user_onReceive(empty_onReceive)
+{
+  switch (module)
+  {
+  case 0:
+    UCBxCTL0 = (volatile uint8_t*) (((volatile uint8_t*) &UCB0CTLW0) + 1);
+    UCBxCTL1 = (volatile uint8_t*) &UCB0CTLW0;
+    UCBxBR0 = (volatile uint8_t*) &UCB0BRW;
+    UCBxBR1 = (volatile uint8_t*) (((volatile uint8_t*) &UCB0BRW) + 1);
+    UCBxRXBUF = (volatile uint8_t*) &UCB0RXBUF;
+    UCBxTXBUF = (volatile uint8_t*) &UCB0TXBUF;
+    UCBxI2COA = (volatile uint8_t*) &UCB0I2COA;
+    UCBxI2CSA = (volatile uint8_t*) &UCB0I2CSA;
+    UCBxIE = (volatile uint8_t*) &UCB0IE;
+    UCBxIFG = (volatile uint8_t*) &UCB0IFG;
+    TWISCLx = TWISCL0;
+    TWISCLx_SET_MODE = TWISCL0_SET_MODE;
+    TWISDAx = TWISDA0;
+    TWISDAx_SET_MODE = TWISDA0_SET_MODE;
+    break;
+  case 1:
+    UCBxCTL0 = (volatile uint8_t*) (((volatile uint8_t*) &UCB1CTLW0) + 1);
+    UCBxCTL1 = (volatile uint8_t*) &UCB1CTLW0;
+    UCBxBR0 = (volatile uint8_t*) &UCB1BRW;
+    UCBxBR1 = (volatile uint8_t*) (((volatile uint8_t*) &UCB1BRW) + 1);
+    UCBxRXBUF = (volatile uint8_t*) &UCB1RXBUF;
+    UCBxTXBUF = (volatile uint8_t*) &UCB1TXBUF;
+    UCBxI2COA = (volatile uint8_t*) &UCB1I2COA;
+    UCBxI2CSA = (volatile uint8_t*) &UCB1I2CSA;
+    UCBxIE = (volatile uint8_t*) &UCB1IE;
+    UCBxIFG = (volatile uint8_t*) &UCB1IFG;
+    TWISCLx = TWISCL1;
+    TWISCLx_SET_MODE = TWISCL1_SET_MODE;
+    TWISDAx = TWISDA1;
+    TWISDAx_SET_MODE = TWISDA1_SET_MODE;
+    break;
+  default:
+    break;
+  }
 }
 
 // Public Methods //////////////////////////////////////////////////////////////
@@ -79,8 +139,17 @@ void TwoWire::begin(void)
 void TwoWire::begin(uint8_t address)
 {
   twi_setAddress(address);
-  twi_attachSlaveTxEvent(onRequestService);
-  twi_attachSlaveRxEvent(onReceiveService);
+  switch (module)
+  {
+  case 0:
+    twi_attachSlaveTxEvent(onRequestService0);
+    twi_attachSlaveRxEvent(onReceiveService0);
+    break;
+  case 1:
+    twi_attachSlaveTxEvent(onRequestService1);
+    twi_attachSlaveRxEvent(onReceiveService1);
+    break;
+  }
   begin();
 }
 
@@ -306,12 +375,413 @@ void TwoWire::onRequest( void (*function)(void) )
   user_onRequest = function;
 }
 
-
-void TwoWire::setModule(uint8_t i2cModule)
+/*
+ * Function twi_init
+ * Desc     readys twi pins and sets twi bitrate
+ * Input    none
+ * Output   none
+ */
+void TwoWire::twi_init(void)
 {
-	twi_setModule(i2cModule);
+  // initialize state
+  twi_state = TWI_IDLE;
+  twi_sendStop = true; // default value
+  twi_inRepStart = false;
+
+  /* Calling this dummy function prevents the linker
+   * from stripping the USCI interupt vectors.*/
+  usci_isr_install();
+
+  twi_init_port();
+
+  //Disable the USCI module and clears the other bits of control register
+  *UCBxCTL1 = UCSWRST;
+
+  /*
+   * Configure as I2C Slave.
+   * UCMODE_3 = I2C mode
+   * UCSYNC = Synchronous mode
+   * UCCLK = SMCLK
+   */
+  *UCBxCTL0 = UCMODE_3 | UCSYNC;
+  /*
+   * Compute the clock divider that achieves less than or
+   * equal to 100kHz.  The numerator is biased to favor a larger
+   * clock divider so that the resulting clock is always less than or equal
+   * to the desired clock, never greater.
+   */
+  *UCBxBR0 = (unsigned char)((F_CPU / TWI_FREQ) & 0xFF);
+  *UCBxBR1 = (unsigned char)((F_CPU / TWI_FREQ) >> 8);
+
+  *UCBxCTL1 &= ~(UCSWRST);
+
+  /* Set I2C state change interrupt mask and TX/RX interrupts */
+  *UCBxIE |= (UCALIE|UCNACKIE|UCSTTIE|UCSTPIE|UCRXIE|UCTXIE);
+}
+
+/*
+ * Function twi_init_port
+ * Desc     initialises the port pins
+ * Input    none
+ * Output   none
+ */
+void TwoWire::twi_init_port(void)
+{
+  /* Set pins to I2C mode */
+  pinMode_int(TWISDAx, INPUT_PULLUP);
+  if (digitalRead(TWISDAx) == 0){ // toggle SCL if SDA is low at startup
+    pinMode_int(TWISCLx, INPUT_PULLUP);
+    digitalWrite(TWISCLx, LOW);
+    pinMode(TWISCLx, OUTPUT);
+    pinMode_int(TWISCLx, INPUT_PULLUP);
+  }
+  if ((TWISDAx_SET_MODE & INPUT_PULLUP) == 0) {
+    pinMode(TWISDAx, INPUT);          // some device do not allow the pull up to be enabled
+    pinMode(TWISCLx, INPUT);
+  }
+  pinMode_int(TWISDAx, TWISDAx_SET_MODE);
+  pinMode_int(TWISCLx, TWISCLx_SET_MODE);
+}
+
+/*
+ * Function twi_setAddress
+ * Desc     sets slave address and enables interrupt
+ * Input    address: 7bit i2c device address
+ * Output   none
+ */
+void TwoWire::twi_setAddress(uint8_t address)
+{
+  /* UCGCEN = respond to general Call */
+  *UCBxI2COA = (address | UCGCEN);
+}
+
+
+/*
+ * Function twi_readFrom
+ * Desc     attempts to become twi bus master and read a
+ *          series of bytes from a device on the bus
+ * Input    address: 7bit i2c device address
+ *          data: pointer to byte array
+ *          length: number of bytes to read into array
+ * Output   number of bytes read
+ */
+uint8_t TwoWire::twi_readFrom(uint8_t address, uint8_t* data, uint8_t length, uint8_t sendStop)
+{
+  uint8_t i;
+
+  *UCBxCTL1 = UCSWRST;                      // Enable SW reset
+  *UCBxCTL1 |= (UCSSEL_2);                  // I2C Master, synchronous mode
+  *UCBxCTL0 |= (UCMST | UCMODE_3 | UCSYNC); // I2C Master, synchronous mode
+  *UCBxCTL1 &= ~(UCTR);                     // Configure in receive mode
+  *UCBxI2CSA = address;                     // Set Slave Address
+  *UCBxCTL1 &= ~UCSWRST;                    // Clear SW reset, resume operation
+  *UCBxIE |= (UCALIE|UCNACKIE|UCSTPIE|UCRXIE|UCTXIE);  // Enable I2C interrupts
+  // ensure data will fit into buffer
+  if(TWI_BUFFER_LENGTH < length){
+    return 0;
+  }
+
+  // initialize buffer iteration vars
+  twi_masterBufferIndex = 0;
+  twi_masterBufferLength = length-1;  // This is not intuitive, read on...
+  // On receive, the previously configured ACK/NACK setting is transmitted in
+  // response to the received byte before the interrupt is signalled.
+  // Therefor we must actually set NACK when the _next_ to last byte is
+  // received, causing that NACK to be sent in response to receiving the last
+  // expected byte of data.
+
+  twi_state =  TWI_MRX;                     // Master receive mode
+  *UCBxCTL1 |= UCTXSTT;                      // I2C start condition
+
+  if(length == 1) {                         // When only receiving 1 byte..
+    while(*UCBxCTL1 & UCTXSTT);            // Wait for start bit to be sent
+    *UCBxCTL1 |= UCTXSTP;                  // Send I2C stop condition after recv
+  }
+
+  /* Wait in low power mode for read operation to complete */
+  while(twi_state != TWI_IDLE){
+    __bis_SR_register(LPM0_bits);
+  }
+
+  if (twi_masterBufferIndex < length)
+    length = twi_masterBufferIndex;
+
+  for(i = 0; i < length; ++i){
+    data[i] = twi_masterBuffer[i];
+  }
+
+  /* Ensure stop condition got sent before we exit. */
+  while (*UCBxCTL1 & UCTXSTP);
+  return length;
+}
+
+/*
+ * Function twi_writeTo
+ * Desc     attempts to become twi bus master and write a
+ *          series of bytes to a device on the bus
+ * Input    address: 7bit i2c device address
+ *          data: pointer to byte array
+ *          length: number of bytes in array
+ *          wait: boolean indicating to wait for write or not
+ * Output   0 .. success
+ *          1 .. length to long for buffer
+ *          2 .. address send, NACK received
+ *          3 .. data send, NACK received
+ *          4 .. other twi error (lost bus arbitration, bus error, ..)
+ */
+uint8_t TwoWire::twi_writeTo(uint8_t address, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop)
+{
+  uint8_t i;
+  twi_error = TWI_ERRROR_NO_ERROR;
+  twi_sendStop = sendStop;
+
+  *UCBxCTL1 = UCSWRST;                          // Enable SW reset
+  *UCBxCTL1 |= UCSSEL_2;                        // SMCLK
+  *UCBxCTL0 |= (UCMST | UCMODE_3 | UCSYNC);     // I2C Master, synchronous mode
+  *UCBxCTL1 |= UCTR;                            // Configure in transmit mode
+  *UCBxI2CSA = address;                         // Set Slave Address
+  *UCBxCTL1 &= ~UCSWRST;                        // Clear SW reset, resume operation
+  *UCBxIE |= (UCALIE|UCNACKIE|UCSTPIE|UCTXIE);  // Enable I2C interrupts
+
+  /* Ensure data will fit into buffer */
+  if(length > TWI_BUFFER_LENGTH){
+    return TWI_ERROR_BUF_TO_LONG;
+  }
+
+  /* initialize buffer iteration vars */
+  twi_masterBufferIndex = 0;
+  twi_masterBufferLength = length;
+
+  for(i = 0; i < length; ++i){
+    twi_masterBuffer[i] = data[i];
+  }
+
+  twi_state =  TWI_MTX;                         // Master Transmit mode
+  *UCBxCTL1 |= UCTXSTT;                         // I2C start condition
+
+  /* Wait for the transaction to complete */
+  while(twi_state != TWI_IDLE) {
+    __bis_SR_register(LPM0_bits);
+  }
+
+  /* Ensure stop/start condition got sent before we exit. */
+  if(sendStop)
+  {
+    while (*UCBxCTL1 & UCTXSTP);                // end with stop condition
+  } else {
+    while (*UCBxCTL1 & UCTXSTT);                // end with (re)start condition
+  }
+
+  return twi_error;
+}
+
+/*
+ * Function twi_transmit
+ * Desc     fills slave tx buffer with data
+ *          must be called in slave tx event callback
+ * Input    data: pointer to byte array
+ *          length: number of bytes in array
+ * Output   1 length too long for buffer
+ *          2 not slave transmitter
+ *          0 ok
+ */
+uint8_t TwoWire::twi_transmit(const uint8_t* data, uint8_t length)
+{
+  uint8_t i;
+
+  twi_state =  TWI_STX; // Slave transmit mode
+
+  // ensure data will fit into buffer
+  if(TWI_BUFFER_LENGTH < length){
+    return 1;
+  }
+
+  // set length and copy data into tx buffer
+  twi_txBufferLength = length;
+  for (i = 0; i < length; ++i) {
+    twi_txBuffer[i] = data[i];
+  }
+
+  return 0;
+}
+
+/*
+ * Function twi_attachSlaveRxEvent
+ * Desc     sets function called before a slave read operation
+ * Input    function: callback function to use
+ * Output   none
+ */
+void TwoWire::twi_attachSlaveRxEvent(void (*function)(uint8_t*, int) )
+{
+  twi_onSlaveReceive = function;
+}
+
+/*
+ * Function twi_attachSlaveTxEvent
+ * Desc     sets function called before a slave write operation
+ * Input    function: callback function to use
+ * Output   none
+ */
+void TwoWire::twi_attachSlaveTxEvent(void (*function)(void) )
+{
+  twi_onSlaveTransmit = function;
+}
+
+boolean TwoWire::i2c_txrx_isr(void)  // RX/TX Service
+{
+  boolean stay_active = false;
+
+  /* USCI I2C mode. USCI_B0 receive interrupt flag.
+   * UCBxRXIFG is set when UCBxRXBUF has received a complete character. */
+  if (*UCBxIFG & UCRXIFG) {
+    /* Master receive mode. */
+    if (twi_state ==  TWI_MRX) {
+      twi_masterBuffer[twi_masterBufferIndex++] = *UCBxRXBUF;
+      if(twi_masterBufferIndex == twi_masterBufferLength)
+        /* Only one byte left. Generate STOP condition.
+         * In master mode a STOP is preceded by a NACK */
+        *UCBxCTL1 |= UCTXSTP;
+      if (twi_masterBufferIndex > twi_masterBufferLength) {
+        /* All bytes received. We are idle */
+        stay_active = true;
+        twi_state = TWI_IDLE;
+      }
+      /* Slave receive mode. (twi_state = TWI_SRX) */
+    } else {
+      // if there is still room in the rx buffer
+      if (twi_rxBufferIndex < TWI_BUFFER_LENGTH) {
+        // put byte in buffer and ack
+        twi_rxBuffer[twi_rxBufferIndex++] = *UCBxRXBUF;
+      } else {
+        // otherwise nack
+        *UCBxCTL1 |= UCTXNACK;   // Generate NACK condition
+      }
+    }
+  }
+  /* USCI I2C mode. USCI_Bx transmit interrupt flag.
+   * UCBxTXIFG is set when UCBxTXBUF is empty.*/
+  if (*UCBxIFG & UCTXIFG){
+    /* Master transmit mode */
+    if (twi_state == TWI_MTX) {
+      // if there is data to send, send it, otherwise stop
+      if (twi_masterBufferIndex < twi_masterBufferLength) {
+        // Copy data to output register and ack.
+        *UCBxTXBUF = twi_masterBuffer[twi_masterBufferIndex++];
+      } else {
+        if (twi_sendStop) {
+          /* All done. Generate STOP condition and IDLE */
+          *UCBxCTL1 |= UCTXSTP;
+        } else {
+          twi_inRepStart = true;  // we're gonna send the START
+          // don't enable the interrupt. We'll generate the start, but we
+          // avoid handling the interrupt until we're in the next transaction,
+          // at the point where we would normally issue the start.
+          *UCBxCTL1 |= UCTXSTT;
+        }
+        twi_state = TWI_IDLE;
+        stay_active = true;
+      }
+      /* Slave transmit mode (twi_state = TWI_STX) */
+    } else {
+      // copy data to output register
+      *UCBxTXBUF = twi_txBuffer[twi_txBufferIndex++];
+      // if there is more to send, ack, otherwise nack
+      if(twi_txBufferIndex < twi_txBufferLength) {
+      } else {
+        *UCBxCTL1 |= UCTXNACK;    // Generate NACK condition
+      }
+    }
+  }
+  return stay_active;
+}
+
+boolean TwoWire::i2c_state_isr(void)  // I2C Service
+{
+  boolean stay_active = false;
+
+  /* Arbitration lost interrupt flag */
+  if (*UCBxIFG & UCALIFG) {
+    *UCBxIFG &= ~UCALIFG;
+    /* TODO: Handle bus arbitration lost */
+  }
+  /* Not-acknowledge received interrupt flag.
+   * UCNACKIFG is automatically cleared when a START condition is received.*/
+  if (*UCBxIFG & UCNACKIFG) {
+    *UCBxIFG &= ~UCNACKIFG;
+    ////UCBxCTL1 |= UCTXSTP;
+    /* TODO: This can just as well be an address NACK.
+     * Figure out a way to distinguish between ANACK and DNACK */
+    if (twi_masterBufferIndex == 0) {
+      twi_error = TWI_ERROR_ADDR_NACK;
+    }
+    else {
+      twi_error = TWI_ERROR_DATA_NACK;
+      //twi_state = TWI_IDLE;
+      //stay_active = true;
+    }
+  }
+  /* Start condition interrupt flag.
+   * UCSTTIFG is automatically cleared if a STOP condition is received. */
+  if (*UCBxIFG & UCSTTIFG) {
+    *UCBxIFG &= ~UCSTTIFG;
+    /* UCTR is automagically set by the USCI module upon a START condition. */
+    if (*UCBxCTL1 &  UCTR) {
+      /* Slave TX mode. */
+      twi_state =  TWI_STX;
+      /* Ready the tx buffer index for iteration. */
+      twi_txBufferIndex = 0;
+      /* Set tx buffer length to be zero, to verify if user changes it. */
+      twi_txBufferLength = 0;
+      /* Request for txBuffer to be filled and length to be set. */
+      /* note: user must call twi_transmit(bytes, length) to do this */
+      (*twi_onSlaveTransmit)();
+      /* If they didn't change buffer & length, initialize it
+       * TODO: Is this right? Shouldn't we reply with a NACK if there is no data to send? */
+      if (0 == twi_txBufferLength) {
+        twi_txBufferLength = 1;
+        twi_txBuffer[0] = 0x00;
+      }
+    } else {
+      /* Slave receive mode. */
+      twi_state =  TWI_SRX;
+      /* Indicate that rx buffer can be overwritten and ACK */
+      twi_rxBufferIndex = 0;
+    }
+  }
+  /* Stop condition interrupt flag.
+   * UCSTPIFG is automatically cleared when a STOP condition is received. */
+  if (*UCBxIFG & UCSTPIFG) {
+    *UCBxIFG &= ~UCSTPIFG;
+    if (twi_state ==  TWI_SRX) {
+      /* Callback to user defined callback */
+      (*twi_onSlaveReceive)(twi_rxBuffer, twi_rxBufferIndex);
+    }
+    twi_state =  TWI_IDLE;
+    stay_active = true;
+  }
+  return stay_active;
+}
+
+boolean i2c_txrx_isr(uint8_t module)
+{
+  if (module == 1) {
+    return Wire1.i2c_txrx_isr();
+  }
+  else {
+    return Wire.i2c_txrx_isr();
+  }
+}
+
+boolean i2c_state_isr(uint8_t module)
+{
+  if (module == 1) {
+    return Wire1.i2c_state_isr();
+  }
+  else {
+    return Wire.i2c_state_isr();
+  }
 }
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
-TwoWire Wire = TwoWire();
-
+TwoWire Wire = TwoWire(0);
+TwoWire Wire1 = TwoWire(1);

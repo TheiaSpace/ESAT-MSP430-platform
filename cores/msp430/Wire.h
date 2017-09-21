@@ -30,29 +30,114 @@
 
 #ifndef TwoWire_h
 #define TwoWire_h
+#include <Energia.h>
 #include <inttypes.h>
 #include "Stream.h"
 #include <msp430.h>
 
 #define BUFFER_LENGTH 16
 
+#ifndef TWI_FREQ
+#define TWI_FREQ 100000L
+#endif
+
+#ifndef TWI_BUFFER_LENGTH
+#define TWI_BUFFER_LENGTH 16
+#endif
+
+#define TWI_READY 0
+#define TWI_MRX   1
+#define TWI_MTX   2
+#define TWI_SRX   3
+#define TWI_STX   4
+
+#define TWI_SND_START 0
+#define TWI_PREP_SLA_ADDR_ACK 1
+#define TWI_MT_PROC_ADDR_ACK 2
+#define TWI_MT_PREP_DATA_ACK 3
+#define TWI_MT_PROC_DATA_ACK 4
+#define TWI_MR_PREP_DATA_RECV 5
+#define TWI_MR_PROC_DATA_RECV 6
+#define TWI_MR_PREP_STOP 7
+
+#define TWI_SL_START 8
+#define TWI_SL_PROC_ADDR 9
+#define TWI_SL_SEND_BYTE 10
+#define TWI_SL_PREP_DATA_ACK 11
+#define TWI_SL_PROC_DATA_ACK 12
+#define TWI_SL_RECV_BYTE 13
+#define TWI_SL_PROC_BYTE 14
+#define TWI_SL_RESET 15
+#define TWI_EXIT 16
+#define TWI_IDLE 17
+
+#define TWI_ERRROR_NO_ERROR 0
+#define TWI_ERROR_BUF_TO_LONG 1
+#define TWI_ERROR_ADDR_NACK 2
+#define TWI_ERROR_DATA_NACK 3
+#define TWI_ERROR_OTHER 4
+
 class TwoWire : public Stream
 {
   private:
-    static uint8_t rxBuffer[];
-    static uint8_t rxBufferIndex;
-    static uint8_t rxBufferLength;
+    uint8_t module;
+    uint8_t rxBuffer[BUFFER_LENGTH];
+    uint8_t rxBufferIndex;
+    uint8_t rxBufferLength;
 
-    static uint8_t txAddress;
-    static uint8_t txBuffer[];
-    static uint8_t txBufferIndex;
-    static uint8_t txBufferLength;
+    uint8_t txAddress;
+    uint8_t txBuffer[BUFFER_LENGTH];
+    uint8_t txBufferIndex;
+    uint8_t txBufferLength;
 
-    static uint8_t transmitting;
-    static void (*user_onRequest)(void);
-    static void (*user_onReceive)(int);
-    static void onRequestService(void);
-    static void onReceiveService(uint8_t*, int);
+    uint8_t transmitting;
+
+    volatile uint8_t* UCBxCTL0;
+    volatile uint8_t* UCBxCTL1;
+    volatile uint8_t* UCBxBR0;
+    volatile uint8_t* UCBxBR1;
+    volatile uint8_t* UCBxRXBUF;
+    volatile uint8_t* UCBxTXBUF;
+    volatile uint8_t* UCBxI2COA;
+    volatile uint8_t* UCBxI2CSA;
+    volatile uint8_t* UCBxIE;
+    volatile uint8_t* UCBxIFG;
+    uint8_t TWISCLx;
+    uint16_t TWISCLx_SET_MODE;
+    uint8_t TWISDAx;
+    uint16_t TWISDAx_SET_MODE;
+    volatile uint8_t twi_state;
+    volatile uint8_t twi_sendStop; // should the transaction end with a stop
+    volatile uint8_t twi_inRepStart; // in the middle of a repeated start
+    void (*twi_onSlaveTransmit)(void);
+    void (*twi_onSlaveReceive)(uint8_t*, int);
+    uint8_t twi_masterBuffer[TWI_BUFFER_LENGTH];
+    volatile uint8_t twi_masterBufferIndex;
+    uint8_t twi_masterBufferLength;
+    uint8_t twi_txBuffer[TWI_BUFFER_LENGTH];
+    volatile uint8_t twi_txBufferIndex;
+    volatile uint8_t twi_txBufferLength;
+    uint8_t twi_rxBuffer[TWI_BUFFER_LENGTH];
+    volatile uint8_t twi_rxBufferIndex;
+    volatile uint8_t twi_error;
+
+    void (*user_onRequest)(void);
+    void (*user_onReceive)(int);
+    void onRequestService(void);
+    void onReceiveService(uint8_t*, int);
+    static void onRequestService0(void);
+    static void onRequestService1(void);
+    static void onReceiveService0(uint8_t*, int);
+    static void onReceiveService1(uint8_t*, int);
+    void twi_init();
+    void twi_init_port();
+    void twi_setAddress(uint8_t);
+    uint8_t twi_readFrom(uint8_t, uint8_t*, uint8_t, uint8_t);
+    uint8_t twi_writeTo(uint8_t, uint8_t*, uint8_t, uint8_t, uint8_t);
+    uint8_t twi_transmit(const uint8_t*, uint8_t);
+    void twi_attachSlaveRxEvent(void (*)(uint8_t*, int) );
+    void twi_attachSlaveTxEvent(void (*)(void) );
+
   public:
     TwoWire();
     TwoWire(uint8_t module);
@@ -73,24 +158,24 @@ class TwoWire : public Stream
     virtual int read(void);
     virtual int peek(void);
     virtual void flush(void);
-#define USCI_ERROR "\n*********\nI2C Slave is not implemented for this MSP430. \nConsider using using a MSP430 with USCI peripheral e.g. MSP430G2553.\n*********\n"
-#if defined(__MSP430_HAS_USCI__) || defined(__MSP430_HAS_EUSCI_A0__) || defined(__MSP430_HAS_USCI_B0__) || defined(__MSP430_HAS_USCI_B1__)
     void onReceive( void (*)(int) );
     void onRequest( void (*)(void) );
-#else
-    void onReceive( void (*)(int) ) __attribute__ ((error(USCI_ERROR)));
-    void onRequest( void (*)(void) ) __attribute__ ((error(USCI_ERROR)));
-#endif
-  
     inline size_t write(unsigned long n) { return write((uint8_t)n); }
     inline size_t write(long n) { return write((uint8_t)n); }
     inline size_t write(unsigned int n) { return write((uint8_t)n); }
     inline size_t write(int n) { return write((uint8_t)n); }
     using Print::write;
-    void setModule(uint8_t i2cModule);
+    boolean i2c_state_isr();
+    boolean i2c_txrx_isr();
 };
 
 extern TwoWire Wire;
+extern TwoWire Wire1;
+
+extern "C" {
+  boolean i2c_txrx_isr(uint8_t module);
+  boolean i2c_state_isr(uint8_t module);
+}
 
 #endif
 
