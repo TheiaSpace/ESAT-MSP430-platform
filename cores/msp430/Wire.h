@@ -41,9 +41,7 @@
 #define TWI_FREQ 100000L
 #endif
 
-#ifndef TWI_BUFFER_LENGTH
-#define TWI_BUFFER_LENGTH 16
-#endif
+#define TWI_BUFFER_LENGTH BUFFER_LENGTH
 
 #define TWI_READY 0
 #define TWI_MRX   1
@@ -126,9 +124,13 @@ class TwoWire : public Stream
     void onRequestService(void);
     void onReceiveService(uint8_t*, int);
     static void onRequestService0(void);
+    #ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
     static void onRequestService1(void);
+    #endif
     static void onReceiveService0(uint8_t*, int);
+    #ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
     static void onReceiveService1(uint8_t*, int);
+    #endif
     void twi_init();
     void twi_init_port();
     void twi_setAddress(uint8_t);
@@ -170,7 +172,9 @@ class TwoWire : public Stream
 };
 
 extern TwoWire Wire;
+#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
 extern TwoWire Wire1;
+#endif
 
 extern "C" {
   boolean i2c_txrx_isr(uint8_t module);

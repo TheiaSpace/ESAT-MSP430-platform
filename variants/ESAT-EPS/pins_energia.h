@@ -72,6 +72,7 @@ static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define TWISDA_SET_MODE  TWISDA0_SET_MODE
 #define TWISCL_SET_MODE  TWISCL0_SET_MODE
 #endif
+#define ESAT_BOARD_HAS_SECOND_I2C_BUS
 
 #define DEBUG_UART_MODULE_OFFSET 0x40
 #define AUX_UART_MODULE_OFFSET 0x0

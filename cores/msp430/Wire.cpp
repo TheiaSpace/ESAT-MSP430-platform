@@ -52,20 +52,24 @@ void TwoWire::onRequestService0(void)
   Wire.onRequestService();
 }
 
+#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
 void TwoWire::onRequestService1(void)
 {
   Wire1.onRequestService();
 }
+#endif
 
 void TwoWire::onReceiveService0(uint8_t* inBytes, int numBytes)
 {
   Wire.onReceiveService(inBytes, numBytes);
 }
 
+#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
 void TwoWire::onReceiveService1(uint8_t* inBytes, int numBytes)
 {
   Wire1.onReceiveService(inBytes, numBytes);
 }
+#endif
 
 // Constructors ////////////////////////////////////////////////////////////////
 
@@ -102,6 +106,7 @@ TwoWire::TwoWire(uint8_t i2cModule):
     TWISDAx = TWISDA0;
     TWISDAx_SET_MODE = TWISDA0_SET_MODE;
     break;
+#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
   case 1:
     UCBxCTL0 = (volatile uint8_t*) (((volatile uint8_t*) &UCB1CTLW0) + 1);
     UCBxCTL1 = (volatile uint8_t*) &UCB1CTLW0;
@@ -118,6 +123,7 @@ TwoWire::TwoWire(uint8_t i2cModule):
     TWISDAx = TWISDA1;
     TWISDAx_SET_MODE = TWISDA1_SET_MODE;
     break;
+#endif
   default:
     break;
   }
@@ -145,10 +151,12 @@ void TwoWire::begin(uint8_t address)
     twi_attachSlaveTxEvent(onRequestService0);
     twi_attachSlaveRxEvent(onReceiveService0);
     break;
+#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
   case 1:
     twi_attachSlaveTxEvent(onRequestService1);
     twi_attachSlaveRxEvent(onReceiveService1);
     break;
+#endif
   }
   begin();
 }
@@ -769,24 +777,34 @@ boolean TwoWire::i2c_state_isr(void)  // I2C Service
 
 boolean i2c_txrx_isr(uint8_t module)
 {
+#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
   if (module == 1) {
     return Wire1.i2c_txrx_isr();
   }
   else {
     return Wire.i2c_txrx_isr();
   }
+#else
+  return Wire.i2c_txrx_isr();
+#endif
 }
 
 boolean i2c_state_isr(uint8_t module)
 {
+#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
   if (module == 1) {
     return Wire1.i2c_state_isr();
   }
   else {
     return Wire.i2c_state_isr();
   }
+#else
+  return Wire.i2c_state_isr();
+#endif
 }
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
 TwoWire Wire = TwoWire(0);
+#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
 TwoWire Wire1 = TwoWire(1);
+#endif
