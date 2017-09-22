@@ -84,7 +84,7 @@ Timer_A(void)
 
 // Timer A0 interrupt service routine
 __attribute__((interrupt(TIMERA0_VECTOR)))
-static void
+void
 Timer_A_int(void)
 {
   Timer_A();

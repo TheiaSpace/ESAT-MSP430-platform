@@ -15,8 +15,8 @@ ESAT-OBC.build.board=ESAT-OBC
 
 ESAT-OBC.upload.tool=msp430-tool
 ESAT-OBC.upload.protocol=msp430-tool
-ESAT-OBC.upload.maximum_size=48000
-ESAT-OBC.upload.maximum_ram_size=1024
+ESAT-OBC.upload.maximum_size=130943
+ESAT-OBC.upload.maximum_ram_size=8192
 
 
 #ESAT-EPS
@@ -30,5 +30,5 @@ ESAT-EPS.build.board=ESAT-EPS
 
 ESAT-EPS.upload.tool=msp430-tool
 ESAT-EPS.upload.protocol=msp430-tool
-ESAT-EPS.upload.maximum_size=48000
-ESAT-EPS.upload.maximum_ram_size=1024
+ESAT-EPS.upload.maximum_size=130943
+ESAT-EPS.upload.maximum_ram_size=8192

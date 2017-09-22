@@ -113,8 +113,10 @@ void enableXtal()
 	/* Enable PJ.4/5 as XTAL pins */
 	PJSEL0 = BIT4 | BIT5;
  #else
-	/* Enabel P4.1/2 as XTAL pins = FR4311*/
+   #if (defined(__MSP430FR4133__))
+	/* Enable P4.1/2 as XTAL pins = FR4133 */
 	P4SEL0 = BIT1 | BIT2;
+   #endif	
  #endif	
 
 	/* LFXT can take up to 1000ms to start.
@@ -297,6 +299,13 @@ void initClocks(void)
 //    CSCTL0 = 0;                    // Disable Access to CS Registers
 #endif // __MSP430_HAS_CS__
 
+#if !defined(NACCESS_0)
+/* new FRAM has renamed this bits */
+#define NACCESS_0  NWAITS_0
+#define NACCESS_1  NWAITS_1
+#define NACCESS_2  NWAITS_2
+#endif
+
 #if (defined(__MSP430_HAS_CS__) || defined(__MSP430_HAS_CS_A__)) && defined(__MSP430_HAS_FRAM__) && !defined(__MSP430FR2XX_4XX_FAMILY__)
     CSCTL0 = CSKEY;                // Enable Access to CS Registers
   
@@ -339,26 +348,26 @@ void initClocks(void)
 
      CSCTL0 = 0;                     // set lowest Frequency
 #if F_CPU >= 16000000L
-     CSCTL1 = DCORSEL_6;             //Range 6
-     CSCTL2 = 0x11E7;                //Loop Control Setting
+     CSCTL1 = DCORSEL_5;             //Range 5
+     CSCTL2 = 0x01E7;                //Loop Control Setting
 	 CSCTL3 = SELREF__REFOCLK;       //REFO for FLL
 	 CSCTL4 = SELA__XT1CLK|SELMS__DCOCLKDIV;  //Select clock sources
 	 CSCTL7 &= ~(0x07);               //Clear Fault flags
 #elif F_CPU >= 12000000L
-     CSCTL1 = DCORSEL_6;             //Range 6
-     CSCTL2 = 0x116D;                //Loop Control Setting
+     CSCTL1 = DCORSEL_4;             //Range 4
+     CSCTL2 = 0x016D;                //Loop Control Setting
 	 CSCTL3 = SELREF__REFOCLK;       //REFO for FLL
 	 CSCTL4 = SELA__XT1CLK|SELMS__DCOCLKDIV;  //Select clock sources
 	 CSCTL7 &= ~(0x07);               //Clear Fault flags
 #elif F_CPU >= 8000000L
-     CSCTL1 = DCORSEL_5;             //Range 6
-     CSCTL2 = 0x10F3;                //Loop Control Setting
+     CSCTL1 = DCORSEL_3;             //Range 3
+     CSCTL2 = 0x00F3;                //Loop Control Setting
 	 CSCTL3 = SELREF__REFOCLK;       //REFO for FLL
 	 CSCTL4 = SELA__XT1CLK|SELMS__DCOCLKDIV;  //Select clock sources
 	 CSCTL7 &= ~(0x07);               //Clear Fault flags
 #elif F_CPU >= 1000000L
-     CSCTL1 = DCORSEL_2;             //Range 6
-     CSCTL2 = 0x101D;                //Loop Control Setting
+     CSCTL1 = DCORSEL_0;             //Range 0
+     CSCTL2 = 0x001D;                //Loop Control Setting
 	 CSCTL3 = SELREF__REFOCLK;       //REFO for FLL
 	 CSCTL4 = SELA__XT1CLK|SELMS__DCOCLKDIV;  //Select clock sources
 	 CSCTL7 &= ~(0x07);               //Clear Fault flags
@@ -455,12 +464,12 @@ unsigned long micros()
 
 	// disable interrupts to ensure consistent readings
 	// safe SREG to avoid issues if interrupts were already disabled
-	uint16_t oldSREG = READ_SR;
+	const __istate_t state = __get_interrupt_state();
 	__dint();
 
 	m = wdt_overflow_count;
 
-	WRITE_SR(oldSREG);	// safe to enable interrupts again
+	__set_interrupt_state(state); // safe to enable interrupts again
 
 	// MSP430 does not give read access to current WDT, so we
 	// have to approximate microseconds from overflows and
@@ -477,12 +486,12 @@ unsigned long millis()
 
 	// disable interrupts to ensure consistent readings
 	// safe SREG to avoid issues if interrupts were already disabled
-	uint16_t oldSREG = READ_SR;
+	const __istate_t state = __get_interrupt_state();
 	__dint();
 
 	m = wdt_millis;
 
-	WRITE_SR(oldSREG);	// safe to enable interrupts again
+	__set_interrupt_state(state); // safe to enable interrupts again
 
  	return m;
 }
@@ -653,7 +662,7 @@ void suspend(void)
 		/* Halt all clocks; millis and micros will quit advancing, only
 		 * a user ISR may wake it up using wakeup().
 		 */
-		__bis_status_register(LPM4_bits+GIE);
+		_bis_SR_register(LPM4_bits+GIE);
 	}
 
 	sleeping = false;
@@ -671,7 +680,7 @@ void delay(uint32_t milliseconds)
 			milliseconds--;
 			start += 1000;
 		}
-		__bis_status_register(LPM0_bits+GIE);
+		_bis_SR_register(LPM0_bits+GIE);
 	}
 }
 
@@ -695,5 +704,5 @@ void watchdog_isr (void)
 	wdt_overflow_count++;
 
         /* Exit from LMP3 on reti (this includes LMP0) */
-        __bic_status_register_on_exit(LPM3_bits);
+        _bic_SR_register_on_exit(LPM3_bits);
 }

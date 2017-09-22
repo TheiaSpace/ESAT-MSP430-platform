@@ -34,7 +34,6 @@
 #define BV(x) (1 << (x))
 #endif
 
-#if defined(__MSP430_HAS_USCI_A0__) || defined(__MSP430_HAS_USCI_A1__)
 static const uint8_t SS      = 36;  /* P2.7 */
 static const uint8_t SCK     = 39;  /* P3.2 */
 static const uint8_t MOSI    = 37;  /* P3.0 */
@@ -43,18 +42,18 @@ static const uint8_t SS1     = 45;  /* P2.7 */
 static const uint8_t SCK1    = 48;  /* P3.2 */
 static const uint8_t MOSI1   = 46;  /* P3.0 */
 static const uint8_t MISO1   = 47;  /* P3.1 */
-static const uint8_t TWISDA  = 37;  /* P3.0 */
-static const uint8_t TWISCL  = 38;  /* P3.1 */
-static const uint8_t TWISDA2 = 46;  /* P4.1 */
-static const uint8_t TWISCL2 = 47;  /* P4.2 */
+static const uint8_t TWISDA0 = 37;  /* P3.0 */
+static const uint8_t TWISCL0 = 38;  /* P3.1 */
+static const uint8_t TWISDA1 = 46;  /* P4.1 */
+static const uint8_t TWISCL1 = 47;  /* P4.2 */
 static const uint8_t DEBUG_UARTRXD = 52;  /* Receive  Data (RXD) at P4.5 */
 static const uint8_t DEBUG_UARTTXD = 51;  /* Transmit Data (TXD) at P4.4 */
 static const uint8_t AUX_UARTRXD = 41;  /* Receive  Data (RXD) at P4.5 */
 static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
-#define TWISDA_SET_MODE (PORT_SELECTION0)
-#define TWISCL_SET_MODE (PORT_SELECTION0)
-#define TWISDA_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1SDA << 8) | INPUT)
-#define TWISCL_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1SCL << 8) | INPUT)
+#define TWISDA0_SET_MODE (PORT_SELECTION0)
+#define TWISCL0_SET_MODE (PORT_SELECTION0)
+#define TWISDA1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SDA << 8) | INPUT)
+#define TWISCL1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SCL << 8) | INPUT)
 #define DEBUG_UARTRXD_SET_MODE (PORT_SELECTION0 | (PM_UCA1RXD << 8) | INPUT)
 #define DEBUG_UARTTXD_SET_MODE (PORT_SELECTION0 | (PM_UCA1TXD << 8) | OUTPUT)
 #define AUX_UARTRXD_SET_MODE (PORT_SELECTION0 | INPUT)
@@ -65,15 +64,18 @@ static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define SPISCK_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1STE << 8) | INPUT)
 #define SPIMOSI_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1SIMO << 8) | OUTPUT)
 #define SPIMISO_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1SOMI << 8) | INPUT)
-#endif
+/* Define the default I2C settings */
+#define DEFAULT_I2C 0
+#define TWISDA TWISDA0
+#define TWISCL TWISCL0
+#define TWISDA_SET_MODE  TWISDA0_SET_MODE
+#define TWISCL_SET_MODE  TWISCL0_SET_MODE
 
 #define DEBUG_UART_MODULE_OFFSET 0x40
 #define AUX_UART_MODULE_OFFSET 0x0
 #define SERIAL1_AVAILABLE 1
 
-#if defined(__MSP430_HAS_USCI_A1__)
 #define USE_USCI_A1
-#endif
 
 /* Analog inputs */
 static const uint8_t ADC12 = 5;
@@ -213,132 +215,72 @@ static const uint8_t TEMPSENSOR = 128 + 10;
 
 #ifdef ARDUINO_MAIN
 
-const uint16_t port_to_input[] = {
+const uint8_t* port_to_input[] = {
   NOT_A_PORT,
-  (uint16_t) &P1IN,
-  (uint16_t) &P2IN,
-#ifdef __MSP430_HAS_PORT3_R__
-  (uint16_t) &P3IN,
-#endif
-#ifdef __MSP430_HAS_PORT4_R__
-  (uint16_t) &P4IN,
-#endif
-#ifdef __MSP430_HAS_PORT5_R__
-  (uint16_t) &P5IN,
-#endif
-#ifdef __MSP430_HAS_PORT6_R__
-  (uint16_t) &P6IN,
-#endif
-#ifdef __MSP430_HAS_PORT7_R__
-  (uint16_t) &P7IN,
-#endif
-#ifdef __MSP430_HAS_PORT8_R__
-  (uint16_t) &P8IN,
-#endif
+  &P1IN,
+  &P2IN,
+  &P3IN,
+  &P4IN,
+  &P5IN,
+  &P6IN,
+  &P7IN,
+  &P8IN,
 };
 
-const uint16_t port_to_output[] = {
+const uint8_t* port_to_output[] = {
   NOT_A_PORT,
-  (uint16_t) &P1OUT,
-  (uint16_t) &P2OUT,
-#ifdef __MSP430_HAS_PORT3_R__
-  (uint16_t) &P3OUT,
-#endif
-#ifdef __MSP430_HAS_PORT4_R__
-  (uint16_t) &P4OUT,
-#endif
-#ifdef __MSP430_HAS_PORT5_R__
-  (uint16_t) &P5OUT,
-#endif
-#ifdef __MSP430_HAS_PORT6_R__
-  (uint16_t) &P6OUT,
-#endif
-#ifdef __MSP430_HAS_PORT7_R__
-  (uint16_t) &P7OUT,
-#endif
-#ifdef __MSP430_HAS_PORT8_R__
-  (uint16_t) &P8OUT,
-#endif
+  &P1OUT,
+  &P2OUT,
+  &P3OUT,
+  &P4OUT,
+  &P5OUT,
+  &P6OUT,
+  &P7OUT,
+  &P8OUT,
 };
 
-const uint16_t port_to_dir[] = {
+const uint8_t* port_to_dir[] = {
   NOT_A_PORT,
-  (uint16_t) &P1DIR,
-  (uint16_t) &P2DIR,
-#ifdef __MSP430_HAS_PORT3_R__
-  (uint16_t) &P3DIR,
-#endif
-#ifdef __MSP430_HAS_PORT4_R__
-  (uint16_t) &P4DIR,
-#endif
-#ifdef __MSP430_HAS_PORT5_R__
-  (uint16_t) &P5DIR,
-#endif
-#ifdef __MSP430_HAS_PORT6_R__
-  (uint16_t) &P6DIR,
-#endif
-#ifdef __MSP430_HAS_PORT7_R__
-  (uint16_t) &P7DIR,
-#endif
-#ifdef __MSP430_HAS_PORT8_R__
-  (uint16_t) &P8DIR,
-#endif
+  &P1DIR,
+  &P2DIR,
+  &P3DIR,
+  &P4DIR,
+  &P5DIR,
+  &P6DIR,
+  &P7DIR,
+  &P8DIR,
 };
 
-const uint16_t port_to_ren[] = {
+const uint8_t* port_to_ren[] = {
   NOT_A_PORT,
-  (uint16_t) &P1REN,
-  (uint16_t) &P2REN,
-#ifdef __MSP430_HAS_PORT3_R__
-  (uint16_t) &P3REN,
-#endif
-#ifdef __MSP430_HAS_PORT4_R__
-  (uint16_t) &P4REN,
-#endif
-#ifdef __MSP430_HAS_PORT5_R__
-  (uint16_t) &P5REN,
-#endif
-#ifdef __MSP430_HAS_PORT6_R__
-  (uint16_t) &P6REN,
-#endif
-#ifdef __MSP430_HAS_PORT7_R__
-  (uint16_t) &P7REN,
-#endif
-#ifdef __MSP430_HAS_PORT8_R__
-  (uint16_t) &P8REN,
-#endif
+  &P1REN,
+  &P2REN,
+  &P3REN,
+  &P4REN,
+  &P5REN,
+  &P6REN,
+  &P7REN,
+  &P8REN,
 };
 
-const uint16_t port_to_sel0[] = {  /* put this PxSEL register under the group of PxSEL0 */
+const uint8_t* port_to_sel0[] = {  /* put this PxSEL register under the group of PxSEL0 */
   NOT_A_PORT,
-  (uint16_t) &P1SEL,
-  (uint16_t) &P2SEL,
-#ifdef __MSP430_HAS_PORT3_R__
-  (uint16_t) &P3SEL,
-#endif
-#ifdef __MSP430_HAS_PORT4_R__
-  (uint16_t) &P4SEL,
-#endif
-#ifdef __MSP430_HAS_PORT5_R__
-  (uint16_t) &P5SEL,
-#endif
-#ifdef __MSP430_HAS_PORT6_R__
-  (uint16_t) &P6SEL,
-#endif
-#ifdef __MSP430_HAS_PORT7_R__
-  (uint16_t) &P7SEL,
-#endif
-#ifdef __MSP430_HAS_PORT8_R__
-  (uint16_t) &P8SEL,
-#endif
+  &P1SEL,
+  &P2SEL,
+  &P3SEL,
+  &P4SEL,
+  &P5SEL,
+  &P6SEL,
+  &P7SEL,
+  &P8SEL,
 };
 
-const uint16_t port_to_pmap[] = {
+const uint8_t* port_to_pmap[] = {
   NOT_A_PORT, /* PMAP starts at port P1 */
   NOT_A_PORT,
   NOT_A_PORT,
   NOT_A_PORT,
-  (uint16_t) &P4MAP0,
+  &P4MAP0,
   NOT_A_PORT,
   NOT_A_PORT,
   NOT_A_PORT,

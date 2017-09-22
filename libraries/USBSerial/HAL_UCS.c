@@ -99,10 +99,6 @@
 #define XT2DRIVE_3  0
 #endif
 
-#ifdef __GNUC__
-#define __get_SR_register() __read_status_register()
-#endif
-
 void LFXT_Start(uint16_t xtdrive)
 {
   // If the drive setting is not already set to maximum
