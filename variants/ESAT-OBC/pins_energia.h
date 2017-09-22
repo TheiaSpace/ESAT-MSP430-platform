@@ -34,7 +34,6 @@
 #define BV(x) (1 << (x))
 #endif
 
-#if defined(__MSP430_HAS_USCI_A0__) || defined(__MSP430_HAS_USCI_A1__)
 static const uint8_t SS      = 36;  /* P2.7 */
 static const uint8_t SCK     = 39;  /* P3.2 */
 static const uint8_t MOSI    = 37;  /* P3.0 */
@@ -71,15 +70,12 @@ static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define TWISCL TWISCL0
 #define TWISDA_SET_MODE  TWISDA0_SET_MODE
 #define TWISCL_SET_MODE  TWISCL0_SET_MODE
-#endif
 
 #define DEBUG_UART_MODULE_OFFSET 0x40
 #define AUX_UART_MODULE_OFFSET 0x0
 #define SERIAL1_AVAILABLE 1
 
-#if defined(__MSP430_HAS_USCI_A1__)
 #define USE_USCI_A1
-#endif
 
 /* Analog inputs */
 static const uint8_t ADC12 = 5;
@@ -223,120 +219,60 @@ const uint8_t* port_to_input[] = {
   NOT_A_PORT,
   &P1IN,
   &P2IN,
-#ifdef __MSP430_HAS_PORT3_R__
   &P3IN,
-#endif
-#ifdef __MSP430_HAS_PORT4_R__
   &P4IN,
-#endif
-#ifdef __MSP430_HAS_PORT5_R__
   &P5IN,
-#endif
-#ifdef __MSP430_HAS_PORT6_R__
   &P6IN,
-#endif
-#ifdef __MSP430_HAS_PORT7_R__
   &P7IN,
-#endif
-#ifdef __MSP430_HAS_PORT8_R__
   &P8IN,
-#endif
 };
 
 const uint8_t* port_to_output[] = {
   NOT_A_PORT,
   &P1OUT,
   &P2OUT,
-#ifdef __MSP430_HAS_PORT3_R__
   &P3OUT,
-#endif
-#ifdef __MSP430_HAS_PORT4_R__
   &P4OUT,
-#endif
-#ifdef __MSP430_HAS_PORT5_R__
   &P5OUT,
-#endif
-#ifdef __MSP430_HAS_PORT6_R__
   &P6OUT,
-#endif
-#ifdef __MSP430_HAS_PORT7_R__
   &P7OUT,
-#endif
-#ifdef __MSP430_HAS_PORT8_R__
   &P8OUT,
-#endif
 };
 
 const uint8_t* port_to_dir[] = {
   NOT_A_PORT,
   &P1DIR,
   &P2DIR,
-#ifdef __MSP430_HAS_PORT3_R__
   &P3DIR,
-#endif
-#ifdef __MSP430_HAS_PORT4_R__
   &P4DIR,
-#endif
-#ifdef __MSP430_HAS_PORT5_R__
   &P5DIR,
-#endif
-#ifdef __MSP430_HAS_PORT6_R__
   &P6DIR,
-#endif
-#ifdef __MSP430_HAS_PORT7_R__
   &P7DIR,
-#endif
-#ifdef __MSP430_HAS_PORT8_R__
   &P8DIR,
-#endif
 };
 
 const uint8_t* port_to_ren[] = {
   NOT_A_PORT,
   &P1REN,
   &P2REN,
-#ifdef __MSP430_HAS_PORT3_R__
   &P3REN,
-#endif
-#ifdef __MSP430_HAS_PORT4_R__
   &P4REN,
-#endif
-#ifdef __MSP430_HAS_PORT5_R__
   &P5REN,
-#endif
-#ifdef __MSP430_HAS_PORT6_R__
   &P6REN,
-#endif
-#ifdef __MSP430_HAS_PORT7_R__
   &P7REN,
-#endif
-#ifdef __MSP430_HAS_PORT8_R__
   &P8REN,
-#endif
 };
 
 const uint8_t* port_to_sel0[] = {  /* put this PxSEL register under the group of PxSEL0 */
   NOT_A_PORT,
   &P1SEL,
   &P2SEL,
-#ifdef __MSP430_HAS_PORT3_R__
   &P3SEL,
-#endif
-#ifdef __MSP430_HAS_PORT4_R__
   &P4SEL,
-#endif
-#ifdef __MSP430_HAS_PORT5_R__
   &P5SEL,
-#endif
-#ifdef __MSP430_HAS_PORT6_R__
   &P6SEL,
-#endif
-#ifdef __MSP430_HAS_PORT7_R__
   &P7SEL,
-#endif
-#ifdef __MSP430_HAS_PORT8_R__
   &P8SEL,
-#endif
 };
 
 const uint8_t* port_to_pmap[] = {
