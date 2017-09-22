@@ -91,16 +91,16 @@ TwoWire::TwoWire(uint8_t i2cModule):
   switch (module)
   {
   case 0:
-    UCBxCTL0 = (volatile uint8_t*) (((volatile uint8_t*) &UCB0CTLW0) + 1);
-    UCBxCTL1 = (volatile uint8_t*) &UCB0CTLW0;
-    UCBxBR0 = (volatile uint8_t*) &UCB0BRW;
-    UCBxBR1 = (volatile uint8_t*) (((volatile uint8_t*) &UCB0BRW) + 1);
-    UCBxRXBUF = (volatile uint8_t*) &UCB0RXBUF;
-    UCBxTXBUF = (volatile uint8_t*) &UCB0TXBUF;
-    UCBxI2COA = (volatile uint8_t*) &UCB0I2COA;
-    UCBxI2CSA = (volatile uint8_t*) &UCB0I2CSA;
-    UCBxIE = (volatile uint8_t*) &UCB0IE;
-    UCBxIFG = (volatile uint8_t*) &UCB0IFG;
+    UCBxCTL0 = &UCB0CTL0;
+    UCBxCTL1 = &UCB0CTL1;
+    UCBxBR0 = &UCB0BR0;
+    UCBxBR1 = &UCB0BR1;
+    UCBxRXBUF = &UCB0RXBUF;
+    UCBxTXBUF = &UCB0TXBUF;
+    UCBxI2COA = &UCB0I2COA;
+    UCBxI2CSA = &UCB0I2CSA;
+    UCBxIE = &UCB0IE;
+    UCBxIFG = &UCB0IFG;
     TWISCLx = TWISCL0;
     TWISCLx_SET_MODE = TWISCL0_SET_MODE;
     TWISDAx = TWISDA0;
@@ -108,16 +108,16 @@ TwoWire::TwoWire(uint8_t i2cModule):
     break;
 #ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
   case 1:
-    UCBxCTL0 = (volatile uint8_t*) (((volatile uint8_t*) &UCB1CTLW0) + 1);
-    UCBxCTL1 = (volatile uint8_t*) &UCB1CTLW0;
-    UCBxBR0 = (volatile uint8_t*) &UCB1BRW;
-    UCBxBR1 = (volatile uint8_t*) (((volatile uint8_t*) &UCB1BRW) + 1);
-    UCBxRXBUF = (volatile uint8_t*) &UCB1RXBUF;
-    UCBxTXBUF = (volatile uint8_t*) &UCB1TXBUF;
-    UCBxI2COA = (volatile uint8_t*) &UCB1I2COA;
-    UCBxI2CSA = (volatile uint8_t*) &UCB1I2CSA;
-    UCBxIE = (volatile uint8_t*) &UCB1IE;
-    UCBxIFG = (volatile uint8_t*) &UCB1IFG;
+    UCBxCTL0 = &UCB1CTL0;
+    UCBxCTL1 = &UCB1CTL1;
+    UCBxBR0 = &UCB1BR0;
+    UCBxBR1 = &UCB1BR1;
+    UCBxRXBUF = &UCB1RXBUF;
+    UCBxTXBUF = &UCB1TXBUF;
+    UCBxI2COA = &UCB1I2COA;
+    UCBxI2CSA = &UCB1I2CSA;
+    UCBxIE = &UCB1IE;
+    UCBxIFG = &UCB1IFG;
     TWISCLx = TWISCL1;
     TWISCLx_SET_MODE = TWISCL1_SET_MODE;
     TWISDAx = TWISDA1;

@@ -90,16 +90,16 @@ class TwoWire : public Stream
 
     uint8_t transmitting;
 
-    volatile uint8_t* UCBxCTL0;
-    volatile uint8_t* UCBxCTL1;
-    volatile uint8_t* UCBxBR0;
-    volatile uint8_t* UCBxBR1;
-    volatile uint8_t* UCBxRXBUF;
-    volatile uint8_t* UCBxTXBUF;
-    volatile uint8_t* UCBxI2COA;
-    volatile uint8_t* UCBxI2CSA;
-    volatile uint8_t* UCBxIE;
-    volatile uint8_t* UCBxIFG;
+    volatile unsigned char* UCBxCTL0;
+    volatile unsigned char* UCBxCTL1;
+    volatile unsigned char* UCBxBR0;
+    volatile unsigned char* UCBxBR1;
+    volatile unsigned char* UCBxRXBUF;
+    volatile unsigned char* UCBxTXBUF;
+    volatile unsigned int* UCBxI2COA;
+    volatile unsigned int* UCBxI2CSA;
+    volatile unsigned char* UCBxIE;
+    volatile unsigned char* UCBxIFG;
     uint8_t TWISCLx;
     uint16_t TWISCLx_SET_MODE;
     uint8_t TWISDAx;
