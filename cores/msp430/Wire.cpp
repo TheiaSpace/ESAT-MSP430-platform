@@ -600,15 +600,15 @@ uint8_t TwoWire::twi_transmit(const uint8_t* data, uint8_t length)
   twi_state =  TWI_STX; // Slave transmit mode
 
   // ensure data will fit into buffer
-  if(TWI_BUFFER_LENGTH < length){
+  if(TWI_BUFFER_LENGTH < (twi_txBufferLength+length)){
     return 1;
   }
 
-  // set length and copy data into tx buffer
-  twi_txBufferLength = length;
+  // copy data into tx buffer and update tx buffer length
   for (i = 0; i < length; ++i) {
-    twi_txBuffer[i] = data[i];
+    twi_txBuffer[twi_txBufferLength+i] = data[i];
   }
+  twi_txBufferLength = twi_txBufferLength + length;
 
   return 0;
 }
