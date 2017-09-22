@@ -703,6 +703,9 @@ boolean TwoWire::i2c_state_isr(void)  // I2C Service
   if (*UCBxIFG & UCALIFG) {
     *UCBxIFG &= ~UCALIFG;
     /* TODO: Handle bus arbitration lost */
+    twi_error = TWI_ERROR_OTHER;
+    twi_state = TWI_IDLE;
+    stay_active = true;
   }
   /* Not-acknowledge received interrupt flag.
    * UCNACKIFG is automatically cleared when a START condition is received.*/
@@ -713,11 +716,13 @@ boolean TwoWire::i2c_state_isr(void)  // I2C Service
      * Figure out a way to distinguish between ANACK and DNACK */
     if (twi_masterBufferIndex == 0) {
       twi_error = TWI_ERROR_ADDR_NACK;
+      twi_state = TWI_IDLE;
+      stay_active = true;
     }
     else {
       twi_error = TWI_ERROR_DATA_NACK;
-      //twi_state = TWI_IDLE;
-      //stay_active = true;
+      twi_state = TWI_IDLE;
+      stay_active = true;
     }
   }
   /* Start condition interrupt flag.
