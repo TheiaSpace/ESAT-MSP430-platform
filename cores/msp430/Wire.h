@@ -26,6 +26,8 @@
   Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
 
   Modified 2012 by Todd Krein (todd@krein.org) to implement repeated starts
+
+  Modified 2017 by Theia Space to support multiple interfaces.
 */
 
 #ifndef TwoWire_h
