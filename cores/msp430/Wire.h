@@ -37,7 +37,7 @@
 #include "Stream.h"
 #include <msp430.h>
 
-#define BUFFER_LENGTH 64
+#define BUFFER_LENGTH 16
 
 #ifndef TWI_FREQ
 #define TWI_FREQ 100000L
