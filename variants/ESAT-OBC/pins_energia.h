@@ -73,7 +73,6 @@ static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 
 #define DEBUG_UART_MODULE_OFFSET 0x40
 #define AUX_UART_MODULE_OFFSET 0x0
-#define SERIAL1_AVAILABLE 1
 
 #define USE_USCI_A1
 
