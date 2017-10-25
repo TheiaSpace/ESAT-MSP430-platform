@@ -478,6 +478,7 @@ void TwoWire::twi_setAddress(uint8_t address)
 uint8_t TwoWire::twi_readFrom(uint8_t address, uint8_t* data, uint8_t length, uint8_t sendStop)
 {
   uint8_t i;
+  uint32_t waitCounter;
 
   *UCBxCTL1 = UCSWRST;                      // Enable SW reset
   *UCBxCTL1 |= (UCSSEL_2);                  // I2C Master, synchronous mode
@@ -504,13 +505,26 @@ uint8_t TwoWire::twi_readFrom(uint8_t address, uint8_t* data, uint8_t length, ui
   *UCBxCTL1 |= UCTXSTT;                      // I2C start condition
 
   if(length == 1) {                         // When only receiving 1 byte..
-    while(*UCBxCTL1 & UCTXSTT);            // Wait for start bit to be sent
+    waitCounter = 0;
+    while(*UCBxCTL1 & UCTXSTT)             // Wait for start bit to be sent
+    {
+      if (waitCounter >= TWI_WAIT_ITERATIONS)
+      {
+        return TWI_ERROR_OTHER;
+      }
+      waitCounter = waitCounter + 1;
+    }
     *UCBxCTL1 |= UCTXSTP;                  // Send I2C stop condition after recv
   }
 
   /* Wait in low power mode for read operation to complete */
+  waitCounter = 0;
   while(twi_state != TWI_IDLE){
-    __bis_SR_register(LPM0_bits);
+    if (waitCounter >= TWI_WAIT_ITERATIONS)
+    {
+      return TWI_ERROR_OTHER;
+    }
+    waitCounter = waitCounter + 1;
   }
 
   if (twi_masterBufferIndex < length)
@@ -542,6 +556,7 @@ uint8_t TwoWire::twi_readFrom(uint8_t address, uint8_t* data, uint8_t length, ui
 uint8_t TwoWire::twi_writeTo(uint8_t address, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop)
 {
   uint8_t i;
+  uint32_t waitCounter;
   twi_error = TWI_ERRROR_NO_ERROR;
   twi_sendStop = sendStop;
 
@@ -570,16 +585,36 @@ uint8_t TwoWire::twi_writeTo(uint8_t address, uint8_t* data, uint8_t length, uin
   *UCBxCTL1 |= UCTXSTT;                         // I2C start condition
 
   /* Wait for the transaction to complete */
+  waitCounter = 0;
   while(twi_state != TWI_IDLE) {
-    __bis_SR_register(LPM0_bits);
+    if (waitCounter >= TWI_WAIT_ITERATIONS)
+    {
+      return TWI_ERROR_OTHER;
+    }
+    waitCounter = waitCounter + 1;
   }
 
   /* Ensure stop/start condition got sent before we exit. */
+  waitCounter = 0;
   if(sendStop)
   {
-    while (*UCBxCTL1 & UCTXSTP);                // end with stop condition
+    while (*UCBxCTL1 & UCTXSTP) // end with stop condition
+    {
+      if (waitCounter >= TWI_WAIT_ITERATIONS)
+      {
+        return TWI_ERROR_OTHER;
+      }
+      waitCounter = waitCounter + 1;
+    }
   } else {
-    while (*UCBxCTL1 & UCTXSTT);                // end with (re)start condition
+    while (*UCBxCTL1 & UCTXSTT) // end with (re)start condition
+    {
+      if (waitCounter >= TWI_WAIT_ITERATIONS)
+      {
+        return TWI_ERROR_OTHER;
+      }
+      waitCounter = waitCounter + 1;
+    }
   }
 
   return twi_error;
