@@ -77,6 +77,8 @@
 #define TWI_ERROR_DATA_NACK 3
 #define TWI_ERROR_OTHER 4
 
+#define TWI_WAIT_ITERATIONS 0xFFFF
+
 class TwoWire : public Stream
 {
   private:
