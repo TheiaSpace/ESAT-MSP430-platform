@@ -87,7 +87,7 @@ struct ring_buffer
 static unsigned char rx_backend_buffer[SERIAL_INPUT_BUFFER_SIZE];
 static unsigned char tx_backend_buffer[SERIAL_OUTPUT_BUFFER_SIZE];
 static ring_buffer rx_buffer  =  { rx_backend_buffer, SERIAL_INPUT_BUFFER_SIZE, 0, 0 };
-static ring_buffer tx_buffer  =  { tx_backend_buffer, SERIAL_OUTPUT_BUFFER_SIZE, 0 };
+static ring_buffer tx_buffer  =  { tx_backend_buffer, SERIAL_OUTPUT_BUFFER_SIZE, 0, 0 };
 #ifdef SERIAL1_AVAILABLE
 
 static unsigned char rx_backend_buffer1[SERIAL_INPUT_BUFFER_SIZE];
