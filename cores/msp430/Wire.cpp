@@ -533,7 +533,12 @@ uint8_t TwoWire::twi_readFrom(uint8_t address, uint8_t* data, uint8_t length, ui
   }
 
   /* Ensure stop condition got sent before we exit. */
-  while (*UCBxCTL1 & UCTXSTP);
+  waitCounter = 0;
+  while (*UCBxCTL1 & UCTXSTP) {
+    if (waitCounter >= TWI_WAIT_ITERATIONS) {
+      return 0;
+    }
+  }
   return length;
 }
 
