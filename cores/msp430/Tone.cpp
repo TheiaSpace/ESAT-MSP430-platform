@@ -147,7 +147,7 @@ static void inline initTimers()
 // we initialize the timer match value only if the tone was not running already, to prevent glitches when re-programming a running tone
 static void setTimer(uint8_t n, unsigned int frequency, unsigned long duration)
 {
-  if ( frequency <= 0 ) 
+  if ( frequency == 0 ) 
   {
     tone_interval[n] = 0;
     tone_periods[n] = 0;
