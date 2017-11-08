@@ -73,25 +73,32 @@
 #endif
 #define UCAxIV        UCA0IV
 
-#define SERIAL_BUFFER_SIZE 16
+#define SERIAL_INPUT_BUFFER_SIZE 512
+#define SERIAL_OUTPUT_BUFFER_SIZE 16
 
 struct ring_buffer
 {
-	unsigned char buffer[SERIAL_BUFFER_SIZE];
+	unsigned char* buffer;
+	unsigned int size;
 	volatile unsigned int head;
 	volatile unsigned int tail;
 };
 
-ring_buffer rx_buffer  =  { { 0 }, 0, 0 };
-ring_buffer tx_buffer  =  { { 0 }, 0, 0 };
+static unsigned char rx_backend_buffer[SERIAL_INPUT_BUFFER_SIZE];
+static unsigned char tx_backend_buffer[SERIAL_OUTPUT_BUFFER_SIZE];
+static ring_buffer rx_buffer  =  { rx_backend_buffer, SERIAL_INPUT_BUFFER_SIZE, 0, 0 };
+static ring_buffer tx_buffer  =  { tx_backend_buffer, SERIAL_OUTPUT_BUFFER_SIZE, 0, 0 };
 #ifdef SERIAL1_AVAILABLE
-ring_buffer rx_buffer1  =  { { 0 }, 0, 0 };
-ring_buffer tx_buffer1  =  { { 0 }, 0, 0 };
+
+static unsigned char rx_backend_buffer1[SERIAL_INPUT_BUFFER_SIZE];
+static unsigned char tx_backend_buffer1[SERIAL_OUTPUT_BUFFER_SIZE];
+static ring_buffer rx_buffer1  =  { rx_backend_buffer1, SERIAL_INPUT_BUFFER_SIZE, 0, 0 };
+static ring_buffer tx_buffer1  =  { tx_backend_buffer1, SERIAL_OUTPUT_BUFFER_SIZE, 0, 0 };
 #endif
 
 inline void store_char(unsigned char c, ring_buffer *buffer)
 {
-	unsigned int i = (unsigned int)(buffer->head + 1) % SERIAL_BUFFER_SIZE;
+	unsigned int i = (unsigned int)(buffer->head + 1) % buffer->size;
 
 	// if we should be storing the received character into the location
 	// just before the tail (meaning that the head would advance to the
@@ -145,7 +152,7 @@ void HardwareSerial::begin(unsigned long baud)
 	delay(10);
 
 	*(&(UCAxCTL1) + uartOffset) = UCSWRST;
-	*(&(UCAxCTL1) + uartOffset) = UCSSEL_2;                                // SMCLK
+	*(&(UCAxCTL1) + uartOffset) |= UCSSEL_2;                                // SMCLK
 	*(&(UCAxCTL0) + uartOffset) = 0;
 	*(&(UCAxABCTL) + uartOffset) = 0;
 #if defined(__MSP430_HAS_EUSCI_A0__) || defined(__MSP430_HAS_EUSCI_A1__)
@@ -192,7 +199,7 @@ void HardwareSerial::end()
 
 int HardwareSerial::available(void)
 {
-	return (unsigned int)(SERIAL_BUFFER_SIZE + _rx_buffer->head - _rx_buffer->tail) % SERIAL_BUFFER_SIZE;
+	return (unsigned int)(_rx_buffer->size + _rx_buffer->head - _rx_buffer->tail) % _rx_buffer->size;
 }
 
 int HardwareSerial::peek(void)
@@ -211,7 +218,7 @@ int HardwareSerial::read(void)
 		return -1;
 	} else {
 		unsigned char c = _rx_buffer->buffer[_rx_buffer->tail];
-		_rx_buffer->tail = (unsigned int)(_rx_buffer->tail + 1) % SERIAL_BUFFER_SIZE;
+		_rx_buffer->tail = (unsigned int)(_rx_buffer->tail + 1) % _rx_buffer->size;
 		return c;
 	}
 }
@@ -223,7 +230,7 @@ void HardwareSerial::flush()
 
 size_t HardwareSerial::write(uint8_t c)
 {
-	unsigned int i = (_tx_buffer->head + 1) % SERIAL_BUFFER_SIZE;
+	unsigned int i = (_tx_buffer->head + 1) % _tx_buffer->size;
 	
 	// If the output buffer is full, there's nothing for it other than to
 	// wait for the interrupt handler to empty it a bit
@@ -278,7 +285,7 @@ void uart_tx_isr(uint8_t offset)
 	}
 
 	unsigned char c = tx_buffer_ptr->buffer[tx_buffer_ptr->tail];
-	tx_buffer_ptr->tail = (tx_buffer_ptr->tail + 1) % SERIAL_BUFFER_SIZE;
+	tx_buffer_ptr->tail = (tx_buffer_ptr->tail + 1) % tx_buffer_ptr->size;
 	*(&(UCAxTXBUF) + offset) = c;
 }
 // Preinstantiate Objects //////////////////////////////////////////////////////

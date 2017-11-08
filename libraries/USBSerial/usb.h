@@ -43,7 +43,6 @@ extern "C"
 #ifdef __GNUC__
 #define __no_init
 #define __data16
-#define __get_SR_register() __read_status_register()
 #define __even_in_range(a,b) (a)
 #endif // __GNUC__
 
@@ -181,43 +180,48 @@ extern "C"
 #define DATA_VALID      1
 #define DATA_INVALID    0
 
-extern __no_init tDEVICE_REQUEST __data16 tSetupPacket;
-extern __no_init BYTE __data16 abIEP0Buffer[];
-extern __no_init BYTE __data16 abOEP0Buffer[];
-extern __no_init BYTE __data16 pbXBufferAddressEp1[];
-extern __no_init BYTE __data16 pbYBufferAddressEp1[];
-extern __no_init BYTE __data16 pbXBufferAddressEp81[];
-extern __no_init BYTE __data16 pbYBufferAddressEp81[];
-extern __no_init BYTE __data16 pbXBufferAddressEp2[];
-extern __no_init BYTE __data16 pbYBufferAddressEp2[];
-extern __no_init BYTE __data16 pbXBufferAddressEp82[];
-extern __no_init BYTE __data16 pbYBufferAddressEp82[];
+#define tSetupPacket (*((tDEVICE_REQUEST*) 0x2380))
+#define tEndPoint0DescriptorBlock  (*((tEDB0*) 0x0920))
+#define tInputEndPointDescriptorBlock ((tEDB*) 0x23C8)
+#define tOutputEndPointDescriptorBlock ((tEDB*) 0x2388)
 
-extern __no_init BYTE __data16 pbXBufferAddressEp3[];
-extern __no_init BYTE __data16 pbYBufferAddressEp3[];
-extern __no_init BYTE __data16 pbXBufferAddressEp83[];
-extern __no_init BYTE __data16 pbYBufferAddressEp83[];
+#define abIEP0Buffer ((BYTE*) 0x2378)
+#define abOEP0Buffer ((BYTE*) 0x2370)
 
-extern __no_init BYTE __data16 pbXBufferAddressEp4[];
-extern __no_init BYTE __data16 pbYBufferAddressEp4[];
-extern __no_init BYTE __data16 pbXBufferAddressEp84[];
-extern __no_init BYTE __data16 pbYBufferAddressEp84[];
+#define pbXBufferAddressEp1 ((BYTE*) (0x1C00 + 0x0000)
+#define pbYBufferAddressEp1 ((BYTE*) (0x1C00 + 0x0040))
+#define pbXBufferAddressEp81 ((BYTE*) (0x1C00 + 0x0080))
+#define pbYBufferAddressEp81 ((BYTE*) (0x1C00 + 0x00C0))
 
-extern __no_init BYTE __data16 pbXBufferAddressEp5[];
-extern __no_init BYTE __data16 pbYBufferAddressEp5[];
-extern __no_init BYTE __data16 pbXBufferAddressEp85[];
-extern __no_init BYTE __data16 pbYBufferAddressEp85[];
+#define pbXBufferAddressEp2 ((BYTE*) (0x1C00 + 0x0100))
+#define pbYBufferAddressEp2 ((BYTE*) (0x1C00 + 0x0140))
+#define pbXBufferAddressEp82 ((BYTE*) (0x1C00 + 0x0180))
+#define pbYBufferAddressEP82 ((BYTE*) (0x1C00 + 0x01C0))
 
+#define pbXBufferAddressEp3 ((BYTE*) (0x1C00 + 0x0200))
+#define pbYBufferAddressEp3 ((BYTE*) (0x1C00 + 0x0240))
+#define pbXBufferAddressEp83 ((BYTE*) (0x1C00 + 0x0280))
+#define pbYBufferAddressEp83 ((BYTE*⁾ (0x1C00 + 0x02C0))
 
-extern __no_init BYTE __data16 pbXBufferAddressEp6[];
-extern __no_init BYTE __data16 pbYBufferAddressEp6[];
-extern __no_init BYTE __data16 pbXBufferAddressEp86[];
-extern __no_init BYTE __data16 pbYBufferAddressEp86[];
+#define pbXBufferAddressEp4 ((BYTE*) (0x1C00 + 0x0300))
+#define pbYBufferAddressEp4 ((BYTE*) (0x1C00 + 0x0340))
+#define pbXBufferAddressEp84 ((BYTE*) (0x1C00 + 0x0380))
+#define pbYBufferAddressEp84 ((BYTE*) (0x1C00 + 0x03C0))
 
-extern __no_init BYTE __data16 pbXBufferAddressEp7[];
-extern __no_init BYTE __data16 pbYBufferAddressEp7[];
-extern __no_init BYTE __data16 pbXBufferAddressEp87[];
-extern __no_init BYTE __data16 pbYBufferAddressEp87[];
+#define pbXBufferAddressEp5 ((BYTE*) (0x1C00 + 0x0400))
+#define pbYBufferAddressEp5 ((BYTE*) (0x1C00 + 0x0440))
+#define pbXBufferAddressEp85 ((BYTE*) (0x1C00 + 0x0480))
+#define pbYBufferAddressEp85 ((BYTE*) (0x1C00 + 0x04C0))
+
+#define pbXBufferAddressEp6 ((BYTE*) (0x1C00 + 0x0500))
+#define pbYBufferAddressEp6 ((BYTE*) (0x1C00 + 0x0540))
+#define pbXBufferAddressEp86 ((BYTE*) (0x1C00 + 0x0580))
+#define pbYBufferAddressEp86 ((BYTE*) (0x1C00 + 0x05C0))
+
+#define pbXBufferAddressEp7 ((BYTE*) (0x1C00 + 0x0600))
+#define pbYBufferAddressEp7 ((BYTE*) (0x1C00 + 0x0640))
+#define pbXBufferAddressEp87 ((BYTE*) (0x1C00 + 0x0680))
+#define pbYBufferAddressEp87 ((BYTE*) (0x1C00 + 0x06C0))
 
 extern WORD wBytesRemainingOnIEP0;
 extern WORD wBytesRemainingOnOEP0;

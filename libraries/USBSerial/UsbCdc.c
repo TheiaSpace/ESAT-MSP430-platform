@@ -101,15 +101,6 @@ extern VOID *(*USB_RX_memcpy)(VOID * dest, const VOID * source, size_t count);
  | Global Variables                                                            |
  +----------------------------------------------------------------------------*/
 
-#ifdef __GNUC__
-extern tDEVICE_REQUEST tSetupPacket  __asm__("0x2380");
-extern tEDB __data16 tInputEndPointDescriptorBlock[7] __asm__("0x23C8");
-extern tEDB __data16 tOutputEndPointDescriptorBlock[7] __asm__("0x2388");
-#else
-extern __no_init tEDB __data16 tInputEndPointDescriptorBlock[];
-extern __no_init tEDB __data16 tOutputEndPointDescriptorBlock[];
-#endif
-
 VOID CdcResetData ()
 {
     int i;

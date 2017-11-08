@@ -67,7 +67,7 @@ static uint8_t tone_state = 0; // 0==not initialized, 1==timer running
 static uint8_t tone_pins[AVAILABLE_TONE_PINS] = { SETARRAY(255) };
 static uint8_t tone_bit[AVAILABLE_TONE_PINS] = { SETARRAY(255)  };
 volatile static uint8_t *tone_out[AVAILABLE_TONE_PINS] = { SETARRAY(0) };
-static uint16_t tone_interval[AVAILABLE_TONE_PINS] = { SETARRAY(-1)  };
+static uint16_t tone_interval[AVAILABLE_TONE_PINS] = { SETARRAY(0)  };
 static int16_t tone_periods[AVAILABLE_TONE_PINS] = { SETARRAY(0)  };
 
 
@@ -147,7 +147,7 @@ static void inline initTimers()
 // we initialize the timer match value only if the tone was not running already, to prevent glitches when re-programming a running tone
 static void setTimer(uint8_t n, unsigned int frequency, unsigned long duration)
 {
-  if ( frequency <= 0 ) 
+  if ( frequency == 0 ) 
   {
     tone_interval[n] = 0;
     tone_periods[n] = 0;

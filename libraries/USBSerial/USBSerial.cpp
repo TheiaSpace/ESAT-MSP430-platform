@@ -40,6 +40,8 @@ USBSerial.cpp (formerly NewSoftSerial.cpp) -
 #include "UsbCdc.h"
 #include "usbConstructs.h"
 
+#define CDC_TIMEOUT 10000
+
 
 //
 // Statics
@@ -164,7 +166,7 @@ int USBSerial::available()
 size_t USBSerial::write(uint8_t b)
 {
 
-  if (cdcSendDataWaitTilDone((BYTE*)&b,1,CDC0_INTFNUM,0)){  	//send char to the Host
+  if (cdcSendDataWaitTilDone((BYTE*)&b,1,CDC0_INTFNUM,CDC_TIMEOUT)){  	//send char to the Host
     return 0;   // could not write
   }
   return 1;
@@ -174,7 +176,7 @@ size_t USBSerial::write(uint8_t b)
 size_t USBSerial::write(const uint8_t *buffer, size_t size)
 {
 
-  if (cdcSendDataWaitTilDone((BYTE*)buffer,size,CDC0_INTFNUM,0)){  	//send char to the Host
+  if (cdcSendDataWaitTilDone((BYTE*)buffer,size,CDC0_INTFNUM,CDC_TIMEOUT)){  	//send char to the Host
     return 0;   // could not write
   }
   return 1;

@@ -6,7 +6,7 @@
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
 
 name=Theia Space's ESAT boards
-version=1.0.0
+version=2.0.0
 
 # compile variables
 # ---------------------
@@ -17,36 +17,34 @@ compiler.warning_flags.default=
 compiler.warning_flags.more=-Wall
 compiler.warning_flags.all=-Wall -Wextra
 
-compiler.mlarge_flag=
-#compiler.mlarge_flag=-mlarge
+compiler.mlarge_flag=-mlarge -mcode-region=either -mdata-region=either
 
 # Default "compiler.path" is correct, change only if you want to overidde the initial value
-compiler.path={runtime.tools.msp430-gcc.path}/bin/
-compiler.c.cmd=msp430-gcc
-compiler.c.flags=-c -g -O2 {compiler.mlarge_flag} {compiler.warning_flags} -ffunction-sections -fdata-sections -MMD
-#compiler.c.elf.flags={compiler.warning_flags} -g -O2 -Wl,--gc-sections
-compiler.c.elf.flags={compiler.warning_flags} -g -O2 {compiler.mlarge_flag} -fno-rtti -fno-exceptions -Wl,--gc-sections,-u,main
-compiler.c.elf.cmd=msp430-gcc
+compiler.path={runtime.tools.msp430-gcc-6.path}/bin/
+compiler.c.cmd=msp430-elf-gcc
+compiler.c.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} -ffunction-sections -fdata-sections -MMD
+compiler.c.elf.flags={compiler.warning_flags} -g -Os {compiler.mlarge_flag} -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -Wl,--gc-sections,-u,main
+compiler.c.elf.cmd=msp430-elf-gcc
 compiler.S.flags=-c -x assembler-with-cpp
-compiler.cpp.cmd=msp430-g++
-compiler.cpp.flags=-c -g -O2 {compiler.mlarge_flag} {compiler.warning_flags} -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD
-compiler.ar.cmd=msp430-ar
+compiler.cpp.cmd=msp430-elf-g++
+compiler.cpp.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD
+compiler.ar.cmd=msp430-elf-ar
 compiler.ar.flags=rcs
-compiler.objcopy.cmd=msp430-objcopy
+compiler.objcopy.cmd=msp430-elf-objcopy
 compiler.objcopy.eep.flags=-O ihex -j .eeprom --set-section-flags=.eeprom=alloc,load --no-change-warnings --change-section-lma .eeprom=0
 compiler.elf2hex.flags=-O ihex -R .eeprom
-compiler.elf2hex.cmd=msp430-objcopy
+compiler.elf2hex.cmd=msp430-elf-objcopy
 compiler.ldflags=
-compiler.size.cmd=msp430-size
+compiler.size.cmd=msp430-elf-size
 
 # This can be overriden in boards.txt
 build.extra_flags=
 
 # These can be overridden in platform.local.txt
-compiler.c.extra_flags=-I{runtime.tools.msp430-gcc.path}/include
-compiler.c.elf.extra_flags=-L{runtime.tools.msp430-gcc.path}/include
+compiler.c.extra_flags=-I{runtime.tools.msp430-gcc-6.path}/include
+compiler.c.elf.extra_flags=-L{runtime.tools.msp430-gcc-6.path}/include
 compiler.S.extra_flags=
-compiler.cpp.extra_flags=-I{runtime.tools.msp430-gcc.path}/include
+compiler.cpp.extra_flags=-I{runtime.tools.msp430-gcc-6.path}/include
 compiler.ar.extra_flags=
 compiler.objcopy.eep.extra_flags=
 compiler.elf2hex.extra_flags=
@@ -67,7 +65,7 @@ recipe.S.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.S.flags} -mmcu={b
 recipe.ar.pattern="{compiler.path}{compiler.ar.cmd}" {compiler.ar.flags} {compiler.ar.extra_flags} "{archive_file_path}" "{object_file}"
 
 ## Combine gc-sections, archives, and objects
-recipe.c.combine.pattern="{compiler.path}{compiler.c.elf.cmd}" {compiler.c.elf.flags} -mmcu={build.mcu} {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" {object_files} "{build.path}/{archive_file}" "-L{build.path}" -lm
+recipe.c.combine.pattern="{compiler.path}{compiler.cpp.cmd}" {compiler.c.elf.flags} -mmcu={build.mcu} {compiler.c.elf.extra_flags} -o "{build.path}/{build.project_name}.elf" {object_files} "{build.path}/{archive_file}" "-L{build.path}" -lm
 
 ## Create output files (.eep and .hex)
 recipe.objcopy.eep.pattern="{compiler.path}{compiler.objcopy.cmd}" {compiler.objcopy.eep.flags} {compiler.objcopy.eep.extra_flags} "{build.path}/{build.project_name}.elf" "{build.path}/{build.project_name}.eep"
@@ -79,7 +77,7 @@ recipe.output.save_file={build.project_name}.{build.variant}.hex
 
 ## Compute size
 recipe.size.pattern="{compiler.path}{compiler.size.cmd}" -A "{build.path}/{build.project_name}.elf"
-recipe.size.regex=^(?:\.text|\.data|\.bootloader)\s+([0-9]+).*
+recipe.size.regex=^(?:\.lower\.rodata|\.rodata|\.rodata2|\.data|\.lowtext|\.lower\.text|\.text|\.upper\.rodata|\.upper\.text|\.upper)\s+([0-9]+).*
 recipe.size.regex.data=^(?:\.data|\.bss|\.noinit)\s+([0-9]+).*
 recipe.size.regex.eeprom=^(?:\.eeprom)\s+([0-9]+).*
 
