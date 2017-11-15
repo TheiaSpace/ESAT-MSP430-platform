@@ -6,7 +6,7 @@
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
 
 name=Theia Space's ESAT boards
-version=2.0.0
+version=2.0.1
 
 # compile variables
 # ---------------------
@@ -41,10 +41,10 @@ compiler.size.cmd=msp430-elf-size
 build.extra_flags=
 
 # These can be overridden in platform.local.txt
-compiler.c.extra_flags=-I{runtime.tools.msp430-gcc-6.path}/include
-compiler.c.elf.extra_flags=-L{runtime.tools.msp430-gcc-6.path}/include
+compiler.c.extra_flags="-I{runtime.tools.msp430-gcc-6.path}/include"
+compiler.c.elf.extra_flags="-L{runtime.tools.msp430-gcc-6.path}/include"
 compiler.S.extra_flags=
-compiler.cpp.extra_flags=-I{runtime.tools.msp430-gcc-6.path}/include
+compiler.cpp.extra_flags="-I{runtime.tools.msp430-gcc-6.path}/include"
 compiler.ar.extra_flags=
 compiler.objcopy.eep.extra_flags=
 compiler.elf2hex.extra_flags=
@@ -94,4 +94,4 @@ tools.msp430-tool.path={runtime.tools.msp430-tool.path}
 tools.msp430-tool.cmd.path={path}/msp430-tool
 tools.msp430-tool.upload.params.quiet=
 tools.msp430-tool.upload.params.verbose=
-tools.msp430-tool.upload.pattern={cmd.path} bsl5.hid -e {build.path}/{build.project_name}.hex
+tools.msp430-tool.upload.pattern="{cmd.path}" bsl5.hid -e {build.path}/{build.project_name}.hex
