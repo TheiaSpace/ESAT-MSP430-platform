@@ -1,0 +1,3 @@
+esat-programmer.name=ESAT Programmer
+esat-programmer.program.protocol=tilib
+esat-programmer.program.tool=esat-programmer

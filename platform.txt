@@ -95,3 +95,10 @@ tools.msp430-tool.cmd.path={path}/msp430-tool
 tools.msp430-tool.upload.params.quiet=
 tools.msp430-tool.upload.params.verbose=
 tools.msp430-tool.upload.pattern={cmd.path} bsl5.hid -e {build.path}/{build.project_name}.hex
+
+# ESAT programmer
+tools.esat-programmer.path={runtime.tools.esat-programmer.path}
+tools.esat-programmer.cmd.path={path}/mspdebug
+tools.esat-programmer.program.params.verbose=
+tools.esat-programmer.program.params.quiet=
+tools.esat-programmer.program.pattern={cmd.path} {program.verbose} {program.protocol} --force-reset "prog {build.path}/{build.project_name}.hex"
