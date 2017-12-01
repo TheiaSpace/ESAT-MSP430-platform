@@ -1,3 +1,3 @@
-esat-programmer.name=ESAT Programmer
-esat-programmer.program.protocol=tilib
-esat-programmer.program.tool=esat-programmer
+esat-msp430-programmer.name=ESAT MSP430 Programmer
+esat-msp430-programmer.program.protocol=tilib
+esat-msp430-programmer.program.tool=esat-msp430-programmer
