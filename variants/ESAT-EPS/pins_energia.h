@@ -116,6 +116,9 @@ static const uint8_t SDA_E = 46; /* SDA, EPS I2C bus */
 static const uint8_t TEST_E = 71;
 static const uint8_t RST_E = 76;
 
+/* LED */
+static const uint8_t LED_E = 42; /* EPS board LED */
+
 /* Analog pin names (datasheet) */
 static const uint8_t A0 = 77;
 static const uint8_t A1 = 78;
