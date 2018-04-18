@@ -127,6 +127,9 @@ static const uint8_t MOSI_O = 46;
 static const uint8_t TEST_O = 71;
 static const uint8_t RST_O = 76;
 
+/* LED */
+static const uint8_t LED_O = 60; /* OBC board LED */
+
 /* Analog pin names (datasheet) */
 static const uint8_t A0 = 77;
 static const uint8_t A1 = 78;
