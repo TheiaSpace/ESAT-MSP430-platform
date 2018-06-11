@@ -217,72 +217,72 @@ static const uint8_t TEMPSENSOR = 128 + 10;
 
 #ifdef ARDUINO_MAIN
 
-const uint8_t* port_to_input[] = {
+const uintptr_t port_to_input[] = {
   NOT_A_PORT,
-  &P1IN,
-  &P2IN,
-  &P3IN,
-  &P4IN,
-  &P5IN,
-  &P6IN,
-  &P7IN,
-  &P8IN,
+  (uintptr_t) &P1IN,
+  (uintptr_t) &P2IN,
+  (uintptr_t) &P3IN,
+  (uintptr_t) &P4IN,
+  (uintptr_t) &P5IN,
+  (uintptr_t) &P6IN,
+  (uintptr_t) &P7IN,
+  (uintptr_t) &P8IN,
 };
 
-const uint8_t* port_to_output[] = {
+const uintptr_t port_to_output[] = {
   NOT_A_PORT,
-  &P1OUT,
-  &P2OUT,
-  &P3OUT,
-  &P4OUT,
-  &P5OUT,
-  &P6OUT,
-  &P7OUT,
-  &P8OUT,
+  (uintptr_t) &P1OUT,
+  (uintptr_t) &P2OUT,
+  (uintptr_t) &P3OUT,
+  (uintptr_t) &P4OUT,
+  (uintptr_t) &P5OUT,
+  (uintptr_t) &P6OUT,
+  (uintptr_t) &P7OUT,
+  (uintptr_t) &P8OUT,
 };
 
-const uint8_t* port_to_dir[] = {
+const uintptr_t port_to_dir[] = {
   NOT_A_PORT,
-  &P1DIR,
-  &P2DIR,
-  &P3DIR,
-  &P4DIR,
-  &P5DIR,
-  &P6DIR,
-  &P7DIR,
-  &P8DIR,
+  (uintptr_t) &P1DIR,
+  (uintptr_t) &P2DIR,
+  (uintptr_t) &P3DIR,
+  (uintptr_t) &P4DIR,
+  (uintptr_t) &P5DIR,
+  (uintptr_t) &P6DIR,
+  (uintptr_t) &P7DIR,
+  (uintptr_t) &P8DIR,
 };
 
-const uint8_t* port_to_ren[] = {
+const uintptr_t port_to_ren[] = {
   NOT_A_PORT,
-  &P1REN,
-  &P2REN,
-  &P3REN,
-  &P4REN,
-  &P5REN,
-  &P6REN,
-  &P7REN,
-  &P8REN,
+  (uintptr_t) &P1REN,
+  (uintptr_t) &P2REN,
+  (uintptr_t) &P3REN,
+  (uintptr_t) &P4REN,
+  (uintptr_t) &P5REN,
+  (uintptr_t) &P6REN,
+  (uintptr_t) &P7REN,
+  (uintptr_t) &P8REN,
 };
 
-const uint8_t* port_to_sel0[] = {  /* put this PxSEL register under the group of PxSEL0 */
+const uintptr_t port_to_sel0[] = {  /* put this PxSEL register under the group of PxSEL0 */
   NOT_A_PORT,
-  &P1SEL,
-  &P2SEL,
-  &P3SEL,
-  &P4SEL,
-  &P5SEL,
-  &P6SEL,
-  &P7SEL,
-  &P8SEL,
+  (uintptr_t) &P1SEL,
+  (uintptr_t) &P2SEL,
+  (uintptr_t) &P3SEL,
+  (uintptr_t) &P4SEL,
+  (uintptr_t) &P5SEL,
+  (uintptr_t) &P6SEL,
+  (uintptr_t) &P7SEL,
+  (uintptr_t) &P8SEL,
 };
 
-const uint8_t* port_to_pmap[] = {
+const uintptr_t port_to_pmap[] = {
   NOT_A_PORT, /* PMAP starts at port P1 */
   NOT_A_PORT,
   NOT_A_PORT,
   NOT_A_PORT,
-  &P4MAP0,
+  (uintptr_t) &P4MAP0,
   NOT_A_PORT,
   NOT_A_PORT,
   NOT_A_PORT,
