@@ -43,6 +43,7 @@
 #include "usb.h"                  //USB-specific Data Structures
 #include "UsbCdc.h"
 
+#include <stdint.h>
 #include <string.h>
 
 //Local Macros
@@ -218,19 +219,19 @@ BOOL CdcToHostFromBuffer (BYTE intfNum)
 
     if (CdcWriteCtrl[INTFNUM_OFFSET(intfNum)].bCurrentBufferXY == X_BUFFER){
         //this is the active EP buffer
-        pEP1 = (BYTE*)stUsbHandle[intfNum].iep_X_Buffer;
+        pEP1 = (BYTE*) (uintptr_t) stUsbHandle[intfNum].iep_X_Buffer;
         pCT1 = &tInputEndPointDescriptorBlock[edbIndex].bEPBCTX;
 
         //second EP buffer
-        pEP2 = (BYTE*)stUsbHandle[intfNum].iep_Y_Buffer;
+        pEP2 = (BYTE*) (uintptr_t) stUsbHandle[intfNum].iep_Y_Buffer;
         pCT2 = &tInputEndPointDescriptorBlock[edbIndex].bEPBCTY;
     } else {
         //this is the active EP buffer
-        pEP1 = (BYTE*)stUsbHandle[intfNum].iep_Y_Buffer;
+        pEP1 = (BYTE*) (uintptr_t) stUsbHandle[intfNum].iep_Y_Buffer;
         pCT1 = &tInputEndPointDescriptorBlock[edbIndex].bEPBCTY;
 
         //second EP buffer
-        pEP2 = (BYTE*)stUsbHandle[intfNum].iep_X_Buffer;
+        pEP2 = (BYTE*) (uintptr_t) stUsbHandle[intfNum].iep_X_Buffer;
         pCT2 = &tInputEndPointDescriptorBlock[edbIndex].bEPBCTX;
     }
 
@@ -405,12 +406,12 @@ BYTE USBCDC_receiveData (BYTE* data, WORD size, BYTE intfNum)
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT1 =
                 &tOutputEndPointDescriptorBlock[edbIndex].bEPBCTY;
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCurrentEpPos =
-                (BYTE*)stUsbHandle[intfNum].oep_Y_Buffer;
+                (BYTE*) (uintptr_t) stUsbHandle[intfNum].oep_Y_Buffer;
         } else {
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT1 =
                 &tOutputEndPointDescriptorBlock[edbIndex].bEPBCTX;
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCurrentEpPos =
-                (BYTE*)stUsbHandle[intfNum].oep_X_Buffer;
+                (BYTE*) (uintptr_t) stUsbHandle[intfNum].oep_X_Buffer;
         }
 
         nTmp1 = *CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT1;
@@ -440,13 +441,13 @@ BYTE USBCDC_receiveData (BYTE* data, WORD size, BYTE intfNum)
             //this is the active EP buffer
             //pEP1
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCurrentEpPos =
-                (BYTE*)stUsbHandle[intfNum].oep_X_Buffer;
+                (BYTE*) (uintptr_t) stUsbHandle[intfNum].oep_X_Buffer;
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT1 =
                 &tOutputEndPointDescriptorBlock[edbIndex].bEPBCTX;
 
             //second EP buffer
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pEP2 =
-                (BYTE*)stUsbHandle[intfNum].oep_Y_Buffer;
+                (BYTE*) (uintptr_t) stUsbHandle[intfNum].oep_Y_Buffer;
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT2 =
                 &tOutputEndPointDescriptorBlock[edbIndex].bEPBCTY;
             nTmp1 = 1;                                                      //indicate that data is available
@@ -455,13 +456,13 @@ BYTE USBCDC_receiveData (BYTE* data, WORD size, BYTE intfNum)
         if (tOutputEndPointDescriptorBlock[edbIndex].bEPBCTY & EPBCNT_NAK){
             //this is the active EP buffer
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCurrentEpPos =
-                (BYTE*)stUsbHandle[intfNum].oep_Y_Buffer;
+                (BYTE*) (uintptr_t) stUsbHandle[intfNum].oep_Y_Buffer;
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT1 =
                 &tOutputEndPointDescriptorBlock[edbIndex].bEPBCTY;
 
             //second EP buffer
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pEP2 =
-                (BYTE*)stUsbHandle[intfNum].oep_X_Buffer;
+                (BYTE*) (uintptr_t) stUsbHandle[intfNum].oep_X_Buffer;
             CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT2 =
                 &tOutputEndPointDescriptorBlock[edbIndex].bEPBCTX;
             nTmp1 = 1;                                                      //indicate that data is available
@@ -540,24 +541,24 @@ BOOL CdcToBufferFromHost (BYTE intfNum)
 
     if (CdcReadCtrl[INTFNUM_OFFSET(intfNum)].bCurrentBufferXY == X_BUFFER){ //X is current buffer
         //this is the active EP buffer
-        pEP1 = (BYTE*)stUsbHandle[intfNum].oep_X_Buffer;
+        pEP1 = (BYTE*) (uintptr_t) stUsbHandle[intfNum].oep_X_Buffer;
         CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT1 =
             &tOutputEndPointDescriptorBlock[edbIndex].bEPBCTX;
 
         //second EP buffer
         CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pEP2 =
-            (BYTE*)stUsbHandle[intfNum].oep_Y_Buffer;
+            (BYTE*) (uintptr_t) stUsbHandle[intfNum].oep_Y_Buffer;
         CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT2 =
             &tOutputEndPointDescriptorBlock[edbIndex].bEPBCTY;
     } else {
         //this is the active EP buffer
-        pEP1 = (BYTE*)stUsbHandle[intfNum].oep_Y_Buffer;
+        pEP1 = (BYTE*) (uintptr_t) stUsbHandle[intfNum].oep_Y_Buffer;
         CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT1 =
             &tOutputEndPointDescriptorBlock[edbIndex].bEPBCTY;
 
         //second EP buffer
         CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pEP2 =
-            (BYTE*)stUsbHandle[intfNum].oep_X_Buffer;
+            (BYTE*) (uintptr_t) stUsbHandle[intfNum].oep_X_Buffer;
         CdcReadCtrl[INTFNUM_OFFSET(intfNum)].pCT2 =
             &tOutputEndPointDescriptorBlock[edbIndex].bEPBCTX;
     }
