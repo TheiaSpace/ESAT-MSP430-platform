@@ -55,13 +55,15 @@
 #if defined(__MSP430_HAS_ADC12_PLUS__)
 #define REFV_MAP(x) ((x>>8) & 0x70)
 #define REF_MAP(x)  (x & 0xB1)
-#define ADCxMEM0 ADC12MEM0 
+#define ADCxMEM0 ADC12MEM0
+#undef DEFAULT_READ_RESOLUTION
 #define DEFAULT_READ_RESOLUTION 12
 #endif
 #if defined(__MSP430_HAS_ADC12_B__)
 #define REFV_MAP(x) (x & 0xF00)
 #define REF_MAP(x)  (x & 0x31)
 #define ADCxMEM0 ADC12MEM0 
+#undef DEFAULT_READ_RESOLUTION
 #define DEFAULT_READ_RESOLUTION 12
 #endif
 #if defined(__MSP430_HAS_ADC__)
