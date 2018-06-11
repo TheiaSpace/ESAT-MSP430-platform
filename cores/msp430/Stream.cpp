@@ -75,7 +75,8 @@ void Stream::setTimeout(unsigned long timeout)  // sets the maximum number of mi
  // find returns true if the target string is found
 bool  Stream::find(char *target)
 {
-  return findUntil(target, "");
+  char emptyTerminator[] = "";
+  return findUntil(target, emptyTerminator);
 }
 
 // reads data from the stream until the target string of given length is found
