@@ -74,6 +74,7 @@ void USBSerial::handle_interrupt()
 //
 USBSerial::USBSerial(uint16_t port)
 {
+  (void) port;
 }
 
 //
