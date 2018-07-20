@@ -177,6 +177,7 @@ char *dtostrf(double value,
               unsigned char decimal_digits,
               char *output)
 {
+  (void) ignored_argument;
   struct dtostrf_state state;
   init_state(&state, value, decimal_digits);
   print_sign(&state, output);
