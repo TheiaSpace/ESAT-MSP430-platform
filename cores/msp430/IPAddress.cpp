@@ -28,6 +28,14 @@ IPAddress::IPAddress(const uint8_t *address)
     memcpy(_address, address, sizeof(_address));
 }
 
+IPAddress::operator uint32_t()
+{
+    return ((uint32_t)_address[0])
+      | (((uint32_t)_address[1])<<8)
+      | (((uint32_t)_address[2])<<16)
+      | (((uint32_t)_address[3])<<24);
+}
+
 IPAddress& IPAddress::operator=(const uint8_t *address)
 {
     memcpy(_address, address, sizeof(_address));
@@ -38,6 +46,11 @@ IPAddress& IPAddress::operator=(uint32_t address)
 {
     memcpy(_address, (const uint8_t *)&address, sizeof(_address));
     return *this;
+}
+
+bool IPAddress::operator==(const IPAddress& addr)
+{
+   return memcmp(addr._address, _address, sizeof(_address)) == 0;
 }
 
 bool IPAddress::operator==(const uint8_t* addr)

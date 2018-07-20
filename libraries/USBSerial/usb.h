@@ -41,9 +41,7 @@ extern "C"
 #endif
 
 #ifdef __GNUC__
-#define __no_init
 #define __data16
-#define __even_in_range(a,b) (a)
 #endif // __GNUC__
 
 

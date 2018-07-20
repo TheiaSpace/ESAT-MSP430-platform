@@ -74,6 +74,7 @@ void USBSerial::handle_interrupt()
 //
 USBSerial::USBSerial(uint16_t port)
 {
+  (void) port;
 }
 
 //
@@ -208,7 +209,7 @@ __interrupt
 __attribute__((interrupt(UNMI_VECTOR)))
 #endif
 //UNMI interrupt service routine
-static void UNMI_ISR(void)
+void UNMI_ISR(void)
 {
     switch (__even_in_range(SYSUNIV, SYSUNIV_BUSIFG ))
     {

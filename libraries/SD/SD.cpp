@@ -248,6 +248,8 @@ boolean callback_pathExists(SdFile& parentDir, char *filePathComponent,
      Returns true if file path exists.
      
      */
+    (void) isLastComponent;
+    (void) object;
     SdFile child;
     
     boolean exists = child.open(parentDir, filePathComponent, O_RDONLY);
@@ -321,6 +323,7 @@ boolean callback_makeDirPath(SdFile& parentDir, char *filePathComponent,
 boolean callback_remove(SdFile& parentDir, char *filePathComponent,
                         boolean isLastComponent, void *object)
 {
+    (void) object;
     if (isLastComponent) {
         return SdFile::remove(parentDir, filePathComponent);
     }
@@ -330,6 +333,7 @@ boolean callback_remove(SdFile& parentDir, char *filePathComponent,
 boolean callback_rmdir(SdFile& parentDir, char *filePathComponent,
                        boolean isLastComponent, void *object)
 {
+    (void) object;
     if (isLastComponent) {
         SdFile f;
         if (!f.open(parentDir, filePathComponent, O_READ)) return false;

@@ -477,6 +477,7 @@ void TwoWire::twi_setAddress(uint8_t address)
  */
 uint8_t TwoWire::twi_readFrom(uint8_t address, uint8_t* data, uint8_t length, uint8_t sendStop)
 {
+  (void) sendStop;                          // Currently, we don't support sendStop=false
   uint8_t i;
   uint32_t waitCounter;
 
@@ -558,6 +559,7 @@ uint8_t TwoWire::twi_readFrom(uint8_t address, uint8_t* data, uint8_t length, ui
  */
 uint8_t TwoWire::twi_writeTo(uint8_t address, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop)
 {
+  (void) wait;                                  // Currently, we don't support wait=false
   uint8_t i;
   uint32_t waitCounter;
   twi_error = TWI_ERRROR_NO_ERROR;
@@ -825,6 +827,7 @@ boolean i2c_txrx_isr(uint8_t module)
     return Wire.i2c_txrx_isr();
   }
 #else
+  (void) module;
   return Wire.i2c_txrx_isr();
 #endif
 }
@@ -839,6 +842,7 @@ boolean i2c_state_isr(uint8_t module)
     return Wire.i2c_state_isr();
   }
 #else
+  (void) module;
   return Wire.i2c_state_isr();
 #endif
 }

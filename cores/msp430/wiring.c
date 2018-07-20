@@ -600,7 +600,7 @@ void sleepSeconds(uint32_t seconds)
 		/* Wait for WDT interrupt in LPM3
 		 * A user's ISR may abort this sleep using wakeup().
 		 */
-		__bis_status_register(LPM3_bits+GIE);
+		_bis_SR_register(LPM3_bits+GIE);
 	}
 
 	sleeping = false;
@@ -640,7 +640,7 @@ void sleep(uint32_t milliseconds)
 		/* Wait for WDT interrupt in LPM3.
 		 * A user's ISR may abort this sleep using wakeup().
 		 */
-		__bis_status_register(LPM3_bits+GIE);
+		_bis_SR_register(LPM3_bits+GIE);
 	}
 
 	sleeping = false;
