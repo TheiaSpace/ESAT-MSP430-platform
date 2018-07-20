@@ -161,8 +161,9 @@ void File::close()
 
 File::operator bool()
 {
-    if (_file)
+    if (_file) {
         return  _file->isOpen();
-        return false;
+    }
+    return false;
 }
 
