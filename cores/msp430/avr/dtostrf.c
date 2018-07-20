@@ -151,7 +151,6 @@ static void print_decimal_separator(struct dtostrf_state* state,
 static void print_decimal_part(struct dtostrf_state* state,
                                char* output)
 {
-  const char digit_to_char[] = "0123456789";
   for (int i = 0; i < state->decimal_digits; i++)
   {
     print_digit(state, output);
