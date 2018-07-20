@@ -825,6 +825,7 @@ boolean i2c_txrx_isr(uint8_t module)
     return Wire.i2c_txrx_isr();
   }
 #else
+  (void) module;
   return Wire.i2c_txrx_isr();
 #endif
 }
@@ -839,6 +840,7 @@ boolean i2c_state_isr(uint8_t module)
     return Wire.i2c_state_isr();
   }
 #else
+  (void) module;
   return Wire.i2c_state_isr();
 #endif
 }
