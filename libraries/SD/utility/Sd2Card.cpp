@@ -475,6 +475,7 @@ uint8_t Sd2Card::readData(uint32_t block, uint16_t offset, uint16_t count, uint8
     dst[n] = SPDR;
     
 #else  // OPTIMIZE_HARDWARE_SPI
+    (void) n;
     
     // skip data before offset
     for (;offset_ < offset; offset_++) {
@@ -580,6 +581,7 @@ uint8_t Sd2Card::setSckRate(uint8_t sckRateID)
         case 4: v=SPI_CLOCK_DIV32; break;
         case 5: v=SPI_CLOCK_DIV64; break;
         case 6: v=SPI_CLOCK_DIV128; break;
+        default: return false; break;
     }
 #else // SPI_CLOCK_DIV128
     v = 2 << sckRateID;
