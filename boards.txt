@@ -1,6 +1,7 @@
 # See: http://code.google.com/p/arduino/wiki/Platforms
 
 menu.cpu=Processor
+menu.ADCS=ADCS code running in
 
 ##############################################################
 
@@ -18,6 +19,9 @@ ESAT-OBC.upload.protocol=msp430-tool
 ESAT-OBC.upload.maximum_size=130943
 ESAT-OBC.upload.maximum_ram_size=8192
 
+ESAT-OBC.menu.ADCS.OBC=OBC
+ESAT-OBC.menu.ADCS.ADCS=ADCS
+ESAT-OBC.menu.ADCS.ADCS.build.extra_flags=-DESAT_ADCS_CODE_RUNNING_IN_ADCS
 
 #ESAT-EPS
 
