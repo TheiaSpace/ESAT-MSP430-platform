@@ -21,7 +21,7 @@ ESAT-OBC.upload.maximum_ram_size=8192
 
 ESAT-OBC.menu.ADCS.OBC=OBC
 ESAT-OBC.menu.ADCS.ADCS=ADCS
-ESAT-OBC.menu.ADCS.ADCS.build.extra_flags=-DESAT_USE_STANDALONE_ADCS
+ESAT-OBC.menu.ADCS.ADCS.build.extra_flags=-DESAT_ADCS_CODE_RUNNING_IN_ADCS
 
 #ESAT-EPS
 
