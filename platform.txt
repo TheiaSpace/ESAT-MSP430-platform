@@ -17,17 +17,19 @@ compiler.warning_flags.default=
 compiler.warning_flags.more=-Wall
 compiler.warning_flags.all=-Wall -Wextra
 
+compiler.usb_flags=-DARDUINO_USB_VID={build.usb_vid} -DARDUINO_USB_PID={build.usb_pid}
+
 compiler.mlarge_flag=-mlarge -mcode-region=either -mdata-region=either
 
 # Default "compiler.path" is correct, change only if you want to overidde the initial value
 compiler.path={runtime.tools.msp430-gcc-6.path}/bin/
 compiler.c.cmd=msp430-elf-gcc
-compiler.c.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} -ffunction-sections -fdata-sections -MMD
-compiler.c.elf.flags={compiler.warning_flags} -g -Os {compiler.mlarge_flag} -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -Wl,--gc-sections,-u,main
+compiler.c.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} {compiler.usb_flags} -ffunction-sections -fdata-sections -MMD
+compiler.c.elf.flags={compiler.warning_flags} -g -Os {compiler.mlarge_flag} {compiler.usb_flags} -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -Wl,--gc-sections,-u,main
 compiler.c.elf.cmd=msp430-elf-gcc
 compiler.S.flags=-c -x assembler-with-cpp
 compiler.cpp.cmd=msp430-elf-g++
-compiler.cpp.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD
+compiler.cpp.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} {compiler.usb_flags} -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD
 compiler.ar.cmd=msp430-elf-ar
 compiler.ar.flags=rcs
 compiler.objcopy.cmd=msp430-elf-objcopy

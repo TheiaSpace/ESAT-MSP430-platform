@@ -13,6 +13,8 @@ ESAT-OBC.build.core=msp430
 ESAT-OBC.build.f_cpu=25000000L
 ESAT-OBC.build.variant=ESAT-OBC
 ESAT-OBC.build.board=ESAT_OBC
+ESAT-OBC.build.usb_vid=0x1d50
+ESAT-OBC.build.usb_pid=0x6135
 
 ESAT-OBC.upload.tool=msp430-tool
 ESAT-OBC.upload.protocol=msp430-tool
@@ -31,6 +33,8 @@ ESAT-EPS.build.core=msp430
 ESAT-EPS.build.f_cpu=25000000L
 ESAT-EPS.build.variant=ESAT-EPS
 ESAT-EPS.build.board=ESAT_EPS
+ESAT-EPS.build.usb_vid=0x1d50
+ESAT-EPS.build.usb_pid=0x6136
 
 ESAT-EPS.upload.tool=msp430-tool
 ESAT-EPS.upload.protocol=msp430-tool
