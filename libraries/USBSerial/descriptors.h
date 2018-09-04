@@ -55,8 +55,8 @@ extern "C"
 
 // Configuration Constants that can change
 // #define that relates to Device Descriptor
-#define USB_VID               0x2047        // Vendor ID (VID)
-#define USB_PID               0x0300        // Product ID (PID)
+#define USB_VID               ARDUINO_USB_VID        // Vendor ID (VID)
+#define USB_PID               ARDUINO_USB_PID        // Product ID (PID)
 /*----------------------------------------------------------------------------+
 | Firmware Version                                                            |
 | How to detect version number of the FW running on MSP430?                   |
