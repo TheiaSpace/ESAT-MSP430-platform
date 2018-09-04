@@ -1,15 +1,14 @@
-
-# Theia Space's ESAT boards
-# ------------------------------
+# Theia Space's ESAT boards (MSP430)
+# ----------------------------------
 #
 # For more info:
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
 
-name=Theia Space's ESAT boards
-version=2.2.0
+name=Theia Space's ESAT boards (MSP430)
+version=2.3.0-beta.2
 
-# compile variables
-# ---------------------
+# Compile variables
+# -----------------
 
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w
@@ -51,8 +50,8 @@ compiler.ar.extra_flags=
 compiler.objcopy.eep.extra_flags=
 compiler.elf2hex.extra_flags=
 
-# compile patterns
-# --------------------
+# Compile patterns
+# ----------------
 
 ## Compile c files
 recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
@@ -91,14 +90,16 @@ preproc.macros.flags=-w -x c++ -E -CC
 recipe.preproc.macros="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {preproc.macros.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{preprocessed_file_path}"
 
 # Uploader/Programmers tools
-# -----------------------------------
+# --------------------------
+
+## Direct USB uploading
 tools.msp430-tool.path={runtime.tools.msp430-tool.path}
 tools.msp430-tool.cmd.path={path}/msp430-tool
 tools.msp430-tool.upload.params.quiet=
 tools.msp430-tool.upload.params.verbose=
 tools.msp430-tool.upload.pattern={cmd.path} bsl5.hid -e {build.path}/{build.project_name}.hex
 
-# ESAT MSP430 programmer
+## ESAT MSP430 programmer
 tools.esat-msp430-programmer.path={runtime.tools.esat-msp430-programmer.path}
 tools.esat-msp430-programmer.cmd.path={path}/mspdebug
 tools.esat-msp430-programmer.program.params.verbose=
