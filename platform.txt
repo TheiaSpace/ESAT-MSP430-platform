@@ -1,4 +1,3 @@
-
 # Theia Space's ESAT boards
 # ------------------------------
 #
