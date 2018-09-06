@@ -27,11 +27,19 @@ unsigned char const abromStringDescriptor[] =
   0x09, 0x04, // 0x0409 for English
 
   // String index1, Manufacturer
-  2 * sizeof("Theia Space"), // Length of this string descriptor
+  2 * sizeof("Theia Space, Universidad Politecnica de Madrid"), // Length of this string descriptor
   3, // bDescriptorType
   'T',0, 'h',0, 'e',0, 'i',0, 'a',0,
   ' ',0,
-  'S',0, 'p',0, 'a',0, 'c',0, 'e',0,
+  'S',0, 'p',0, 'a',0, 'c',0, 'e',0, ',',0,
+  ' ',0,
+  'U',0, 'n',0, 'i',0, 'v',0, 'e',0, 'r',0, 's',0, 'i',0, 'd',0, 'a',0, 'd',0,
+  ' ',0,
+  'P',0, 'o',0, 'l',0, 'i',0, 't',0, 0xe9,0, 'c',0, 'n',0, 'i',0, 'c',0, 'a',0,
+  ' ',0,
+  'd',0, 'e',0,
+  ' ',0,
+  'M',0, 'a',0, 'd',0, 'r',0, 'i',0, 'd',0,
 
   // String index2, Product
   2 * sizeof("ESAT Electrical Power Subsystem"), // Length of this string descriptor
