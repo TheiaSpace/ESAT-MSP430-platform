@@ -104,11 +104,11 @@ static const uint8_t SCL_O = 38;
 static const uint8_t SDA_O = 37;
 
 /* SPI bus */
-static const uint8_t CLK_O = 48;
-static const uint8_t CS_O = 59;
-static const uint8_t MISO_O = 47;
-static const uint8_t MOSI_O = 46;
-static const uint8_t CS_SD = 45;
+static const uint8_t CLK_O = 48;  /* Clock, OBC SPI bus */
+static const uint8_t CS_O = 59;   /* User chip select */
+static const uint8_t CS_SD = 45;  /* SD card chip select */
+static const uint8_t MISO_O = 47; /* MISO, OBC SPI bus */
+static const uint8_t MOSI_O = 46; /* MOSI, OBC SPI bus */
 
 /* Spy-Bi-Wire debugging interface */
 static const uint8_t TEST_O = 71;
