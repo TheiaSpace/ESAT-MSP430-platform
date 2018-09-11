@@ -34,8 +34,6 @@
 #define BV(x) (1 << (x))
 #endif
 
-static const uint8_t SS      = 45;  /* P2.7 */
-static const uint8_t SS1     = 45;
 static const uint8_t SCK     = 48;  /* P3.2 */
 static const uint8_t MOSI    = 46;  /* P3.0 */
 static const uint8_t MISO    = 47;  /* P3.1 */
