@@ -44,14 +44,10 @@ static const uint8_t MOSI1   = 46;  /* P3.0 */
 static const uint8_t MISO1   = 47;  /* P3.1 */
 static const uint8_t TWISDA0 = 37;  /* P3.0 */
 static const uint8_t TWISCL0 = 38;  /* P3.1 */
-static const uint8_t TWISDA1 = 46;  /* P4.1 */
-static const uint8_t TWISCL1 = 47;  /* P4.2 */
 static const uint8_t DEBUG_UARTRXD = 52;  /* Receive  Data (RXD) at P4.5 */
 static const uint8_t DEBUG_UARTTXD = 51;  /* Transmit Data (TXD) at P4.4 */
 #define TWISDA0_SET_MODE (PORT_SELECTION0)
 #define TWISCL0_SET_MODE (PORT_SELECTION0)
-#define TWISDA1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SDA << 8) | INPUT)
-#define TWISCL1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SCL << 8) | INPUT)
 #define DEBUG_UARTRXD_SET_MODE (PORT_SELECTION0 | (PM_UCA1RXD << 8) | INPUT)
 #define DEBUG_UARTTXD_SET_MODE (PORT_SELECTION0 | (PM_UCA1TXD << 8) | OUTPUT)
 #define SPISCK_SET_MODE (PORT_SELECTION0)
