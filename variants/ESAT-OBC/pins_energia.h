@@ -48,16 +48,12 @@ static const uint8_t TWISDA1 = 46;  /* P4.1 */
 static const uint8_t TWISCL1 = 47;  /* P4.2 */
 static const uint8_t DEBUG_UARTRXD = 52;  /* Receive  Data (RXD) at P4.5 */
 static const uint8_t DEBUG_UARTTXD = 51;  /* Transmit Data (TXD) at P4.4 */
-static const uint8_t AUX_UARTRXD = 41;  /* Receive  Data (RXD) at P4.5 */
-static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define TWISDA0_SET_MODE (PORT_SELECTION0)
 #define TWISCL0_SET_MODE (PORT_SELECTION0)
 #define TWISDA1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SDA << 8) | INPUT)
 #define TWISCL1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SCL << 8) | INPUT)
 #define DEBUG_UARTRXD_SET_MODE (PORT_SELECTION0 | (PM_UCA1RXD << 8) | INPUT)
 #define DEBUG_UARTTXD_SET_MODE (PORT_SELECTION0 | (PM_UCA1TXD << 8) | OUTPUT)
-#define AUX_UARTRXD_SET_MODE (PORT_SELECTION0 | INPUT)
-#define AUX_UARTTXD_SET_MODE (PORT_SELECTION0 | OUTPUT)
 #define SPISCK_SET_MODE (PORT_SELECTION0)
 #define SPIMOSI_SET_MODE (PORT_SELECTION0)
 #define SPIMISO_SET_MODE (PORT_SELECTION0)
@@ -72,7 +68,6 @@ static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define TWISCL_SET_MODE  TWISCL0_SET_MODE
 
 #define DEBUG_UART_MODULE_OFFSET 0x40
-#define AUX_UART_MODULE_OFFSET 0x0
 
 #define USE_USCI_A1
 
