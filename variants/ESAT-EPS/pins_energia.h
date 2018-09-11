@@ -113,6 +113,10 @@ static const uint8_t SDA_E = 46; /* SDA, EPS I2C bus */
 static const uint8_t SCL1 = 47; /* SCL, EPS I2C bus, same as SCL_E */
 static const uint8_t SDA1 = 46; /* SDA, EPS I2C bus, same as SDA_E */
 
+/* Serial bus */
+static const uint8_t RX1 = 41; /* Serial interface RX */
+static const uint8_t TX1 = 40; /* Serial interface TX */
+
 /* Spy-Bi-Wire debugging interface */
 static const uint8_t TEST_E = 71;
 static const uint8_t RST_E = 76;
