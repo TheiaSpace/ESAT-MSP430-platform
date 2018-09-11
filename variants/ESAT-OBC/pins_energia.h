@@ -56,6 +56,7 @@ static const uint8_t DEBUG_UARTTXD = 51;  /* Transmit Data (TXD) at P4.4 */
 #define SPISCK_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1STE << 8) | INPUT)
 #define SPIMOSI_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1SIMO << 8) | OUTPUT)
 #define SPIMISO_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1SOMI << 8) | INPUT)
+#define SPI_AVAILABLE
 #define SD_AVAILABLE
 /* Define the default I2C settings */
 #define DEFAULT_I2C 0

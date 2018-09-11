@@ -16,6 +16,8 @@
 #include "spi_430.h"
 #include <Energia.h>
 
+#if defined(SPI_AVAILABLE)
+
 #if defined(__MSP430_HAS_USCI_B0__) || defined(__MSP430_HAS_USCI_B1__) || defined(__MSP430_HAS_USCI__)
 
 /**
@@ -196,3 +198,4 @@ void spi_set_datamode(const uint8_t mode)
     //#error "Error! This device doesn't have a USCI peripheral"
 #endif
 
+#endif

@@ -12,6 +12,7 @@
  */
 
 #include <Energia.h>
+#ifdef SPI_AVAILABLE
 
 #include "SPI.h"
 
@@ -57,3 +58,4 @@ void SPIClass::setModule(uint8_t module)
 #endif
 }
 
+#endif /* SPI_AVAILABLE */
