@@ -98,26 +98,9 @@ void spi_initialize(const uint8_t module)
 
 	*UCBxCTL1 = UCSWRST | UCSSEL_2;      // Put USCI in reset mode, source USCI clock from SMCLK
 	*UCBxCTL0 = SPI_MODE_0 | UCMSB | UCSYNC | UCMST;  // Use SPI MODE 0 - CPOL=0 CPHA=0
-
-#if defined(__MSP430_HAS_USCI_B1__)
-	if(module == 1) {
-		/*pinMode_int(SCK1, SPISCK_SET_MODE1);
-		pinMode_int(MOSI1, SPIMOSI_SET_MODE1);
-		pinMode_int(MISO1, SPIMISO_SET_MODE1);
-*/
-		  P4SEL |= BIT1+BIT2;                       // P4.1,4.2 option select
-		  P4SEL |= BIT3;                            // P4.3 option select
-    }
-    else {
-		pinMode_int(SCK, SPISCK_SET_MODE);
-		pinMode_int(MOSI, SPIMOSI_SET_MODE);
-		pinMode_int(MISO, SPIMISO_SET_MODE);
-    }
-#else
 	pinMode_int(SCK, SPISCK_SET_MODE);
 	pinMode_int(MOSI, SPIMOSI_SET_MODE);
 	pinMode_int(MISO, SPIMISO_SET_MODE);
-#endif
 
 	*UCBxBR0 = SPI_CLOCK_DIV() & 0xFF;   // set initial speed to 4MHz
 	*UCBxBR1 = (SPI_CLOCK_DIV() >> 8 ) & 0xFF;

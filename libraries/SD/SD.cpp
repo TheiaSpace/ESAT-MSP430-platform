@@ -362,7 +362,7 @@ boolean callback_rmdir(SdFile& parentDir, char *filePathComponent,
 //         root.openRoot(volume);
 //}
 
-boolean SDClass::begin(uint8_t chipSelectPin, uint8_t sckRateID, int8_t SPI_Port, int8_t cardDetectionPin, int8_t level)
+boolean SDClass::begin(uint8_t chipSelectPin, uint8_t sckRateID, int8_t cardDetectionPin, int8_t level)
 {
     /*
      
@@ -371,11 +371,11 @@ boolean SDClass::begin(uint8_t chipSelectPin, uint8_t sckRateID, int8_t SPI_Port
      Return true if initialization succeeds, false otherwise.
      
      */
-    // , SPI_Port, cardDetectionPin
+    // , cardDetectionPin
     
     //    Serial.println("> SDClass::begin");
     
-    return (card.init(chipSelectPin, sckRateID, SPI_Port, cardDetectionPin, level) &&
+    return (card.init(chipSelectPin, sckRateID, cardDetectionPin, level) &&
             volume.init(card) &&
             root.openRoot(volume));
 }

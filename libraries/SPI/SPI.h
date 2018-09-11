@@ -28,11 +28,6 @@
 #define SPI_MODE3 4
 
 class SPIClass {
-private:
-#if defined(__MSP430_HAS_USCI_B1__)
-    static uint8_t spiModule;
-#endif
-
 public:
   inline static uint8_t transfer(uint8_t _data);
 
@@ -44,8 +39,6 @@ public:
   static void setBitOrder(uint8_t);
   static void setDataMode(uint8_t);
   static void setClockDivider(uint8_t);
-
-  void setModule(uint8_t module);
 
   inline static void attachInterrupt();
   inline static void detachInterrupt();

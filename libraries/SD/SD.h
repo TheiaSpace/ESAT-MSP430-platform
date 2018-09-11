@@ -93,14 +93,12 @@ public:
     /// @brief      Initialise the SD-card
     /// @param      chipSelectPin pin number for SD-card chip select
     /// @param      sckRateID SPI speed, optional, default=SPI_HALF_SPEED
-    /// @param      SPI_Port SPI port number, optional, default=-1=none
     /// @param      cardDetectionPin card detection pin number, optional, default=-1=none
     /// @param		level expected level when SD-card available, default=LOW
     /// @return     true is success, false otherwise
     ///
     boolean begin(uint8_t chipSelectPin,
                   uint8_t sckRateID = SPI_HALF_SPEED,
-                  int8_t SPI_Port = -1,
                   int8_t cardDetectionPin = -1,
                   int8_t level = LOW);
     

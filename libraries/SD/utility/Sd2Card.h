@@ -208,7 +208,7 @@ public:
     //    return init(SD_CHIP_SELECT_PIN, sckRateID);
     //  }
     //  uint8_t init(uint8_t sckRateID, uint8_t chipSelectPin);
-    uint8_t init(uint8_t chipSelectPin, uint8_t sckRateID = SPI_HALF_SPEED, int8_t SPI_Port = -1, int8_t cardDetectionPin = -1, int8_t level = LOW);
+    uint8_t init(uint8_t chipSelectPin, uint8_t sckRateID = SPI_HALF_SPEED, int8_t cardDetectionPin = -1, int8_t level = LOW);
     
     ///
     /// @brief	SD-card hardware detection
@@ -247,7 +247,6 @@ public:
 private:
     uint32_t block_;
     uint8_t chipSelectPin_;
-    int8_t SPI_Port_;
     int8_t cardDetectionPin_;
     int8_t level_;
     uint8_t errorCode_;

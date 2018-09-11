@@ -27,7 +27,6 @@
 #ifndef SOFTWARE_SPI
 #ifdef USE_SPI_LIB
 #include "SPI.h"
-SPIClass SPI_for_SD;
 
 #endif
 // functions for hardware SPI
@@ -38,7 +37,7 @@ static void spiSend(uint8_t b)
     SPDR = b;
     while (!(SPSR & (1 << SPIF)));
 #else
-    SPI_for_SD.transfer(b);
+    SPI.transfer(b);
 #endif
 }
 /** Receive a byte from the card */
@@ -48,7 +47,7 @@ static  uint8_t spiRec(void)
     spiSend(0XFF);
     return SPDR;
 #else
-    return SPI_for_SD.transfer(0xFF);
+    return SPI.transfer(0xFF);
 #endif
 }
 #else  // SOFTWARE_SPI
@@ -245,13 +244,12 @@ uint8_t Sd2Card::eraseSingleBlockEnable(void)
  * the value zero, false, is returned for failure.  The reason for failure
  * can be determined by calling errorCode() and errorData().
  */
-uint8_t Sd2Card::init(uint8_t chipSelectPin, uint8_t sckRateID, int8_t SPI_Port, int8_t cardDetectionPin, int8_t level)
+uint8_t Sd2Card::init(uint8_t chipSelectPin, uint8_t sckRateID, int8_t cardDetectionPin, int8_t level)
 {
     // Serial.println("> Sd2Card::init");
     
     errorCode_ = inBlock_ = partialBlockRead_ = type_ = 0;
     chipSelectPin_ = chipSelectPin;
-    SPI_Port_ = SPI_Port;
     cardDetectionPin_ = cardDetectionPin;
     level_ = level;
     
@@ -282,20 +280,15 @@ uint8_t Sd2Card::init(uint8_t chipSelectPin, uint8_t sckRateID, int8_t SPI_Port,
     //  // clear double speed
     //  SPSR &= ~(1 << SPI2X);
     //#else // USE_SPI_LIB
-    
-    /// @todo Add SPI port selection for LM4F and TM4C
-    if (SPI_Port >= 0) {
-        SPI_for_SD.setModule(SPI_Port);
-    }
-    SPI_for_SD.begin();
-#endif
+
+    SPI.begin();
     
 #ifdef SPI_CLOCK_DIV128
 // Serial.println("> SPI_Port 128");
-    SPI_for_SD.setClockDivider(SPI_CLOCK_DIV128);
+    SPI.setClockDivider(SPI_CLOCK_DIV128);
 #else
 // Serial.println("> SPI_Port 255");
-    SPI_for_SD.setClockDivider(255);
+    SPI.setClockDivider(255);
 #endif
     
     //#endif // USE_SPI_LIB
@@ -583,7 +576,7 @@ uint8_t Sd2Card::setSckRate(uint8_t sckRateID)
 #else // SPI_CLOCK_DIV128
     v = 2 << sckRateID;
 #endif // SPI_CLOCK_DIV128
-    SPI_for_SD.setClockDivider(v);
+    SPI.setClockDivider(v);
 #endif // USE_SPI_LIB
     return true;
 }

@@ -16,19 +16,9 @@
 
 #include "SPI.h"
 
-SPIClass SPI;
-
-#if defined(__MSP430_HAS_USCI_B1__)
-uint8_t SPIClass::spiModule = 0;
-#endif
-
 void SPIClass::begin()
 {
-#if defined(__MSP430_HAS_USCI_B1__)
-    spi_initialize(spiModule);
-#else
-    spi_initialize(0);
-#endif
+    spi_initialize(SPI_MODULE);
 }
 
 void SPIClass::end()
@@ -49,13 +39,6 @@ void SPIClass::setDataMode(uint8_t mode)
 void SPIClass::setClockDivider(uint8_t rate)
 {
     spi_set_divisor(rate);
-}
-
-void SPIClass::setModule(uint8_t module)
-{
-#if defined(__MSP430_HAS_USCI_B1__)
-    spiModule = module;
-#endif
 }
 
 #endif /* SPI_AVAILABLE */
