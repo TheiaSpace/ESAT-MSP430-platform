@@ -46,18 +46,14 @@ static const uint8_t TWISDA0 = 37;  /* P3.0 */
 static const uint8_t TWISCL0 = 38;  /* P3.1 */
 static const uint8_t TWISDA1 = 46;  /* P4.1 */
 static const uint8_t TWISCL1 = 47;  /* P4.2 */
-static const uint8_t DEBUG_UARTRXD = 52;  /* Receive  Data (RXD) at P4.5 */
-static const uint8_t DEBUG_UARTTXD = 51;  /* Transmit Data (TXD) at P4.4 */
-static const uint8_t AUX_UARTRXD = 41;  /* Receive  Data (RXD) at P4.5 */
-static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
+static const uint8_t DEBUG_UARTRXD = 41;  /* Receive  Data (RXD) at P4.5 */
+static const uint8_t DEBUG_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define TWISDA0_SET_MODE (PORT_SELECTION0)
 #define TWISCL0_SET_MODE (PORT_SELECTION0)
 #define TWISDA1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SDA << 8) | INPUT)
 #define TWISCL1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SCL << 8) | INPUT)
-#define DEBUG_UARTRXD_SET_MODE (PORT_SELECTION0 | (PM_UCA1RXD << 8) | INPUT)
-#define DEBUG_UARTTXD_SET_MODE (PORT_SELECTION0 | (PM_UCA1TXD << 8) | OUTPUT)
-#define AUX_UARTRXD_SET_MODE (PORT_SELECTION0 | INPUT)
-#define AUX_UARTTXD_SET_MODE (PORT_SELECTION0 | OUTPUT)
+#define DEBUG_UARTRXD_SET_MODE (PORT_SELECTION0 | INPUT)
+#define DEBUG_UARTTXD_SET_MODE (PORT_SELECTION0 | OUTPUT)
 #define SPISCK_SET_MODE (PORT_SELECTION0)
 #define SPIMOSI_SET_MODE (PORT_SELECTION0)
 #define SPIMISO_SET_MODE (PORT_SELECTION0)
@@ -70,12 +66,15 @@ static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define TWISCL TWISCL0
 #define TWISDA_SET_MODE  TWISDA0_SET_MODE
 #define TWISCL_SET_MODE  TWISCL0_SET_MODE
-#define ESAT_BOARD_HAS_SECOND_I2C_BUS
+#define WIRE1_AVAILABLE
 
-#define DEBUG_UART_MODULE_OFFSET 0x40
-#define AUX_UART_MODULE_OFFSET 0x0
+#define DEBUG_UART_MODULE_OFFSET 0x0
 
 #define USE_USCI_A1
+
+/* General purpose IO */
+static const uint8_t IO0 = 42; /* Same as LED_E */
+static const uint8_t IO1 = 43;
 
 /* Current and voltage sensor pins */
 static const uint8_t I_5V = 80;     /* 5V line current */
@@ -111,6 +110,12 @@ static const uint8_t SCL_O = 38; /* SCL, OBC I2C bus */
 static const uint8_t SDA_O = 37; /* SDA, OBC I2C bus */
 static const uint8_t SCL_E = 47; /* SCL, EPS I2C bus */
 static const uint8_t SDA_E = 46; /* SDA, EPS I2C bus */
+static const uint8_t SCL1 = 47; /* SCL, EPS I2C bus, same as SCL_E */
+static const uint8_t SDA1 = 46; /* SDA, EPS I2C bus, same as SDA_E */
+
+/* Serial bus */
+static const uint8_t RX1 = 41; /* Serial interface RX */
+static const uint8_t TX1 = 40; /* Serial interface TX */
 
 /* Spy-Bi-Wire debugging interface */
 static const uint8_t TEST_E = 71;
@@ -119,89 +124,11 @@ static const uint8_t RST_E = 76;
 /* LED */
 static const uint8_t LED_E = 42; /* EPS board LED */
 
-/* Analog pin names (datasheet) */
-static const uint8_t A0 = 77;
-static const uint8_t A1 = 78;
-static const uint8_t A2 = 79;
-static const uint8_t A3 = 80;
-static const uint8_t A4 = 1;
-static const uint8_t A5 = 2;
-static const uint8_t A6 = 3;
-static const uint8_t A7 = 4;
-static const uint8_t A8 = 9;
-static const uint8_t A9 = 10;
-static const uint8_t A10 = 128 + 10; /* special. This is the internal temp sensor */
-static const uint8_t A11 = 128 + 11; /* special. This is Vcc/2 */
-static const uint8_t A12 = 5;
-static const uint8_t A13 = 6;
-static const uint8_t A14 = 7;
-static const uint8_t A15 = 8;
-
-/* Pin names (datasheet) */
-static const uint8_t P6_4 = 1;
-static const uint8_t P6_5 = 2;
-static const uint8_t P6_6 = 3;
-static const uint8_t P6_7 = 4;
-static const uint8_t P7_0 = 5;
-static const uint8_t P7_1 = 6;
-static const uint8_t P7_2 = 7;
-static const uint8_t P7_3 = 8;
-static const uint8_t P5_0 = 9;
-static const uint8_t P5_1 = 10;
-static const uint8_t P5_4 = 12;
-static const uint8_t P5_5 = 13;
-static const uint8_t P8_0 = 15;
-static const uint8_t P8_1 = 16;
-static const uint8_t P8_2 = 17;
-static const uint8_t P1_0 = 21;
-static const uint8_t P1_1 = 22;
-static const uint8_t P1_2 = 23;
-static const uint8_t P1_3 = 24;
-static const uint8_t P1_4 = 25;
-static const uint8_t P1_5 = 26;
-static const uint8_t P1_6 = 27;
-static const uint8_t P1_7 = 28;
-static const uint8_t P2_0 = 29;
-static const uint8_t P2_1 = 30;
-
-static const uint8_t P2_2 = 31;
-static const uint8_t P2_3 = 32;
-static const uint8_t P2_4 = 33;
-static const uint8_t P2_5 = 34;
-static const uint8_t P2_6 = 35;
-static const uint8_t P2_7 = 36;
-static const uint8_t P3_0 = 37;
-static const uint8_t P3_1 = 38;
-static const uint8_t P3_2 = 39;
-static const uint8_t P3_3 = 40;
-
-static const uint8_t P3_4 = 41;
-static const uint8_t P3_5 = 42;
-static const uint8_t P3_6 = 43;
-static const uint8_t P3_7 = 44;
-static const uint8_t P4_0 = 45;
-static const uint8_t P4_1 = 46;
-static const uint8_t P4_2 = 47;
-static const uint8_t P4_3 = 48;
-static const uint8_t P4_4 = 51;
-static const uint8_t P4_5 = 52;
-static const uint8_t P4_6 = 53;
-static const uint8_t P4_7 = 54;
-static const uint8_t P5_6 = 55;
-static const uint8_t P5_7 = 56;
-static const uint8_t P7_4 = 57;
-static const uint8_t P7_5 = 58;
-static const uint8_t P7_6 = 59;
-static const uint8_t P7_7 = 60;
-static const uint8_t P5_2 = 69;
-static const uint8_t P5_3 = 70;
-static const uint8_t P6_0 = 77;
-static const uint8_t P6_1 = 78;
-static const uint8_t P6_2 = 79;
-static const uint8_t P6_3 = 80;
-
 /* Internal thermometer */
 static const uint8_t TEMPSENSOR = 128 + 10;
+
+/* Vcc/2 */
+static const uint8_t VCC_2 = 128 + 11;
 
 #ifdef ARDUINO_MAIN
 
