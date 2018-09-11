@@ -284,14 +284,10 @@ uint8_t Sd2Card::init(uint8_t chipSelectPin, uint8_t sckRateID, int8_t SPI_Port,
     //#else // USE_SPI_LIB
     
     /// @todo Add SPI port selection for LM4F and TM4C
-    SPI_for_SD.setModule(1);
-    SPI_for_SD.begin();
-    
-#if defined(__LM4F120H5QR__) || defined(__TM4C1230C3PM__) || defined(__TM4C123GH6PM__) || defined(__TM4C129XNCZAD__) || defined(__TM4C1294NCPDT__)
-    // LM4F and TM4C specific
     if (SPI_Port >= 0) {
         SPI_for_SD.setModule(SPI_Port);
     }
+    SPI_for_SD.begin();
 #endif
     
 #ifdef SPI_CLOCK_DIV128
