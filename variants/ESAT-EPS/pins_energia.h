@@ -110,6 +110,8 @@ static const uint8_t SCL_O = 38; /* SCL, OBC I2C bus */
 static const uint8_t SDA_O = 37; /* SDA, OBC I2C bus */
 static const uint8_t SCL_E = 47; /* SCL, EPS I2C bus */
 static const uint8_t SDA_E = 46; /* SDA, EPS I2C bus */
+static const uint8_t SCL1 = 47; /* SCL, EPS I2C bus, same as SCL_E */
+static const uint8_t SDA1 = 46; /* SDA, EPS I2C bus, same as SDA_E */
 
 /* Spy-Bi-Wire debugging interface */
 static const uint8_t TEST_E = 71;
