@@ -40,6 +40,8 @@
 #include "Arduino.h"
 #endif // end IDE
 
+#if defined(SD_AVAILABLE)
+
 //#ifdef __AVR__
 //#include <avr/pgmspace.h>
 ///** Store and print a string in flash memory.*/
@@ -88,4 +90,5 @@ static UNUSEDOK int FreeRam(void)
 //  Serial.println();
 //}
 //#endif  // __AVR__
+#endif /* SD_AVAILABLE */
 #endif  // #define SdFatUtil_h

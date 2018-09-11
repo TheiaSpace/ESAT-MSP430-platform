@@ -34,14 +34,9 @@
 #define BV(x) (1 << (x))
 #endif
 
-static const uint8_t SS      = 36;  /* P2.7 */
-static const uint8_t SCK     = 39;  /* P3.2 */
-static const uint8_t MOSI    = 37;  /* P3.0 */
-static const uint8_t MISO    = 38;  /* P3.1 */
-static const uint8_t SS1     = 45;  /* P2.7 */
-static const uint8_t SCK1    = 48;  /* P3.2 */
-static const uint8_t MOSI1   = 46;  /* P3.0 */
-static const uint8_t MISO1   = 47;  /* P3.1 */
+static const uint8_t SCK     = 48;  /* P3.2 */
+static const uint8_t MOSI    = 46;  /* P3.0 */
+static const uint8_t MISO    = 47;  /* P3.1 */
 static const uint8_t TWISDA0 = 37;  /* P3.0 */
 static const uint8_t TWISCL0 = 38;  /* P3.1 */
 static const uint8_t DEBUG_UARTRXD = 52;  /* Receive  Data (RXD) at P4.5 */
@@ -53,9 +48,9 @@ static const uint8_t DEBUG_UARTTXD = 51;  /* Transmit Data (TXD) at P4.4 */
 #define SPISCK_SET_MODE (PORT_SELECTION0)
 #define SPIMOSI_SET_MODE (PORT_SELECTION0)
 #define SPIMISO_SET_MODE (PORT_SELECTION0)
-#define SPISCK_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1STE << 8) | INPUT)
-#define SPIMOSI_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1SIMO << 8) | OUTPUT)
-#define SPIMISO_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1SOMI << 8) | INPUT)
+#define SPI_MODULE 1
+#define SPI_AVAILABLE
+#define SD_AVAILABLE
 /* Define the default I2C settings */
 #define DEFAULT_I2C 0
 #define TWISDA TWISDA0
@@ -109,10 +104,11 @@ static const uint8_t SCL_O = 38;
 static const uint8_t SDA_O = 37;
 
 /* SPI bus */
-static const uint8_t CLK_O = 48;
-static const uint8_t CS_O = 59;
-static const uint8_t MISO_O = 47;
-static const uint8_t MOSI_O = 46;
+static const uint8_t CLK_O = 48;  /* Clock, OBC SPI bus */
+static const uint8_t CS_O = 59;   /* User chip select */
+static const uint8_t CS_SD = 45;  /* SD card chip select */
+static const uint8_t MISO_O = 47; /* MISO, OBC SPI bus */
+static const uint8_t MOSI_O = 46; /* MOSI, OBC SPI bus */
 
 /* Spy-Bi-Wire debugging interface */
 static const uint8_t TEST_O = 71;

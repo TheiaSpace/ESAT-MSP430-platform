@@ -38,6 +38,8 @@
 #include "Arduino.h"
 #endif // end IDE
 
+#if defined(SD_AVAILABLE)
+
 /**
  * \file
  * SdFile and SdVolume classes
@@ -608,4 +610,5 @@ private:
         return sdCard_->writeBlock(block, dst);
     }
 };
+#endif /* SD_AVAILABLE */
 #endif  // SdFat_h

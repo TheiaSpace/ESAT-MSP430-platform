@@ -15,6 +15,7 @@
 #define _SPI_H_INCLUDED
 
 #include <Energia.h>
+#if defined(SPI_AVAILABLE)
 #include <inttypes.h>
 
 #if defined(__MSP430_HAS_USI__) || defined(__MSP430_HAS_USCI_B0__) || defined(__MSP430_HAS_USCI_B1__) || defined(__MSP430_HAS_USCI__) || defined(__MSP430_HAS_EUSCI_B0__)
@@ -27,11 +28,6 @@
 #define SPI_MODE3 4
 
 class SPIClass {
-private:
-#if defined(__MSP430_HAS_USCI_B1__)
-    static uint8_t spiModule;
-#endif
-
 public:
   inline static uint8_t transfer(uint8_t _data);
 
@@ -43,8 +39,6 @@ public:
   static void setBitOrder(uint8_t);
   static void setDataMode(uint8_t);
   static void setClockDivider(uint8_t);
-
-  void setModule(uint8_t module);
 
   inline static void attachInterrupt();
   inline static void detachInterrupt();
@@ -63,5 +57,7 @@ void SPIClass::attachInterrupt() {
 void SPIClass::detachInterrupt() {
     /* undocumented in Arduino 1.0 */
 }
+
+#endif /* SPI_AVAILABLE */
 
 #endif
