@@ -91,8 +91,12 @@ void pinMode(uint8_t pin, uint8_t mode)
 		*dir &= ~bit;
                 *out &= ~bit;
                 *ren |= bit;
-        } else {
+        } else if (mode == OUTPUT) {
 		*dir |= bit;
+	} else if (mode == PORT_SELECTION0) {
+		*sel |= bit;
+	} else if (mode == PORT_SELECTION1) {
+		*sel |= bit;
 	}
 }
 

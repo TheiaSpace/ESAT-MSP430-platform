@@ -98,9 +98,10 @@ void spi_initialize(const uint8_t module)
 
 	*UCBxCTL1 = UCSWRST | UCSSEL_2;      // Put USCI in reset mode, source USCI clock from SMCLK
 	*UCBxCTL0 = SPI_MODE_0 | UCMSB | UCSYNC | UCMST;  // Use SPI MODE 0 - CPOL=0 CPHA=0
-	pinMode_int(SCK, SPISCK_SET_MODE);
-	pinMode_int(MOSI, SPIMOSI_SET_MODE);
-	pinMode_int(MISO, SPIMISO_SET_MODE);
+
+	pinMode(SCK, SPISCK_SET_MODE);
+	pinMode(MOSI, SPIMOSI_SET_MODE);
+	pinMode(MISO, SPIMISO_SET_MODE);
 
 	*UCBxBR0 = SPI_CLOCK_DIV() & 0xFF;   // set initial speed to 4MHz
 	*UCBxBR1 = (SPI_CLOCK_DIV() >> 8 ) & 0xFF;
