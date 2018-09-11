@@ -215,6 +215,9 @@ static const uint8_t P6_3 = 80;
 /* Internal thermometer */
 static const uint8_t TEMPSENSOR = 128 + 10;
 
+/* Vcc/2 */
+static const uint8_t VCC_2 = 128 + 11;
+
 #ifdef ARDUINO_MAIN
 
 const uintptr_t port_to_input[] = {
