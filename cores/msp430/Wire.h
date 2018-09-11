@@ -128,11 +128,11 @@ class TwoWire : public Stream
     void onRequestService(void);
     void onReceiveService(uint8_t*, int);
     static void onRequestService0(void);
-    #ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+    #ifdef WIRE1_AVAILABLE
     static void onRequestService1(void);
     #endif
     static void onReceiveService0(uint8_t*, int);
-    #ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+    #ifdef WIRE1_AVAILABLE
     static void onReceiveService1(uint8_t*, int);
     #endif
     void twi_init();
@@ -176,7 +176,7 @@ class TwoWire : public Stream
 };
 
 extern TwoWire Wire;
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
 extern TwoWire Wire1;
 #endif
 

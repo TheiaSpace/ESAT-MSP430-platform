@@ -819,7 +819,7 @@ boolean TwoWire::i2c_state_isr(void)  // I2C Service
 
 boolean i2c_txrx_isr(uint8_t module)
 {
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
   if (module == 1) {
     return Wire1.i2c_txrx_isr();
   }
@@ -834,7 +834,7 @@ boolean i2c_txrx_isr(uint8_t module)
 
 boolean i2c_state_isr(uint8_t module)
 {
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
   if (module == 1) {
     return Wire1.i2c_state_isr();
   }
@@ -849,6 +849,6 @@ boolean i2c_state_isr(uint8_t module)
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
 TwoWire Wire = TwoWire(0);
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
 TwoWire Wire1 = TwoWire(1);
 #endif
