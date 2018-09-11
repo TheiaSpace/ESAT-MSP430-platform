@@ -19,6 +19,7 @@
  */
 #define USE_SPI_LIB
 #include "Energia.h"
+#if defined(SD_AVAILABLE)
 #include "Sd2Card.h"
 //#include "Debug.h"
 
@@ -772,3 +773,5 @@ fail:
     chipSelectHigh();
     return false;
 }
+
+#endif /* SD_AVAILABLE */

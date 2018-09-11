@@ -54,6 +54,7 @@
  */
 
 #include "SD.h"
+#if defined(SD_AVAILABLE)
 #include "USBSerial.h"
 
 // Used by `getNextPathComponent`
@@ -656,3 +657,5 @@ void File::rewindDirectory(void)
 }
 
 SDClass SD; // ***
+
+#endif /* SD_AVAILABLE */

@@ -35,6 +35,8 @@
 #include "Arduino.h"
 #endif // end IDE
 
+#if defined(SD_AVAILABLE)
+
 #include <utility/SdFat.h>
 #include <utility/SdFatUtil.h>
 
@@ -142,5 +144,7 @@ private:
 };
 
 extern SDClass SD;
+
+#endif /* SD_AVAILABLE */
 
 #endif

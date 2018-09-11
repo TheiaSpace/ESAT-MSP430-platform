@@ -37,6 +37,8 @@
 #include "Arduino.h"
 #endif // end IDE
 
+#if defined(SD_AVAILABLE)
+
 #include <stdint.h>
 // Based on the document:
 //
@@ -247,4 +249,5 @@ union csd_t {
     csd1_t v1;
     csd2_t v2;
 };
+#endif /* SD_AVAILABLE */
 #endif  // SdInfo_h

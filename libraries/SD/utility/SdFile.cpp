@@ -17,12 +17,13 @@
  * along with the Arduino SdFat Library.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
+#include <Arduino.h>
+#if defined(SD_AVAILABLE)
 #include "SdFat.h"
 #include "USBSerial.h"
 //#ifdef __AVR__
 //#include <avr/pgmspace.h>
 //#endif
-#include <Arduino.h>
 //------------------------------------------------------------------------------
 // callback function for date/time
 void (*SdFile::dateTime_)(uint16_t* date, uint16_t* time) = NULL;
@@ -1359,3 +1360,5 @@ size_t SdFile::write(const char* str)
 //  println();
 //}
 //#endif
+
+#endif /* SD_AVAILABLE */

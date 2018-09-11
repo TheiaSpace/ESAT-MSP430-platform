@@ -37,6 +37,8 @@
 #include "Arduino.h"
 #endif // end IDE
 
+#if defined(SD_AVAILABLE)
+
 /**
  * \file
  * Sd2Card class
@@ -270,4 +272,5 @@ private:
     uint8_t writeData(uint8_t token, const uint8_t* src);
     uint8_t waitStartBlock(void);
 };
+#endif /* SD_AVAILABLE */
 #endif  // Sd2Card_h

@@ -18,6 +18,7 @@
  * <http://www.gnu.org/licenses/>.
  */
 #include "SdFat.h"
+#if defined(SD_AVAILABLE)
 //------------------------------------------------------------------------------
 // raw block cache
 // init cacheBlockNumber_to invalid SD block number
@@ -323,3 +324,4 @@ uint8_t SdVolume::init(Sd2Card* dev, uint8_t part)
     }
     return true;
 }
+#endif /* SD_AVAILABLE */

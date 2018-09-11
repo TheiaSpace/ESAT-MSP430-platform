@@ -17,6 +17,8 @@
 
 #include <SD.h>
 
+#if defined(SD_AVAILABLE)
+
 /* for debugging file open/close leaks
  uint8_t nfilecount=0;
  */
@@ -167,3 +169,4 @@ File::operator bool()
     return false;
 }
 
+#endif /* SD_AVAILABLE */
