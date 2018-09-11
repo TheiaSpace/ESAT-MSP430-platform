@@ -72,6 +72,10 @@ static const uint8_t DEBUG_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 
 #define USE_USCI_A1
 
+/* General purpose IO */
+static const uint8_t GPIO0 = 42;
+static const uint8_t GPIO1 = 43;
+
 /* Current and voltage sensor pins */
 static const uint8_t I_5V = 80;     /* 5V line current */
 static const uint8_t V_5V = 1;      /* 5V line voltage */
