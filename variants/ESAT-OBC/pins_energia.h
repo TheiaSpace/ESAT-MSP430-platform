@@ -108,6 +108,7 @@ static const uint8_t CLK_O = 48;
 static const uint8_t CS_O = 59;
 static const uint8_t MISO_O = 47;
 static const uint8_t MOSI_O = 46;
+static const uint8_t CS_SD = 45;
 
 /* Spy-Bi-Wire debugging interface */
 static const uint8_t TEST_O = 71;
