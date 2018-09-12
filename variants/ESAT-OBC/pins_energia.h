@@ -109,6 +109,7 @@ static const uint8_t CS_O = 59;   /* User chip select */
 static const uint8_t CS_SD = 45;  /* SD card chip select */
 static const uint8_t MISO_O = 47; /* MISO, OBC SPI bus */
 static const uint8_t MOSI_O = 46; /* MOSI, OBC SPI bus */
+static const uint8_t SS1 __attribute__((deprecated("Use CS_SD instead."))) = 48;
 
 /* Spy-Bi-Wire debugging interface */
 static const uint8_t TEST_O = 71;
