@@ -41,6 +41,11 @@ extern "C"
 #endif
 
 /**
+ * Dummy function to ensure that the linker doesn't strip the interrupt vector.
+ */
+void usb_isr_install();
+
+/**
  * Handle incoming setup packet.
  * returns TRUE to keep CPU awake
  */

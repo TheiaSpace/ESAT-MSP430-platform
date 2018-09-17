@@ -68,6 +68,9 @@ BOOL PHDCIsReceiveInProgress(BYTE);
 /*----------------------------------------------------------------------------+
 | General Subroutines                                                         |
 +----------------------------------------------------------------------------*/
+// Dummy function to ensure that the linker doesn't strip the interrupt vector.
+void usb_isr_install() {}
+
 __attribute__((interrupt(USB_UBM_VECTOR)))
 VOID iUsbInterruptHandler(VOID)
 {

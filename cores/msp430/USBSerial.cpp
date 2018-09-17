@@ -39,6 +39,7 @@ USBSerial.cpp (formerly NewSoftSerial.cpp) -
 
 #include "USBSerial/UsbCdc.h"
 #include "USBSerial/usbConstructs.h"
+#include "USBSerial/UsbIsr.h"
 
 #define CDC_TIMEOUT 10000
 
@@ -93,6 +94,7 @@ USBSerial::~USBSerial()
 void USBSerial::begin()
 {
     __disable_interrupt();                           //Enable interrupts globally
+    usb_isr_install();
     //Initialization of clock module
 	//UCSCTL6 |= XT1OFF;
 /*SELECT_FLLREF(SELREF__XT2CLK); 
