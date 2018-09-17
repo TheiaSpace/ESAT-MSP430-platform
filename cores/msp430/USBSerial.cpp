@@ -29,16 +29,16 @@ USBSerial.cpp (formerly NewSoftSerial.cpp) -
 #include "Energia.h"
 #include "USBSerial.h"
 
-#include "descriptors.h"
+#include "USBSerial/descriptors.h"
 
-#include "device.h"
-#include "types.h"               //Basic Type declarations
-#include "usb.h"                 //USB-specific functions
-#include "HAL_UCS.h"
+#include "USBSerial/device.h"
+#include "USBSerial/types.h"               //Basic Type declarations
+#include "USBSerial/usb.h"                 //USB-specific functions
+#include "USBSerial/HAL_UCS.h"
 //#include "HAL_PMM.h"
 
-#include "UsbCdc.h"
-#include "usbConstructs.h"
+#include "USBSerial/UsbCdc.h"
+#include "USBSerial/usbConstructs.h"
 
 #define CDC_TIMEOUT 10000
 

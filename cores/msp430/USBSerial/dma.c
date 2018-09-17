@@ -35,7 +35,7 @@
 #include "device.h"
 #include "types.h"    //Basic Type declarations
 #include "defMSP430USB.h"
-#include <descriptors.h>
+#include "descriptors.h"
 #include <string.h>
 #include <stdint.h>
 

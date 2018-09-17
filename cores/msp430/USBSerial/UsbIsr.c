@@ -33,15 +33,15 @@
 /*-----------------------------------------------------------------------------+
 | Include files                                                                |
 |-----------------------------------------------------------------------------*/
-#include <device.h>
-#include <types.h>				// Basic Type declarations
-#include <defMSP430USB.h>
+#include "device.h"
+#include "types.h"				// Basic Type declarations
+#include "defMSP430USB.h"
 #include "descriptors.h"
-#include <usb.h>           //USB-specific Data Structures
-#include <UsbIsr.h>
+#include "usb.h"           //USB-specific Data Structures
+#include "UsbIsr.h"
 #include <string.h>
 
-#include <UsbCdc.h>
+#include "UsbCdc.h"
 //#include <UsbHid.h>
 //#include <UsbHidReq.h>
 /*----------------------------------------------------------------------------+

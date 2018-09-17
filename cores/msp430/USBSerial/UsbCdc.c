@@ -32,7 +32,7 @@
 /* 
  * ======== UsbCdc.c ========
  */
-#include <descriptors.h>
+#include "descriptors.h"
 
 #ifdef _CDC_
 
