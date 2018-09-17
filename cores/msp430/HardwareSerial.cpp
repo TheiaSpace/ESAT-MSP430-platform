@@ -88,13 +88,6 @@ static unsigned char rx_backend_buffer[SERIAL_INPUT_BUFFER_SIZE];
 static unsigned char tx_backend_buffer[SERIAL_OUTPUT_BUFFER_SIZE];
 static ring_buffer rx_buffer  =  { rx_backend_buffer, SERIAL_INPUT_BUFFER_SIZE, 0, 0 };
 static ring_buffer tx_buffer  =  { tx_backend_buffer, SERIAL_OUTPUT_BUFFER_SIZE, 0, 0 };
-#ifdef SERIAL1_AVAILABLE
-
-static unsigned char rx_backend_buffer1[SERIAL_INPUT_BUFFER_SIZE];
-static unsigned char tx_backend_buffer1[SERIAL_OUTPUT_BUFFER_SIZE];
-static ring_buffer rx_buffer1  =  { rx_backend_buffer1, SERIAL_INPUT_BUFFER_SIZE, 0, 0 };
-static ring_buffer tx_buffer1  =  { tx_backend_buffer1, SERIAL_OUTPUT_BUFFER_SIZE, 0, 0 };
-#endif
 
 inline void store_char(unsigned char c, ring_buffer *buffer)
 {
@@ -112,17 +105,10 @@ inline void store_char(unsigned char c, ring_buffer *buffer)
 
 void serialEvent() __attribute__((weak));
 void serialEvent() {}
-#ifdef SERIAL1_AVAILABLE
-void serialEvent1() __attribute__((weak));
-void serialEvent1() {}
-#endif
 
 void serialEventRun(void)
 {
-	if (Serial.available()) serialEvent();
-#ifdef SERIAL1_AVAILABLE
-	if (Serial1.available()) serialEvent1();
-#endif
+	if (Serial1.available()) serialEvent();
 }
 
 // Public Methods //////////////////////////////////////////////////////////////
@@ -255,24 +241,14 @@ HardwareSerial::operator bool() {
 
 void uart_rx_isr(uint8_t offset)
 {
-#ifdef SERIAL1_AVAILABLE
-	/* Debug uart aka Serial always gets rx_buffer and aux aka Serial1 gets rx_buffer1 */
-	ring_buffer *rx_buffer_ptr = (offset == DEBUG_UART_MODULE_OFFSET) ? &rx_buffer:&rx_buffer1;
-#else
 	ring_buffer *rx_buffer_ptr = &rx_buffer;
-#endif
 	unsigned char c = *(&(UCAxRXBUF) + offset);
 	store_char(c, rx_buffer_ptr);
 }
 
 void uart_tx_isr(uint8_t offset)
 {
-#ifdef SERIAL1_AVAILABLE
-	/* Debug uart aka Serial always gets rx_buffer and aux aka Serial1 gets rx_buffer1 */
-	ring_buffer *tx_buffer_ptr = (offset == DEBUG_UART_MODULE_OFFSET) ? &tx_buffer : &tx_buffer1;
-#else
 	ring_buffer *tx_buffer_ptr = &tx_buffer;
-#endif
 	if (tx_buffer_ptr->head == tx_buffer_ptr->tail) {
 		// Buffer empty, so disable interrupts
 #if defined(__MSP430_HAS_USCI_A0__) || defined(__MSP430_HAS_USCI_A1__) || defined(__MSP430_HAS_EUSCI_A0__) || defined(__MSP430_HAS_EUSCI_A1__)
@@ -290,9 +266,6 @@ void uart_tx_isr(uint8_t offset)
 }
 // Preinstantiate Objects //////////////////////////////////////////////////////
 
-HardwareSerial Serial(&rx_buffer, &tx_buffer, DEBUG_UART_MODULE_OFFSET, DEBUG_UARTRXD_SET_MODE, DEBUG_UARTTXD_SET_MODE, DEBUG_UARTRXD, DEBUG_UARTTXD);
-#ifdef SERIAL1_AVAILABLE
-HardwareSerial Serial1(&rx_buffer1, &tx_buffer1, AUX_UART_MODULE_OFFSET, AUX_UARTRXD_SET_MODE, AUX_UARTTXD_SET_MODE, AUX_UARTRXD, AUX_UARTTXD);
-#endif
+HardwareSerial Serial1(&rx_buffer, &tx_buffer, AUX_UART_MODULE_OFFSET, AUX_UARTRXD_SET_MODE, AUX_UARTTXD_SET_MODE, AUX_UARTRXD, AUX_UARTTXD);
 
 #endif

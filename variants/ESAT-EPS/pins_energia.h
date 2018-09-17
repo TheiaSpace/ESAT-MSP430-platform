@@ -38,14 +38,14 @@ static const uint8_t TWISDA0 = 37;  /* P3.0 */
 static const uint8_t TWISCL0 = 38;  /* P3.1 */
 static const uint8_t TWISDA1 = 46;  /* P4.1 */
 static const uint8_t TWISCL1 = 47;  /* P4.2 */
-static const uint8_t DEBUG_UARTRXD = 41;  /* Receive  Data (RXD) at P4.5 */
-static const uint8_t DEBUG_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
+static const uint8_t AUX_UARTRXD = 41;  /* Receive  Data (RXD) at P4.5 */
+static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define TWISDA0_SET_MODE (PORT_SELECTION0)
 #define TWISCL0_SET_MODE (PORT_SELECTION0)
 #define TWISDA1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SDA << 8) | INPUT)
 #define TWISCL1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SCL << 8) | INPUT)
-#define DEBUG_UARTRXD_SET_MODE (PORT_SELECTION0 | INPUT)
-#define DEBUG_UARTTXD_SET_MODE (PORT_SELECTION0 | OUTPUT)
+#define AUX_UARTRXD_SET_MODE (PORT_SELECTION0 | INPUT)
+#define AUX_UARTTXD_SET_MODE (PORT_SELECTION0 | OUTPUT)
 /* Define the default I2C settings */
 #define DEFAULT_I2C 0
 #define TWISDA TWISDA0
@@ -54,7 +54,7 @@ static const uint8_t DEBUG_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define TWISCL_SET_MODE  TWISCL0_SET_MODE
 #define WIRE1_AVAILABLE
 
-#define DEBUG_UART_MODULE_OFFSET 0x0
+#define AUX_UART_MODULE_OFFSET 0x0
 
 #define USE_USCI_A1
 
@@ -100,8 +100,8 @@ static const uint8_t SCL1 = 47; /* SCL, EPS I2C bus, same as SCL_E */
 static const uint8_t SDA1 = 46; /* SDA, EPS I2C bus, same as SDA_E */
 
 /* Serial bus */
-static const uint8_t RX1 = 41; /* Serial interface RX */
-static const uint8_t TX1 = 40; /* Serial interface TX */
+static const uint8_t RX1 = 41; /* Serial1 interface RX */
+static const uint8_t TX1 = 40; /* Serial1 interface TX */
 
 /* Spy-Bi-Wire debugging interface */
 static const uint8_t TEST_E = 71;
