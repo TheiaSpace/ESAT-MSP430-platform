@@ -103,6 +103,7 @@ static const uint8_t EMG = 33;
 /* I2C bus */
 static const uint8_t SCL_O = 38;
 static const uint8_t SDA_O = 37;
+#define WireOBC (Wire) /* OBC I2C bus */
 
 /* SPI bus */
 static const uint8_t CLK_O = 48;  /* Clock, OBC SPI bus */

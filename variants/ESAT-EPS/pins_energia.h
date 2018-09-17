@@ -98,6 +98,8 @@ static const uint8_t SCL_E = 47; /* SCL, EPS I2C bus */
 static const uint8_t SDA_E = 46; /* SDA, EPS I2C bus */
 static const uint8_t SCL1 = 47; /* SCL, EPS I2C bus, same as SCL_E */
 static const uint8_t SDA1 = 46; /* SDA, EPS I2C bus, same as SDA_E */
+#define WireOBC (Wire) /* OBC I2C bus */
+#define WireEPS (Wire1) /* EPS I2C bus */
 
 /* Serial bus */
 static const uint8_t RX1 = 41; /* Serial1 interface RX */
