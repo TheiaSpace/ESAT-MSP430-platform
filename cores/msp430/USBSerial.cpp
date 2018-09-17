@@ -233,4 +233,4 @@ void UNMI_ISR(void)
             USB_disable();                                      //Disable
     }
 }
-USBSerial USB(1);
+USBSerial Serial(1);

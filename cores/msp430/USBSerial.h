@@ -55,6 +55,6 @@ public:
   // public only for easy access by interrupt handlers
   static inline void handle_interrupt();
 };
-extern USBSerial USB;
+extern USBSerial Serial;
 #endif
 
