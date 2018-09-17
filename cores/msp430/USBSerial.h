@@ -41,7 +41,7 @@ public:
   // public methods
   USBSerial(uint16_t port);
   ~USBSerial();
-  void begin();
+  void begin(uint32_t unusedBaudrate = 0, uint8_t unusedConfig = 0);
   void end();
   virtual int available(void);
   virtual int peek();

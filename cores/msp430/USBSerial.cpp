@@ -91,8 +91,10 @@ USBSerial::~USBSerial()
 // Public methods
 //
 
-void USBSerial::begin()
+void USBSerial::begin(uint32_t unusedBaudrate, uint8_t unusedConfig)
 {
+    (void) unusedBaudrate;
+    (void) unusedConfig;
     __disable_interrupt();                           //Enable interrupts globally
     usb_isr_install();
     //Initialization of clock module
