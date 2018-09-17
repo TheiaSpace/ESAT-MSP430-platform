@@ -313,6 +313,7 @@ void enableWatchDog();
 #include "WCharacter.h"
 #include "WString.h"
 #include "HardwareSerial.h"
+#include "USBSerial.h"
 
 uint16_t makeWord(uint16_t w);
 uint16_t makeWord(byte h, byte l);
