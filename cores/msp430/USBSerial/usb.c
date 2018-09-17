@@ -41,10 +41,10 @@
 #include "defMSP430USB.h"
 #include "usb.h"      //USB-specific Data Structures
 #include "UsbCdc.h"
-#include <descriptors.h>
+#include "descriptors.h"
 
-#include <HAL_UCS.h>
-#include <HAL_TLV.h>
+#include "HAL_UCS.h"
+#include "HAL_TLV.h"
 #include <string.h>
 
 /*----------------------------------------------------------------------------+

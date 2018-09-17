@@ -29,16 +29,17 @@ USBSerial.cpp (formerly NewSoftSerial.cpp) -
 #include "Energia.h"
 #include "USBSerial.h"
 
-#include "descriptors.h"
+#include "USBSerial/descriptors.h"
 
-#include "device.h"
-#include "types.h"               //Basic Type declarations
-#include "usb.h"                 //USB-specific functions
-#include "HAL_UCS.h"
+#include "USBSerial/device.h"
+#include "USBSerial/types.h"               //Basic Type declarations
+#include "USBSerial/usb.h"                 //USB-specific functions
+#include "USBSerial/HAL_UCS.h"
 //#include "HAL_PMM.h"
 
-#include "UsbCdc.h"
-#include "usbConstructs.h"
+#include "USBSerial/UsbCdc.h"
+#include "USBSerial/usbConstructs.h"
+#include "USBSerial/UsbIsr.h"
 
 #define CDC_TIMEOUT 10000
 
@@ -90,9 +91,12 @@ USBSerial::~USBSerial()
 // Public methods
 //
 
-void USBSerial::begin()
+void USBSerial::begin(uint32_t unusedBaudrate, uint8_t unusedConfig)
 {
+    (void) unusedBaudrate;
+    (void) unusedConfig;
     __disable_interrupt();                           //Enable interrupts globally
+    usb_isr_install();
     //Initialization of clock module
 	//UCSCTL6 |= XT1OFF;
 /*SELECT_FLLREF(SELREF__XT2CLK); 
@@ -231,4 +235,4 @@ void UNMI_ISR(void)
             USB_disable();                                      //Disable
     }
 }
-USBSerial USB(1);
+USBSerial Serial(1);

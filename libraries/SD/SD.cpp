@@ -55,7 +55,6 @@
 
 #include "SD.h"
 #if defined(SD_AVAILABLE)
-#include "USBSerial.h"
 
 // Used by `getNextPathComponent`
 #define MAX_COMPONENT_LEN 12 // What is max length?
@@ -421,7 +420,6 @@ SdFile SDClass::getParentDir(const char *filepath, int *index)
         subdir->close();
         if (! subdir->open(parent, subdirname, O_READ)) {
             // failed to open one of the subdirectories
-			//USB.println("failed to open one of the subdirectories");
             return SdFile();
         }
         // move forward to the next subdirectory
@@ -473,7 +471,6 @@ File SDClass::open(const char *filepath, uint8_t mode)
     filepath += pathidx;
     if (! filepath[0]) {
         // it was the directory itself!
-		USB.println("1");
         return File(parentdir, "/");
     }
     
@@ -609,24 +606,20 @@ File File::openNextFile(uint8_t mode)
 {
     dir_t p;
     
-    USB.print("\t\treading dir...");
     while (_file->readDir(&p) > 0) {
         
         // done if past last used entry
         if (p.name[0] == DIR_NAME_FREE) {
-            USB.println("end");
             return File();
         }
         
         // skip deleted entry and entries for . and  ..
         if (p.name[0] == DIR_NAME_DELETED || p.name[0] == '.') {
-            USB.println("dots");
             continue;
         }
         
         // only list subdirectories and files
         if (!DIR_IS_FILE_OR_SUBDIR(&p)) {
-            USB.println("notafile");
             continue;
         }
         
@@ -634,19 +627,14 @@ File File::openNextFile(uint8_t mode)
         SdFile f;
         char name[13];
         _file->dirName(p, name);
-        USB.print("try to open file ");
-        USB.println(name);
         
         if (f.open(_file, name, mode)) {
-            USB.println("OK!");
             return File(f, name);
         } else {
-            USB.println("ugh");
             return File();
         }
     }
     
-    USB.println("nothing");
     return File();
 }
 
