@@ -74,6 +74,7 @@ static const uint8_t ESP_SLEEP = 25;
 static const uint8_t ESP0 = 35;
 static const uint8_t RX1 = 52; /* Receive data from the Wifi module */
 static const uint8_t TX1 = 51; /* Send data to the Wifi module */
+#define SerialWifi (Serial1) /* Serial interface for the Wifi module */
 
 /* General purpose IO */
 static const uint8_t GPIO0 = 28;
