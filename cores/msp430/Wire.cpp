@@ -54,7 +54,7 @@ void TwoWire::onRequestService0(void)
   Wire.onRequestService();
 }
 
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
 void TwoWire::onRequestService1(void)
 {
   Wire1.onRequestService();
@@ -66,7 +66,7 @@ void TwoWire::onReceiveService0(uint8_t* inBytes, int numBytes)
   Wire.onReceiveService(inBytes, numBytes);
 }
 
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
 void TwoWire::onReceiveService1(uint8_t* inBytes, int numBytes)
 {
   Wire1.onReceiveService(inBytes, numBytes);
@@ -108,7 +108,7 @@ TwoWire::TwoWire(uint8_t i2cModule):
     TWISDAx = TWISDA0;
     TWISDAx_SET_MODE = TWISDA0_SET_MODE;
     break;
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
   case 1:
     UCBxCTL0 = &UCB1CTL0;
     UCBxCTL1 = &UCB1CTL1;
@@ -153,7 +153,7 @@ void TwoWire::begin(uint8_t address)
     twi_attachSlaveTxEvent(onRequestService0);
     twi_attachSlaveRxEvent(onReceiveService0);
     break;
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
   case 1:
     twi_attachSlaveTxEvent(onRequestService1);
     twi_attachSlaveRxEvent(onReceiveService1);
