@@ -203,6 +203,11 @@ int USBSerial::peek()
   return USBCDC_bytesInUSBBuffer(CDC0_INTFNUM);
 }
 
+USBSerial::operator bool()
+{
+  return true;
+}
+
 /*  
  * ======== UNMI_ISR ========
  */

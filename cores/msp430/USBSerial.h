@@ -52,6 +52,8 @@ public:
 
   using Print::write;
 
+  operator bool();
+
   // public only for easy access by interrupt handlers
   static inline void handle_interrupt();
 };
