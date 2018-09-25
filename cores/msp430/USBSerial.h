@@ -46,7 +46,7 @@ public:
   virtual int available(void);
   virtual int peek();
   virtual size_t write(uint8_t byte);
-  virtual size_t write(const uint8_t *buffer, size_t size);
+  using Print::write;
   virtual int read();
   virtual void flush();
 
