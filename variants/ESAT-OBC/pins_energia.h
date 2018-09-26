@@ -2,7 +2,7 @@
   pins_energia.h - Pin definition functions for Energia.
   Part of Theia Space's ESAT OBC (MSP430) core for Energia.
   Modified for Theia Space's ESAT OBC (MSP430) by Theia Space.
-  Copyright (c) 2017-2018 Theia Space.
+  Copyright (c) 2017, 2018 Theia Space.
 
   Original file: pins_energia.h, part of the Energia platform.
   Copyright (c) 2012 Robert Wessels.
