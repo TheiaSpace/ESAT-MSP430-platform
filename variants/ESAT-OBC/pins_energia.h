@@ -119,6 +119,7 @@ static const uint8_t RST_O = 76;
 
 /* LED */
 static const uint8_t LED_O = 60; /* OBC board LED */
+static const uint8_t LED_BUILTIN = 60; /* Same as LED_O */
 
 /* Internal thermometer */
 static const uint8_t TEMPSENSOR = 128 + 10;
