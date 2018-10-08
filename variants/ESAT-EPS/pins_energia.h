@@ -111,6 +111,7 @@ static const uint8_t RST_E = 76;
 
 /* LED */
 static const uint8_t LED_E = 42; /* EPS board LED */
+static const uint8_t LED_BUILTIN = 42; /* Same as LED_E */
 
 /* Internal thermometer */
 static const uint8_t TEMPSENSOR = 128 + 10;
