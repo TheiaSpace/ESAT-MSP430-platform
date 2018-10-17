@@ -21,7 +21,7 @@ compiler.usb_flags=-DARDUINO_USB_VID={build.usb_vid} -DARDUINO_USB_PID={build.us
 compiler.mlarge_flag=-mlarge -mcode-region=either -mdata-region=either
 
 # Default "compiler.path" is correct, change only if you want to overidde the initial value
-compiler.path={runtime.tools.msp430-gcc-6.path}/bin/
+compiler.path={runtime.tools.msp430-gcc-7.3.1.24-esat1.path}/bin/
 compiler.c.cmd=msp430-elf-gcc
 compiler.c.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} {compiler.usb_flags} -ffunction-sections -fdata-sections -MMD
 compiler.c.elf.flags={compiler.warning_flags} -g -Os {compiler.mlarge_flag} {compiler.usb_flags} -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -Wl,--gc-sections,-u,main
@@ -42,10 +42,10 @@ compiler.size.cmd=msp430-elf-size
 build.extra_flags=
 
 # These can be overridden in platform.local.txt
-compiler.c.extra_flags=-I{runtime.tools.msp430-gcc-6.path}/include
-compiler.c.elf.extra_flags=-L{runtime.tools.msp430-gcc-6.path}/include
+compiler.c.extra_flags=-I{runtime.tools.msp430-gcc-7.3.1.24-esat1.path}/include
+compiler.c.elf.extra_flags=-L{runtime.tools.msp430-gcc-7.3.1.24-esat1.path}/include
 compiler.S.extra_flags=
-compiler.cpp.extra_flags=-I{runtime.tools.msp430-gcc-6.path}/include
+compiler.cpp.extra_flags=-I{runtime.tools.msp430-gcc-7.3.1.24-esat1.path}/include
 compiler.ar.extra_flags=
 compiler.objcopy.eep.extra_flags=
 compiler.elf2hex.extra_flags=
