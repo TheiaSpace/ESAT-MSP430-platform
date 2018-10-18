@@ -61,8 +61,8 @@
 #define UCAxIFG       UCA0IFG
 #define UCAxIV        UCA0IV
 
-#define SERIAL_INPUT_BUFFER_SIZE 512
-#define SERIAL_OUTPUT_BUFFER_SIZE 16
+#define ARDUINO_SERIAL1_INPUT_BUFFER_SIZE 512
+#define ARDUINO_SERIAL1_OUTPUT_BUFFER_SIZE 16
 
 struct ring_buffer
 {
@@ -72,10 +72,10 @@ struct ring_buffer
 	volatile unsigned int tail;
 };
 
-static unsigned char rx_backend_buffer[SERIAL_INPUT_BUFFER_SIZE];
-static unsigned char tx_backend_buffer[SERIAL_OUTPUT_BUFFER_SIZE];
-static ring_buffer rx_buffer  =  { rx_backend_buffer, SERIAL_INPUT_BUFFER_SIZE, 0, 0 };
-static ring_buffer tx_buffer  =  { tx_backend_buffer, SERIAL_OUTPUT_BUFFER_SIZE, 0, 0 };
+static unsigned char rx_backend_buffer[ARDUINO_SERIAL1_INPUT_BUFFER_SIZE];
+static unsigned char tx_backend_buffer[ARDUINO_SERIAL1_OUTPUT_BUFFER_SIZE];
+static ring_buffer rx_buffer  =  { rx_backend_buffer, ARDUINO_SERIAL1_INPUT_BUFFER_SIZE, 0, 0 };
+static ring_buffer tx_buffer  =  { tx_backend_buffer, ARDUINO_SERIAL1_OUTPUT_BUFFER_SIZE, 0, 0 };
 
 inline void store_char(unsigned char c, ring_buffer *buffer)
 {
