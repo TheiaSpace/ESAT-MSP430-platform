@@ -1,6 +1,7 @@
 # See: http://code.google.com/p/arduino/wiki/Platforms
 
 menu.ADCS=ADCS code running in
+menu.SERIAL1_INPUT_BUFFER_SIZE=Serial1 input buffer size
 
 ##############################################################
 
@@ -23,6 +24,22 @@ ESAT-OBC.upload.maximum_ram_size=8192
 ESAT-OBC.menu.ADCS.OBC=OBC
 ESAT-OBC.menu.ADCS.ADCS=ADCS
 ESAT-OBC.menu.ADCS.ADCS.build.extra_flags=-DESAT_ADCS_CODE_RUNNING_IN_ADCS
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.512=512
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.512.build.serial1_input_buffer_size=512
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.16=16
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.16.build.serial1_input_buffer_size=16
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.32=32
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.32.build.serial1_input_buffer_size=32
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.64=64
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.64.build.serial1_input_buffer_size=64
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.128=128
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.128.build.serial1_input_buffer_size=128
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.256=256
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.256.build.serial1_input_buffer_size=256
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.1024=1024
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.1024.build.serial1_input_buffer_size=1024
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.2048=2048
+ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.2048.build.serial1_input_buffer_size=2048
 
 #ESAT-EPS
 
@@ -39,3 +56,20 @@ ESAT-EPS.upload.tool=msp430-tool
 ESAT-EPS.upload.protocol=msp430-tool
 ESAT-EPS.upload.maximum_size=130943
 ESAT-EPS.upload.maximum_ram_size=8192
+
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.512=512
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.512.build.serial1_input_buffer_size=512
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.16=16
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.16.build.serial1_input_buffer_size=16
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.32=32
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.32.build.serial1_input_buffer_size=32
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.64=64
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.64.build.serial1_input_buffer_size=64
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.128=128
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.128.build.serial1_input_buffer_size=128
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.256=256
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.256.build.serial1_input_buffer_size=256
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.1024=1024
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.1024.build.serial1_input_buffer_size=1024
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.2048=2048
+ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.2048.build.serial1_input_buffer_size=2048
