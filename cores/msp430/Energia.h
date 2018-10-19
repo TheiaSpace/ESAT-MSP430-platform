@@ -283,6 +283,7 @@ extern const uint32_t digital_pin_to_analog_in[];
 #define digitalPinToTimer(P)   ( digital_pin_to_timer[P] )
 #define digitalPinToADCIn(P)      ( digital_pin_to_analog_in[P] )
 #define portDirRegister(P)     ( (volatile uint8_t *)( port_to_dir[P]) )
+#define digitalPinToInterrupt(P) ( P )
 /*
  * We either of the compination   PxSEL and PxSEL2   or   PxSEL0 and PxSEL1
  * So we can remap  PxSEL and PxSEL2   to   PxSEL0 and PxSEL1
