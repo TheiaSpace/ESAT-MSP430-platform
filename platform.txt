@@ -16,7 +16,9 @@ compiler.warning_flags.default=
 compiler.warning_flags.more=-Wall
 compiler.warning_flags.all=-Wall -Wextra
 
-compiler.serial_flags=-DARDUINO_SERIAL1_INPUT_BUFFER_SIZE={build.serial1_input_buffer_size}
+# Overriden in boards.txt
+build.serial1_input_buffer_size_flags=
+compiler.serial_flags={build.serial1_input_buffer_size_flags}
 compiler.usb_flags=-DARDUINO_USB_VID={build.usb_vid} -DARDUINO_USB_PID={build.usb_pid}
 
 compiler.mlarge_flag=-mlarge -mcode-region=either -mdata-region=either
