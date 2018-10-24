@@ -156,6 +156,7 @@ BYTE USB_handleEnumCompleteEvent ()
  */
 BYTE USBCDC_handleDataReceived (BYTE intfNum)
 {
+    (void) intfNum;
     //TO DO: You can place your code here
 
     bCDCDataReceived_event = TRUE;
@@ -170,6 +171,7 @@ BYTE USBCDC_handleDataReceived (BYTE intfNum)
  */
 BYTE USBCDC_handleSendCompleted (BYTE intfNum)
 {
+    (void) intfNum;
     //TO DO: You can place your code here
 
     return (FALSE);                             //return FALSE to go asleep after interrupt (in the case the CPU slept before
@@ -181,6 +183,7 @@ BYTE USBCDC_handleSendCompleted (BYTE intfNum)
  */
 BYTE USBCDC_handleReceiveCompleted (BYTE intfNum)
 {
+    (void) intfNum;
     //TO DO: You can place your code here
 
     return (FALSE);                             //return FALSE to go asleep after interrupt (in the case the CPU slept before
@@ -192,6 +195,8 @@ BYTE USBCDC_handleReceiveCompleted (BYTE intfNum)
  */
 BYTE USBCDC_handleSetLineCoding (BYTE intfNum, ULONG lBaudrate)
 {
+    (void) intfNum;
+    (void) lBaudrate;
     //TO DO: You can place your code here
 
     return (FALSE);                             //return FALSE to go asleep after interrupt (in the case the CPU slept before
@@ -203,6 +208,8 @@ BYTE USBCDC_handleSetLineCoding (BYTE intfNum, ULONG lBaudrate)
  */
 BYTE USBCDC_handleSetControlLineState (BYTE intfNum, BYTE lineState)
 {
+	(void) intfNum;
+	(void) lineState;
 	return FALSE;
 }
 

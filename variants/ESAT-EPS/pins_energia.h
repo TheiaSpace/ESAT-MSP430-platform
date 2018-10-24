@@ -2,7 +2,7 @@
   pins_energia.h - Pin definition functions for Energia.
   Part of Theia Space's ESAT EPS (MSP430) core for Energia.
   Modified for Theia Space's ESAT EPS (MSP430) by Theia Space.
-  Copyright (c) 2017 Theia Space.
+  Copyright (c) 2017, 2018 Theia Space.
 
   Original file: pins_energia.h, part of the Energia platform.
   Copyright (c) 2012 Robert Wessels.
@@ -34,48 +34,33 @@
 #define BV(x) (1 << (x))
 #endif
 
-static const uint8_t SS      = 36;  /* P2.7 */
-static const uint8_t SCK     = 39;  /* P3.2 */
-static const uint8_t MOSI    = 37;  /* P3.0 */
-static const uint8_t MISO    = 38;  /* P3.1 */
-static const uint8_t SS1     = 45;  /* P2.7 */
-static const uint8_t SCK1    = 48;  /* P3.2 */
-static const uint8_t MOSI1   = 46;  /* P3.0 */
-static const uint8_t MISO1   = 47;  /* P3.1 */
 static const uint8_t TWISDA0 = 37;  /* P3.0 */
 static const uint8_t TWISCL0 = 38;  /* P3.1 */
 static const uint8_t TWISDA1 = 46;  /* P4.1 */
 static const uint8_t TWISCL1 = 47;  /* P4.2 */
-static const uint8_t DEBUG_UARTRXD = 52;  /* Receive  Data (RXD) at P4.5 */
-static const uint8_t DEBUG_UARTTXD = 51;  /* Transmit Data (TXD) at P4.4 */
 static const uint8_t AUX_UARTRXD = 41;  /* Receive  Data (RXD) at P4.5 */
 static const uint8_t AUX_UARTTXD = 40;  /* Transmit Data (TXD) at P4.4 */
 #define TWISDA0_SET_MODE (PORT_SELECTION0)
 #define TWISCL0_SET_MODE (PORT_SELECTION0)
 #define TWISDA1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SDA << 8) | INPUT)
 #define TWISCL1_SET_MODE (PORT_SELECTION0 | (PM_UCB1SCL << 8) | INPUT)
-#define DEBUG_UARTRXD_SET_MODE (PORT_SELECTION0 | (PM_UCA1RXD << 8) | INPUT)
-#define DEBUG_UARTTXD_SET_MODE (PORT_SELECTION0 | (PM_UCA1TXD << 8) | OUTPUT)
 #define AUX_UARTRXD_SET_MODE (PORT_SELECTION0 | INPUT)
 #define AUX_UARTTXD_SET_MODE (PORT_SELECTION0 | OUTPUT)
-#define SPISCK_SET_MODE (PORT_SELECTION0)
-#define SPIMOSI_SET_MODE (PORT_SELECTION0)
-#define SPIMISO_SET_MODE (PORT_SELECTION0)
-#define SPISCK_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1STE << 8) | INPUT)
-#define SPIMOSI_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1SIMO << 8) | OUTPUT)
-#define SPIMISO_SET_MODE1 (PORT_SELECTION0 | (PM_UCB1SOMI << 8) | INPUT)
 /* Define the default I2C settings */
 #define DEFAULT_I2C 0
 #define TWISDA TWISDA0
 #define TWISCL TWISCL0
 #define TWISDA_SET_MODE  TWISDA0_SET_MODE
 #define TWISCL_SET_MODE  TWISCL0_SET_MODE
-#define ESAT_BOARD_HAS_SECOND_I2C_BUS
+#define WIRE1_AVAILABLE
 
-#define DEBUG_UART_MODULE_OFFSET 0x40
 #define AUX_UART_MODULE_OFFSET 0x0
 
 #define USE_USCI_A1
+
+/* General purpose IO */
+static const uint8_t IO0 = 42; /* Same as LED_E */
+static const uint8_t IO1 = 43;
 
 /* Current and voltage sensor pins */
 static const uint8_t I_5V = 80;     /* 5V line current */
@@ -111,6 +96,14 @@ static const uint8_t SCL_O = 38; /* SCL, OBC I2C bus */
 static const uint8_t SDA_O = 37; /* SDA, OBC I2C bus */
 static const uint8_t SCL_E = 47; /* SCL, EPS I2C bus */
 static const uint8_t SDA_E = 46; /* SDA, EPS I2C bus */
+static const uint8_t SCL1 = 47; /* SCL, EPS I2C bus, same as SCL_E */
+static const uint8_t SDA1 = 46; /* SDA, EPS I2C bus, same as SDA_E */
+#define WireOBC (Wire) /* OBC I2C bus */
+#define WireEPS (Wire1) /* EPS I2C bus */
+
+/* Serial bus */
+static const uint8_t RX1 = 41; /* Serial1 interface RX */
+static const uint8_t TX1 = 40; /* Serial1 interface TX */
 
 /* Spy-Bi-Wire debugging interface */
 static const uint8_t TEST_E = 71;
@@ -118,159 +111,105 @@ static const uint8_t RST_E = 76;
 
 /* LED */
 static const uint8_t LED_E = 42; /* EPS board LED */
-
-/* Analog pin names (datasheet) */
-static const uint8_t A0 = 77;
-static const uint8_t A1 = 78;
-static const uint8_t A2 = 79;
-static const uint8_t A3 = 80;
-static const uint8_t A4 = 1;
-static const uint8_t A5 = 2;
-static const uint8_t A6 = 3;
-static const uint8_t A7 = 4;
-static const uint8_t A8 = 9;
-static const uint8_t A9 = 10;
-static const uint8_t A10 = 128 + 10; /* special. This is the internal temp sensor */
-static const uint8_t A11 = 128 + 11; /* special. This is Vcc/2 */
-static const uint8_t A12 = 5;
-static const uint8_t A13 = 6;
-static const uint8_t A14 = 7;
-static const uint8_t A15 = 8;
-
-/* Pin names (datasheet) */
-static const uint8_t P6_4 = 1;
-static const uint8_t P6_5 = 2;
-static const uint8_t P6_6 = 3;
-static const uint8_t P6_7 = 4;
-static const uint8_t P7_0 = 5;
-static const uint8_t P7_1 = 6;
-static const uint8_t P7_2 = 7;
-static const uint8_t P7_3 = 8;
-static const uint8_t P5_0 = 9;
-static const uint8_t P5_1 = 10;
-static const uint8_t P5_4 = 12;
-static const uint8_t P5_5 = 13;
-static const uint8_t P8_0 = 15;
-static const uint8_t P8_1 = 16;
-static const uint8_t P8_2 = 17;
-static const uint8_t P1_0 = 21;
-static const uint8_t P1_1 = 22;
-static const uint8_t P1_2 = 23;
-static const uint8_t P1_3 = 24;
-static const uint8_t P1_4 = 25;
-static const uint8_t P1_5 = 26;
-static const uint8_t P1_6 = 27;
-static const uint8_t P1_7 = 28;
-static const uint8_t P2_0 = 29;
-static const uint8_t P2_1 = 30;
-
-static const uint8_t P2_2 = 31;
-static const uint8_t P2_3 = 32;
-static const uint8_t P2_4 = 33;
-static const uint8_t P2_5 = 34;
-static const uint8_t P2_6 = 35;
-static const uint8_t P2_7 = 36;
-static const uint8_t P3_0 = 37;
-static const uint8_t P3_1 = 38;
-static const uint8_t P3_2 = 39;
-static const uint8_t P3_3 = 40;
-
-static const uint8_t P3_4 = 41;
-static const uint8_t P3_5 = 42;
-static const uint8_t P3_6 = 43;
-static const uint8_t P3_7 = 44;
-static const uint8_t P4_0 = 45;
-static const uint8_t P4_1 = 46;
-static const uint8_t P4_2 = 47;
-static const uint8_t P4_3 = 48;
-static const uint8_t P4_4 = 51;
-static const uint8_t P4_5 = 52;
-static const uint8_t P4_6 = 53;
-static const uint8_t P4_7 = 54;
-static const uint8_t P5_6 = 55;
-static const uint8_t P5_7 = 56;
-static const uint8_t P7_4 = 57;
-static const uint8_t P7_5 = 58;
-static const uint8_t P7_6 = 59;
-static const uint8_t P7_7 = 60;
-static const uint8_t P5_2 = 69;
-static const uint8_t P5_3 = 70;
-static const uint8_t P6_0 = 77;
-static const uint8_t P6_1 = 78;
-static const uint8_t P6_2 = 79;
-static const uint8_t P6_3 = 80;
+static const uint8_t LED_BUILTIN = 42; /* Same as LED_E */
 
 /* Internal thermometer */
 static const uint8_t TEMPSENSOR = 128 + 10;
 
+/* Vcc/2 */
+static const uint8_t VCC_2 = 128 + 11;
+
+/*
+ * These serial port names are intended to allow libraries and architecture-neutral
+ * sketches to automatically default to the correct port name for a particular type
+ * of use.  For example, a GPS module would normally connect to SERIAL_PORT_HARDWARE_OPEN,
+ * the first hardware serial port whose RX/TX pins are not dedicated to another use.
+ *
+ * SERIAL_PORT_MONITOR        Port which normally prints to the Arduino Serial Monitor
+ *
+ * SERIAL_PORT_USBVIRTUAL     Port which is USB virtual serial
+ *
+ * SERIAL_PORT_LINUXBRIDGE    Port which connects to a Linux system via Bridge library
+ *
+ * SERIAL_PORT_HARDWARE       Hardware serial port, physical RX & TX pins.
+ *
+ * SERIAL_PORT_HARDWARE_OPEN  Hardware serial ports which are open for use.  Their RX & TX
+ *                            pins are NOT connected to anything by default.
+ */
+#define SERIAL_PORT_MONITOR       Serial
+#define SERIAL_PORT_USBVIRTUAL    Serial
+#define SERIAL_PORT_HARDWARE      Serial1
+#define SERIAL_PORT_HARDWARE_OPEN Serial1
+#define SerialUSB                 SERIAL_PORT_USBVIRTUAL
+
 #ifdef ARDUINO_MAIN
 
-const uint8_t* port_to_input[] = {
+const uintptr_t port_to_input[] = {
   NOT_A_PORT,
-  &P1IN,
-  &P2IN,
-  &P3IN,
-  &P4IN,
-  &P5IN,
-  &P6IN,
-  &P7IN,
-  &P8IN,
+  (uintptr_t) &P1IN,
+  (uintptr_t) &P2IN,
+  (uintptr_t) &P3IN,
+  (uintptr_t) &P4IN,
+  (uintptr_t) &P5IN,
+  (uintptr_t) &P6IN,
+  (uintptr_t) &P7IN,
+  (uintptr_t) &P8IN,
 };
 
-const uint8_t* port_to_output[] = {
+const uintptr_t port_to_output[] = {
   NOT_A_PORT,
-  &P1OUT,
-  &P2OUT,
-  &P3OUT,
-  &P4OUT,
-  &P5OUT,
-  &P6OUT,
-  &P7OUT,
-  &P8OUT,
+  (uintptr_t) &P1OUT,
+  (uintptr_t) &P2OUT,
+  (uintptr_t) &P3OUT,
+  (uintptr_t) &P4OUT,
+  (uintptr_t) &P5OUT,
+  (uintptr_t) &P6OUT,
+  (uintptr_t) &P7OUT,
+  (uintptr_t) &P8OUT,
 };
 
-const uint8_t* port_to_dir[] = {
+const uintptr_t port_to_dir[] = {
   NOT_A_PORT,
-  &P1DIR,
-  &P2DIR,
-  &P3DIR,
-  &P4DIR,
-  &P5DIR,
-  &P6DIR,
-  &P7DIR,
-  &P8DIR,
+  (uintptr_t) &P1DIR,
+  (uintptr_t) &P2DIR,
+  (uintptr_t) &P3DIR,
+  (uintptr_t) &P4DIR,
+  (uintptr_t) &P5DIR,
+  (uintptr_t) &P6DIR,
+  (uintptr_t) &P7DIR,
+  (uintptr_t) &P8DIR,
 };
 
-const uint8_t* port_to_ren[] = {
+const uintptr_t port_to_ren[] = {
   NOT_A_PORT,
-  &P1REN,
-  &P2REN,
-  &P3REN,
-  &P4REN,
-  &P5REN,
-  &P6REN,
-  &P7REN,
-  &P8REN,
+  (uintptr_t) &P1REN,
+  (uintptr_t) &P2REN,
+  (uintptr_t) &P3REN,
+  (uintptr_t) &P4REN,
+  (uintptr_t) &P5REN,
+  (uintptr_t) &P6REN,
+  (uintptr_t) &P7REN,
+  (uintptr_t) &P8REN,
 };
 
-const uint8_t* port_to_sel0[] = { /* put this PxSEL register under the group of PxSEL0 */
+const uintptr_t port_to_sel0[] = { /* put this PxSEL register under the group of PxSEL0 */
   NOT_A_PORT,
-  &P1SEL,
-  &P2SEL,
-  &P3SEL,
-  &P4SEL,
-  &P5SEL,
-  &P6SEL,
-  &P7SEL,
-  &P8SEL,
+  (uintptr_t) &P1SEL,
+  (uintptr_t) &P2SEL,
+  (uintptr_t) &P3SEL,
+  (uintptr_t) &P4SEL,
+  (uintptr_t) &P5SEL,
+  (uintptr_t) &P6SEL,
+  (uintptr_t) &P7SEL,
+  (uintptr_t) &P8SEL,
 };
 
-const uint8_t* port_to_pmap[] = {
+const uintptr_t port_to_pmap[] = {
   NOT_A_PORT, /* PMAP starts at port P1 */
   NOT_A_PORT,
   NOT_A_PORT,
   NOT_A_PORT,
-  &P4MAP0,
+  (uintptr_t) &P4MAP0,
   NOT_A_PORT,
   NOT_A_PORT,
   NOT_A_PORT,

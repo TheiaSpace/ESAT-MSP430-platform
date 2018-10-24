@@ -1,15 +1,14 @@
-
-# Theia Space's ESAT boards
-# ------------------------------
+# Theia Space's ESAT boards (MSP430)
+# ----------------------------------
 #
 # For more info:
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
 
-name=Theia Space's ESAT boards
-version=2.2.0
+name=Theia Space's ESAT boards (MSP430)
+version=3.0.0
 
-# compile variables
-# ---------------------
+# Compile variables
+# -----------------
 
 compiler.warning_flags=-w
 compiler.warning_flags.none=-w
@@ -17,17 +16,22 @@ compiler.warning_flags.default=
 compiler.warning_flags.more=-Wall
 compiler.warning_flags.all=-Wall -Wextra
 
+# Overriden in boards.txt
+build.serial1_input_buffer_size_flags=
+compiler.serial_flags={build.serial1_input_buffer_size_flags}
+compiler.usb_flags=-DARDUINO_USB_VID={build.usb_vid} -DARDUINO_USB_PID={build.usb_pid}
+
 compiler.mlarge_flag=-mlarge -mcode-region=either -mdata-region=either
 
 # Default "compiler.path" is correct, change only if you want to overidde the initial value
-compiler.path={runtime.tools.msp430-gcc-6.path}/bin/
+compiler.path={runtime.tools.msp430-gcc-7.3.1.24-esat1.path}/bin/
 compiler.c.cmd=msp430-elf-gcc
-compiler.c.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} -ffunction-sections -fdata-sections -MMD
-compiler.c.elf.flags={compiler.warning_flags} -g -Os {compiler.mlarge_flag} -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -Wl,--gc-sections,-u,main
+compiler.c.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} {compiler.serial_flags} {compiler.usb_flags} -ffunction-sections -fdata-sections -MMD
+compiler.c.elf.flags={compiler.warning_flags} -g -Os {compiler.mlarge_flag} {compiler.serial_flags} {compiler.usb_flags} -ffunction-sections -fdata-sections -fno-rtti -fno-exceptions -Wl,--gc-sections,-u,main
 compiler.c.elf.cmd=msp430-elf-gcc
 compiler.S.flags=-c -x assembler-with-cpp
 compiler.cpp.cmd=msp430-elf-g++
-compiler.cpp.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD
+compiler.cpp.flags=-c -g -Os {compiler.mlarge_flag} {compiler.warning_flags} {compiler.serial_flags} {compiler.usb_flags} -fno-exceptions -ffunction-sections -fdata-sections -fno-threadsafe-statics -MMD
 compiler.ar.cmd=msp430-elf-ar
 compiler.ar.flags=rcs
 compiler.objcopy.cmd=msp430-elf-objcopy
@@ -41,16 +45,16 @@ compiler.size.cmd=msp430-elf-size
 build.extra_flags=
 
 # These can be overridden in platform.local.txt
-compiler.c.extra_flags=-I{runtime.tools.msp430-gcc-6.path}/include
-compiler.c.elf.extra_flags=-L{runtime.tools.msp430-gcc-6.path}/include
+compiler.c.extra_flags=-I{runtime.tools.msp430-gcc-7.3.1.24-esat1.path}/include
+compiler.c.elf.extra_flags=-L{runtime.tools.msp430-gcc-7.3.1.24-esat1.path}/include
 compiler.S.extra_flags=
-compiler.cpp.extra_flags=-I{runtime.tools.msp430-gcc-6.path}/include
+compiler.cpp.extra_flags=-I{runtime.tools.msp430-gcc-7.3.1.24-esat1.path}/include
 compiler.ar.extra_flags=
 compiler.objcopy.eep.extra_flags=
 compiler.elf2hex.extra_flags=
 
-# compile patterns
-# --------------------
+# Compile patterns
+# ----------------
 
 ## Compile c files
 recipe.c.o.pattern="{compiler.path}{compiler.c.cmd}" {compiler.c.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.c.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{object_file}"
@@ -89,14 +93,16 @@ preproc.macros.flags=-w -x c++ -E -CC
 recipe.preproc.macros="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {preproc.macros.flags} -mmcu={build.mcu} -DF_CPU={build.f_cpu} -DARDUINO={runtime.ide.version} -DARDUINO_{build.board} -DARDUINO_ARCH_{build.arch} {compiler.cpp.extra_flags} {build.extra_flags} {includes} "{source_file}" -o "{preprocessed_file_path}"
 
 # Uploader/Programmers tools
-# -----------------------------------
+# --------------------------
+
+## Direct USB uploading
 tools.msp430-tool.path={runtime.tools.msp430-tool.path}
 tools.msp430-tool.cmd.path={path}/msp430-tool
 tools.msp430-tool.upload.params.quiet=
 tools.msp430-tool.upload.params.verbose=
 tools.msp430-tool.upload.pattern={cmd.path} bsl5.hid -e {build.path}/{build.project_name}.hex
 
-# ESAT MSP430 programmer
+## ESAT MSP430 programmer
 tools.esat-msp430-programmer.path={runtime.tools.esat-msp430-programmer.path}
 tools.esat-msp430-programmer.cmd.path={path}/mspdebug
 tools.esat-msp430-programmer.program.params.verbose=

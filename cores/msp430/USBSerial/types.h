@@ -46,7 +46,6 @@ extern "C"
 #endif
 
 #ifdef __GNUC__
-#define __no_init
 #define __data16
 #endif
 

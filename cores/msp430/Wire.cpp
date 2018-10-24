@@ -54,7 +54,7 @@ void TwoWire::onRequestService0(void)
   Wire.onRequestService();
 }
 
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
 void TwoWire::onRequestService1(void)
 {
   Wire1.onRequestService();
@@ -66,7 +66,7 @@ void TwoWire::onReceiveService0(uint8_t* inBytes, int numBytes)
   Wire.onReceiveService(inBytes, numBytes);
 }
 
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
 void TwoWire::onReceiveService1(uint8_t* inBytes, int numBytes)
 {
   Wire1.onReceiveService(inBytes, numBytes);
@@ -108,7 +108,7 @@ TwoWire::TwoWire(uint8_t i2cModule):
     TWISDAx = TWISDA0;
     TWISDAx_SET_MODE = TWISDA0_SET_MODE;
     break;
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
   case 1:
     UCBxCTL0 = &UCB1CTL0;
     UCBxCTL1 = &UCB1CTL1;
@@ -153,7 +153,7 @@ void TwoWire::begin(uint8_t address)
     twi_attachSlaveTxEvent(onRequestService0);
     twi_attachSlaveRxEvent(onReceiveService0);
     break;
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
   case 1:
     twi_attachSlaveTxEvent(onRequestService1);
     twi_attachSlaveRxEvent(onReceiveService1);
@@ -477,6 +477,7 @@ void TwoWire::twi_setAddress(uint8_t address)
  */
 uint8_t TwoWire::twi_readFrom(uint8_t address, uint8_t* data, uint8_t length, uint8_t sendStop)
 {
+  (void) sendStop;                          // Currently, we don't support sendStop=false
   uint8_t i;
   uint32_t waitCounter;
 
@@ -558,6 +559,7 @@ uint8_t TwoWire::twi_readFrom(uint8_t address, uint8_t* data, uint8_t length, ui
  */
 uint8_t TwoWire::twi_writeTo(uint8_t address, uint8_t* data, uint8_t length, uint8_t wait, uint8_t sendStop)
 {
+  (void) wait;                                  // Currently, we don't support wait=false
   uint8_t i;
   uint32_t waitCounter;
   twi_error = TWI_ERRROR_NO_ERROR;
@@ -817,7 +819,7 @@ boolean TwoWire::i2c_state_isr(void)  // I2C Service
 
 boolean i2c_txrx_isr(uint8_t module)
 {
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
   if (module == 1) {
     return Wire1.i2c_txrx_isr();
   }
@@ -825,13 +827,14 @@ boolean i2c_txrx_isr(uint8_t module)
     return Wire.i2c_txrx_isr();
   }
 #else
+  (void) module;
   return Wire.i2c_txrx_isr();
 #endif
 }
 
 boolean i2c_state_isr(uint8_t module)
 {
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
   if (module == 1) {
     return Wire1.i2c_state_isr();
   }
@@ -839,12 +842,13 @@ boolean i2c_state_isr(uint8_t module)
     return Wire.i2c_state_isr();
   }
 #else
+  (void) module;
   return Wire.i2c_state_isr();
 #endif
 }
 
 // Preinstantiate Objects //////////////////////////////////////////////////////
 TwoWire Wire = TwoWire(0);
-#ifdef ESAT_BOARD_HAS_SECOND_I2C_BUS
+#ifdef WIRE1_AVAILABLE
 TwoWire Wire1 = TwoWire(1);
 #endif

@@ -33,15 +33,15 @@
 /*-----------------------------------------------------------------------------+
 | Include files                                                                |
 |-----------------------------------------------------------------------------*/
-#include <device.h>
-#include <types.h>				// Basic Type declarations
-#include <defMSP430USB.h>
+#include "device.h"
+#include "types.h"				// Basic Type declarations
+#include "defMSP430USB.h"
 #include "descriptors.h"
-#include <usb.h>           //USB-specific Data Structures
-#include <UsbIsr.h>
+#include "usb.h"           //USB-specific Data Structures
+#include "UsbIsr.h"
 #include <string.h>
 
-#include <UsbCdc.h>
+#include "UsbCdc.h"
 //#include <UsbHid.h>
 //#include <UsbHidReq.h>
 /*----------------------------------------------------------------------------+
@@ -68,6 +68,9 @@ BOOL PHDCIsReceiveInProgress(BYTE);
 /*----------------------------------------------------------------------------+
 | General Subroutines                                                         |
 +----------------------------------------------------------------------------*/
+// Dummy function to ensure that the linker doesn't strip the interrupt vector.
+void usb_isr_install() {}
+
 __attribute__((interrupt(USB_UBM_VECTOR)))
 VOID iUsbInterruptHandler(VOID)
 {

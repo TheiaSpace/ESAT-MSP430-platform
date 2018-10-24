@@ -41,20 +41,22 @@ public:
   // public methods
   USBSerial(uint16_t port);
   ~USBSerial();
-  void begin();
+  void begin(uint32_t unusedBaudrate = 0, uint8_t unusedConfig = 0);
   void end();
   virtual int available(void);
   virtual int peek();
   virtual size_t write(uint8_t byte);
-  virtual size_t write(const uint8_t *buffer, size_t size);
+  using Print::write;
   virtual int read();
   virtual void flush();
 
   using Print::write;
 
+  operator bool();
+
   // public only for easy access by interrupt handlers
   static inline void handle_interrupt();
 };
-extern USBSerial USB;
+extern USBSerial Serial;
 #endif
 

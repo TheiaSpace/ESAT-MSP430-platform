@@ -29,16 +29,17 @@ USBSerial.cpp (formerly NewSoftSerial.cpp) -
 #include "Energia.h"
 #include "USBSerial.h"
 
-#include "descriptors.h"
+#include "USBSerial/descriptors.h"
 
-#include "device.h"
-#include "types.h"               //Basic Type declarations
-#include "usb.h"                 //USB-specific functions
-#include "HAL_UCS.h"
+#include "USBSerial/device.h"
+#include "USBSerial/types.h"               //Basic Type declarations
+#include "USBSerial/usb.h"                 //USB-specific functions
+#include "USBSerial/HAL_UCS.h"
 //#include "HAL_PMM.h"
 
-#include "UsbCdc.h"
-#include "usbConstructs.h"
+#include "USBSerial/UsbCdc.h"
+#include "USBSerial/usbConstructs.h"
+#include "USBSerial/UsbIsr.h"
 
 #define CDC_TIMEOUT 10000
 
@@ -74,6 +75,7 @@ void USBSerial::handle_interrupt()
 //
 USBSerial::USBSerial(uint16_t port)
 {
+  (void) port;
 }
 
 //
@@ -89,9 +91,12 @@ USBSerial::~USBSerial()
 // Public methods
 //
 
-void USBSerial::begin()
+void USBSerial::begin(uint32_t unusedBaudrate, uint8_t unusedConfig)
 {
+    (void) unusedBaudrate;
+    (void) unusedConfig;
     __disable_interrupt();                           //Enable interrupts globally
+    usb_isr_install();
     //Initialization of clock module
 	//UCSCTL6 |= XT1OFF;
 /*SELECT_FLLREF(SELREF__XT2CLK); 
@@ -172,16 +177,6 @@ size_t USBSerial::write(uint8_t b)
   return 1;
 }
 
-
-size_t USBSerial::write(const uint8_t *buffer, size_t size)
-{
-
-  if (cdcSendDataWaitTilDone((BYTE*)buffer,size,CDC0_INTFNUM,CDC_TIMEOUT)){  	//send char to the Host
-    return 0;   // could not write
-  }
-  return 1;
-}
-
 void USBSerial::flush()
 {
   while (USBCDC_bytesInUSBBuffer(CDC0_INTFNUM) > 0);            // wait till all send
@@ -198,6 +193,11 @@ int USBSerial::peek()
   return USBCDC_bytesInUSBBuffer(CDC0_INTFNUM);
 }
 
+USBSerial::operator bool()
+{
+  return true;
+}
+
 /*  
  * ======== UNMI_ISR ========
  */
@@ -208,7 +208,7 @@ __interrupt
 __attribute__((interrupt(UNMI_VECTOR)))
 #endif
 //UNMI interrupt service routine
-static void UNMI_ISR(void)
+void UNMI_ISR(void)
 {
     switch (__even_in_range(SYSUNIV, SYSUNIV_BUSIFG ))
     {
@@ -230,4 +230,4 @@ static void UNMI_ISR(void)
             USB_disable();                                      //Disable
     }
 }
-USBSerial USB(1);
+USBSerial Serial(1);

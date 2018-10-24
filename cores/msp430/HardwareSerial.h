@@ -29,7 +29,6 @@
 #ifndef HardwareSerial_h
 #define HardwareSerial_h
 
-#if defined(__MSP430_HAS_USCI__) || defined(__MSP430_HAS_USCI_A0__) || defined(__MSP430_HAS_USCI_A1__) || defined(__MSP430_HAS_EUSCI_A0__) || defined(__MSP430_HAS_EUSCI_A1__)
 #include <inttypes.h>
 #include <Stream.h>
 
@@ -66,10 +65,8 @@ class HardwareSerial : public Stream
 		operator bool();
 };
 
-extern HardwareSerial Serial;
 extern HardwareSerial Serial1;
 
 extern void serialEventRun(void) __attribute__((weak));
 
-#endif
 #endif

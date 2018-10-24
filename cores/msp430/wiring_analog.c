@@ -55,13 +55,15 @@
 #if defined(__MSP430_HAS_ADC12_PLUS__)
 #define REFV_MAP(x) ((x>>8) & 0x70)
 #define REF_MAP(x)  (x & 0xB1)
-#define ADCxMEM0 ADC12MEM0 
+#define ADCxMEM0 ADC12MEM0
+#undef DEFAULT_READ_RESOLUTION
 #define DEFAULT_READ_RESOLUTION 12
 #endif
 #if defined(__MSP430_HAS_ADC12_B__)
 #define REFV_MAP(x) (x & 0xF00)
 #define REF_MAP(x)  (x & 0x31)
 #define ADCxMEM0 ADC12MEM0 
+#undef DEFAULT_READ_RESOLUTION
 #define DEFAULT_READ_RESOLUTION 12
 #endif
 #if defined(__MSP430_HAS_ADC__)
@@ -138,7 +140,7 @@ void analogWrite(uint8_t pin, int val)
 		digitalWrite(pin, LOW); // set pin to LOW when duty cycle is 0
                                         // digitalWrite will take care of invalid pins
 	}
-	else if (val == analog_res)
+	else if (val == (int) analog_res)
 	{
 		digitalWrite(pin, HIGH); // set pin HIGH when duty cycle is 255
                                          // digitalWrite will take care of invalid pins
@@ -298,7 +300,7 @@ void analogWrite(uint8_t pin, int val)
  
                         case NOT_ON_TIMER:                      // not on a timer output pin
 			default:                                // or TxA0 pin
-				if (val <= (analog_res >> 1)) {
+				if (val <= (int) (analog_res >> 1)) {
 					digitalWrite(pin, LOW); // 
 				} else {
 					digitalWrite(pin, HIGH);

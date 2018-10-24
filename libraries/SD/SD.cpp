@@ -54,7 +54,7 @@
  */
 
 #include "SD.h"
-#include "USBSerial.h"
+#if defined(SD_AVAILABLE)
 
 // Used by `getNextPathComponent`
 #define MAX_COMPONENT_LEN 12 // What is max length?
@@ -248,6 +248,8 @@ boolean callback_pathExists(SdFile& parentDir, char *filePathComponent,
      Returns true if file path exists.
      
      */
+    (void) isLastComponent;
+    (void) object;
     SdFile child;
     
     boolean exists = child.open(parentDir, filePathComponent, O_RDONLY);
@@ -321,6 +323,7 @@ boolean callback_makeDirPath(SdFile& parentDir, char *filePathComponent,
 boolean callback_remove(SdFile& parentDir, char *filePathComponent,
                         boolean isLastComponent, void *object)
 {
+    (void) object;
     if (isLastComponent) {
         return SdFile::remove(parentDir, filePathComponent);
     }
@@ -330,6 +333,7 @@ boolean callback_remove(SdFile& parentDir, char *filePathComponent,
 boolean callback_rmdir(SdFile& parentDir, char *filePathComponent,
                        boolean isLastComponent, void *object)
 {
+    (void) object;
     if (isLastComponent) {
         SdFile f;
         if (!f.open(parentDir, filePathComponent, O_READ)) return false;
@@ -357,7 +361,7 @@ boolean callback_rmdir(SdFile& parentDir, char *filePathComponent,
 //         root.openRoot(volume);
 //}
 
-boolean SDClass::begin(uint8_t chipSelectPin, uint8_t sckRateID, int8_t SPI_Port, int8_t cardDetectionPin, int8_t level)
+boolean SDClass::begin(uint8_t chipSelectPin, uint8_t sckRateID, int8_t cardDetectionPin, int8_t level)
 {
     /*
      
@@ -366,11 +370,11 @@ boolean SDClass::begin(uint8_t chipSelectPin, uint8_t sckRateID, int8_t SPI_Port
      Return true if initialization succeeds, false otherwise.
      
      */
-    // , SPI_Port, cardDetectionPin
+    // , cardDetectionPin
     
     //    Serial.println("> SDClass::begin");
     
-    return (card.init(chipSelectPin, sckRateID, SPI_Port, cardDetectionPin, level) &&
+    return (card.init(chipSelectPin, sckRateID, cardDetectionPin, level) &&
             volume.init(card) &&
             root.openRoot(volume));
 }
@@ -416,7 +420,6 @@ SdFile SDClass::getParentDir(const char *filepath, int *index)
         subdir->close();
         if (! subdir->open(parent, subdirname, O_READ)) {
             // failed to open one of the subdirectories
-			//USB.println("failed to open one of the subdirectories");
             return SdFile();
         }
         // move forward to the next subdirectory
@@ -468,7 +471,6 @@ File SDClass::open(const char *filepath, uint8_t mode)
     filepath += pathidx;
     if (! filepath[0]) {
         // it was the directory itself!
-		USB.println("1");
         return File(parentdir, "/");
     }
     
@@ -604,24 +606,20 @@ File File::openNextFile(uint8_t mode)
 {
     dir_t p;
     
-    USB.print("\t\treading dir...");
     while (_file->readDir(&p) > 0) {
         
         // done if past last used entry
         if (p.name[0] == DIR_NAME_FREE) {
-            USB.println("end");
             return File();
         }
         
         // skip deleted entry and entries for . and  ..
         if (p.name[0] == DIR_NAME_DELETED || p.name[0] == '.') {
-            USB.println("dots");
             continue;
         }
         
         // only list subdirectories and files
         if (!DIR_IS_FILE_OR_SUBDIR(&p)) {
-            USB.println("notafile");
             continue;
         }
         
@@ -629,19 +627,14 @@ File File::openNextFile(uint8_t mode)
         SdFile f;
         char name[13];
         _file->dirName(p, name);
-        USB.print("try to open file ");
-        USB.println(name);
         
         if (f.open(_file, name, mode)) {
-            USB.println("OK!");
             return File(f, name);
         } else {
-            USB.println("ugh");
             return File();
         }
     }
     
-    USB.println("nothing");
     return File();
 }
 
@@ -652,3 +645,5 @@ void File::rewindDirectory(void)
 }
 
 SDClass SD; // ***
+
+#endif /* SD_AVAILABLE */

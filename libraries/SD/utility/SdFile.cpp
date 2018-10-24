@@ -17,12 +17,13 @@
  * along with the Arduino SdFat Library.  If not, see
  * <http://www.gnu.org/licenses/>.
  */
+#include <Arduino.h>
+#if defined(SD_AVAILABLE)
 #include "SdFat.h"
-#include "USBSerial.h"
+#include <USBSerial.h>
 //#ifdef __AVR__
 //#include <avr/pgmspace.h>
 //#endif
-#include <Arduino.h>
 //------------------------------------------------------------------------------
 // callback function for date/time
 void (*SdFile::dateTime_)(uint16_t* date, uint16_t* time) = NULL;
@@ -202,7 +203,7 @@ void SdFile::dirName(const dir_t& dir, char* name)
     name[j] = 0;
 }
 //------------------------------------------------------------------------------
-/** List directory contents to USB.
+/** List directory contents to Serial.
  *
  * \param[in] flags The inclusive OR of
  *
@@ -232,7 +233,7 @@ void SdFile::ls(uint8_t flags, uint8_t indent)
         if (!DIR_IS_FILE_OR_SUBDIR(p)) continue;
         
         // print any indent spaces
-        for (int8_t i = 0; i < indent; i++) USB.print(' ');
+        for (int8_t i = 0; i < indent; i++) Serial.print(' ');
         
         // print file name with possible blank fill
         printDirName(*p, flags & (LS_DATE | LS_SIZE) ? 14 : 0);
@@ -241,16 +242,16 @@ void SdFile::ls(uint8_t flags, uint8_t indent)
         if (flags & LS_DATE)
         {
             printFatDate(p->lastWriteDate);
-            USB.print(' ');
+            Serial.print(' ');
             printFatTime(p->lastWriteTime);
         }
         // print size if requested
         if (!DIR_IS_SUBDIR(p) && (flags & LS_SIZE))
         {
-            USB.print(' ');
-            USB.print(p->fileSize);
+            Serial.print(' ');
+            Serial.print(p->fileSize);
         }
-        USB.println();
+        Serial.println();
         
         // list subdirectory content if requested
         if ((flags & LS_R) && DIR_IS_SUBDIR(p))
@@ -626,7 +627,7 @@ uint8_t SdFile::openRoot(SdVolume* vol)
     return true;
 }
 //------------------------------------------------------------------------------
-/** %Print the name field of a directory entry in 8.3 format to USB.
+/** %Print the name field of a directory entry in 8.3 format to Serial.
  *
  * \param[in] dir The directory structure containing the name.
  * \param[in] width Blank fill name if length is less than \a width.
@@ -639,25 +640,25 @@ void SdFile::printDirName(const dir_t& dir, uint8_t width)
         if (dir.name[i] == ' ')continue;
         if (i == 8)
         {
-            USB.print('.');
+            Serial.print('.');
             w++;
         }
-        USB.write(dir.name[i]);
+        Serial.write(dir.name[i]);
         w++;
     }
     if (DIR_IS_SUBDIR(&dir))
     {
-        USB.print('/');
+        Serial.print('/');
         w++;
     }
     while (w < width)
     {
-        USB.print(' ');
+        Serial.print(' ');
         w++;
     }
 }
 //------------------------------------------------------------------------------
-/** %Print a directory date field to USB.
+/** %Print a directory date field to Serial.
  *
  *  Format is yyyy-mm-dd.
  *
@@ -665,14 +666,14 @@ void SdFile::printDirName(const dir_t& dir, uint8_t width)
  */
 void SdFile::printFatDate(uint16_t fatDate)
 {
-    USB.print(FAT_YEAR(fatDate));
-    USB.print('-');
+    Serial.print(FAT_YEAR(fatDate));
+    Serial.print('-');
     printTwoDigits(FAT_MONTH(fatDate));
-    USB.print('-');
+    Serial.print('-');
     printTwoDigits(FAT_DAY(fatDate));
 }
 //------------------------------------------------------------------------------
-/** %Print a directory time field to USB.
+/** %Print a directory time field to Serial.
  *
  * Format is hh:mm:ss.
  *
@@ -681,13 +682,13 @@ void SdFile::printFatDate(uint16_t fatDate)
 void SdFile::printFatTime(uint16_t fatTime)
 {
     printTwoDigits(FAT_HOUR(fatTime));
-    USB.print(':');
+    Serial.print(':');
     printTwoDigits(FAT_MINUTE(fatTime));
-    USB.print(':');
+    Serial.print(':');
     printTwoDigits(FAT_SECOND(fatTime));
 }
 //------------------------------------------------------------------------------
-/** %Print a value as two digits to USB.
+/** %Print a value as two digits to Serial.
  *
  * \param[in] v Value to be printed, 0 <= \a v <= 99
  */
@@ -697,7 +698,7 @@ void SdFile::printTwoDigits(uint8_t v)
     str[0] = '0' + v/10;
     str[1] = '0' + v % 10;
     str[2] = 0;
-    USB.print(str);
+    Serial.print(str);
 }
 //------------------------------------------------------------------------------
 /**
@@ -1359,3 +1360,5 @@ size_t SdFile::write(const char* str)
 //  println();
 //}
 //#endif
+
+#endif /* SD_AVAILABLE */

@@ -35,7 +35,7 @@
 #include "device.h"
 #include "types.h"    //Basic Type declarations
 #include "defMSP430USB.h"
-#include <descriptors.h>
+#include "descriptors.h"
 #include <string.h>
 #include <stdint.h>
 
@@ -54,7 +54,7 @@
 
 #ifdef __GNUC__
 #undef __DMA_ACCESS_REG__
-#define __DMA_ACCESS_REG__ (uint16_t)
+#define __DMA_ACCESS_REG__ (uint16_t) (uintptr_t)
 #endif
 
 //function pointers
