@@ -423,6 +423,9 @@ uint16_t analogRead(uint8_t pin)
     if (pin == TEMPSENSOR) {// if Temp Sensor 
         REFCTL0 = REF_MAP(INTERNAL1V5);               // Set reference to internal 1.5V
         ADC12MCTL0 = channel | REFV_MAP(INTERNAL1V5); // set channel and reference 
+    } else if (pin == VCC_2) {// if supply voltage
+        REFCTL0 = REF_MAP(INTERNAL2V0);               // Set reference using internal 2.0V
+        ADC12MCTL0 = channel | REFV_MAP(INTERNAL2V0); // set channel and reference
     } else {
         REFCTL0 = REF_MAP(analog_reference);          // Set reference using masking off the SREF bits. See Energia.h.
         ADC12MCTL0 = channel | REFV_MAP(analog_reference); // set channel and reference 
