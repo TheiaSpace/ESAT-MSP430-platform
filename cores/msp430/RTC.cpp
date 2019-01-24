@@ -54,7 +54,7 @@ void RealTimeClock::enableTickInterrupt()
   RTCCTL01 = RTCCTL01 | RTCRDYIE;
 }
 
-RtcTimestamp RealTimeClock::read(void)
+RtcTimestamp RealTimeClock::read()
 {
   const boolean tickInterruptWasEnabled = tickInterruptEnabled();
   // The tick interrupt must be stopped while we copy the current time
