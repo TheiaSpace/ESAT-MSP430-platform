@@ -46,6 +46,18 @@ boolean RealTimeClock::running()
   }
 }
 
+void RealTimeClock::setBCDMode()
+{
+  // The clock is in BCD mode when the RTCBCD bit is set.
+  RTCCTL01 = RTCCTL01 | RTCBCD;
+}
+
+void RealTimeClock::setBinaryMode()
+{
+  // The clock is in binary mode when the RTCBCD bit is clear.
+  RTCCTL01 = RTCCTL01 & (~RTCBCD);
+}
+
 void RealTimeClock::start()
 {
   // The clock runs when the RTCHOLD bit is clear.
@@ -135,22 +147,6 @@ RtcTimestamp RealTimeClock::read(void)
 void RealTimeClock::disable()
 {
   RTCCTL01 = RTCHOLD; // Sets whole RTCCTL01 to reset state.
-  return;
-}
-
-void RealTimeClock::setMode(uint8_t mode)
-{
-  switch (mode) // Only changes if proper value is set.
-  {
-    case RTC_BCD:
-      RTCCTL01 |= RTCBCD;
-      return;
-    case RTC_DECIMAL:
-      RTCCTL01 &= (~RTCBCD);
-      return;
-    default:
-      return;
-  }
   return;
 }
 

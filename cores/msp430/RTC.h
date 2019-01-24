@@ -24,9 +24,6 @@
 #define DEFAULT_MINUTES 0
 #define DEFAULT_SECONDS 0
 
-#define RTC_DECIMAL 0
-#define RTC_BCD     1
-
 #define RTC_CALIBRATION_SIGNAL_DISABLED 0
 #define RTC_CALIBRATION_SIGNAL_512HZ    1
 #define RTC_CALIBRATION_SIGNAL_256HZ    2
@@ -46,7 +43,9 @@ struct RtcTimestamp
 class RealTimeClock
 {
   public:
-    // Enables RTC.
+    // Start the clock.
+    // The clock runs in binary mode by default; use RTC.setBCDMode()
+    // if you need it to run in BCD mode.
     void begin();
 
     // Writes timestamp into RTC registers.
@@ -59,8 +58,14 @@ class RealTimeClock
     // Turns RTC off.
     void disable();
 
-    // Sets RTC into BCD or decimal mode.
-    void setMode(uint8_t mode);
+    // Set the clock in BCD mode.
+    // Time will be encoded as BCD numbers.
+    void setBCDMode();
+
+    // Set the clock in binary mode.
+    // Time will be encoded as binary numbers.
+    // This is the default mode.
+    void setBinaryMode();
 
     // Allows user to trim RTC frequency.
     void setCalibration(int8_t calibrationValue);
