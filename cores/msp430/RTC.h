@@ -35,7 +35,7 @@
 #define RTC_CALIBRATION_SIGNAL_256HZ 	2
 #define RTC_CALIBRATION_SIGNAL_1HZ		3
 
-typedef struct
+struct RtcTimestamp
 {
 	uint16_t year;
 	uint8_t month;
@@ -44,7 +44,7 @@ typedef struct
 	uint8_t hours;
 	uint8_t minutes;
 	uint8_t seconds;
-} RtcTimestamp;
+};
 
 
 
