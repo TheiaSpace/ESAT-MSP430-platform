@@ -49,9 +49,6 @@ struct RtcTimestamp
 class RealTimeClock
 {
   public:
-    // Instantiates a new RTC object.
-    RealTimeClock();
-
     // Enables RTC.
     void begin();
 

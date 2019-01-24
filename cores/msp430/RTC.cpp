@@ -14,11 +14,6 @@
 #include "RTC.h"
 #include <Arduino.h>
 
-
-RealTimeClock::RealTimeClock()
-{
-}
-
 void RealTimeClock::begin()
 {
   UCSCTL6_L &= (~XCAP_3); // Sets minimum capacitance for XT1 RTC crystal oscillator.
