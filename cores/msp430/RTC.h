@@ -79,6 +79,37 @@ class RealTimeClock
 
     // Enables or disables calibration output waverform.
     void setCalibrationOutput(uint8_t frequency);
+
+    // Update the reading of the real-time clock driver in
+    // response to real-time clock tick interrupts.  User code
+    // shouldn't care about this.
+    void updateReading();
+
+  private:
+    // Current timestamp.
+    // Updated on calls to updateReading(), which happen automatically
+    // every time the real-time clock ticks.
+    // We need to double-buffer the current timestamp like this
+    // instead of reading the real-time clock time registers directly
+    // in order to avoid problems when the time registers change in
+    // the middle of a read operation.
+    volatile RtcTimestamp currentTime;
+
+    // Disable the clock tick interrupt.
+    void disableTickInterrupt();
+
+    // Enable the clock tick interrupt.
+    void enableTickInterrupt();
+
+    // Start the clock.
+    void start();
+
+    // Stop the clock.
+    void stop();
+
+    // Return true if clock tick interrupt is enabled; otherwise
+    // return false.
+    boolean tickInterruptEnabled();
 };
 
 extern RealTimeClock RTC;

@@ -18,10 +18,64 @@ void RealTimeClock::begin()
 {
   UCSCTL6_L &= (~XCAP_3); // Sets minimum capacitance for XT1 RTC crystal oscillator.
   RTCCTL01 = RTCMODE; // Also clears RTCHOLD to enable RTC.
+  enableTickInterrupt();
+}
+
+void RealTimeClock::disableTickInterrupt()
+{
+  // The clock tick interrupt is disabled when the RTCRDYIE bit is clear.
+  RTCCTL01 = RTCCTL01 & (~RTCRDYIE);
+}
+
+void RealTimeClock::enableTickInterrupt()
+{
+  // The clock tick interrupt is enabled when the RTCRDYIE bit is set.
+  RTCCTL01 = RTCCTL01 | RTCRDYIE;
+}
+
+void RealTimeClock::start()
+{
+  // The clock runs when the RTCHOLD bit is clear.
+  RTCCTL01 = RTCCTL01 & (~RTCHOLD);
+}
+
+void RealTimeClock::stop()
+{
+  // The clock halts when the RTCHOLD bit is set.
+  RTCCTL01 = RTCCTL01 | RTCHOLD;
+}
+
+boolean RealTimeClock::tickInterruptEnabled()
+{
+  // The clock tick interrupt is enabled when the RTCRDYIE bit is set.
+  if (RTCCTL01 & RTCRDYIE)
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
+void RealTimeClock::updateReading()
+{
+  currentTime.seconds = RTCSEC;
+  currentTime.minutes = RTCMIN;
+  currentTime.hours = RTCHOUR;
+  currentTime.dayOfWeek = RTCDOW;
+  currentTime.dayOfMonth = RTCDAY;
+  currentTime.month = RTCMON;
+  currentTime.year = (RTCYEAR & 0x0FFF);
 }
 
 void RealTimeClock::write(RtcTimestamp timeToSet)
 {
+  const boolean clockWasRunning = !!(status());
+  // The clock must be stopped while we set the time in order to avoid
+  // it from ticking and leaving us with a potentially incorrect time.
+  stop();
+  // We can safely set the time when the clock is stopped.
   RTCYEAR = timeToSet.year & 0x0FFF;
   RTCMON = timeToSet.month;
   RTCDAY = timeToSet.dayOfMonth;
@@ -29,20 +83,39 @@ void RealTimeClock::write(RtcTimestamp timeToSet)
   RTCHOUR = timeToSet.hours;
   RTCMIN = timeToSet.minutes;
   RTCSEC = timeToSet.seconds;
-  return;
+  // Update the real-time clock reading with the time we just set.
+  updateReading();
+  // Finally, don't forget to start the clock if it was running
+  // before.
+  if (clockWasRunning)
+  {
+    start();
+  }
 }
 
 RtcTimestamp RealTimeClock::read(void)
 {
+  const boolean tickInterruptWasEnabled = tickInterruptEnabled();
+  // The tick interrupt must be stopped while we copy the current time
+  // in order to avoid it from changing and leaving us with a
+  // potentially incorrect time.
+  disableTickInterrupt();
+  // We can safely copy the current time when the clock tick interrupt
+  // is disabled.
   RtcTimestamp readTime;
-  while (!(RTCCTL01 & RTCRDY)); // While RTCRDY is off, wait.
-  readTime.seconds = RTCSEC;
-  readTime.minutes = RTCMIN;
-  readTime.hours = RTCHOUR;
-  readTime.dayOfWeek = RTCDOW;
-  readTime.dayOfMonth = RTCDAY;
-  readTime.month = RTCMON;
-  readTime.year = (RTCYEAR & 0x0FFF);
+  readTime.seconds = currentTime.seconds;
+  readTime.minutes = currentTime.minutes;
+  readTime.hours = currentTime.hours;
+  readTime.dayOfWeek = currentTime.dayOfWeek;
+  readTime.dayOfMonth = currentTime.dayOfMonth;
+  readTime.month = currentTime.month;
+  readTime.year = currentTime.year;
+  // The tick interrupt must be enabled again if it was enabled
+  // before.
+  if (tickInterruptWasEnabled)
+  {
+    enableTickInterrupt();
+  }
   return readTime;
 }
 
@@ -152,6 +225,19 @@ void RealTimeClock::setCalibrationOutput(uint8_t frequency)
   P2DIR &= ~(1<<6);
   RTCCTL23_H = 0;
   return;
+}
+
+extern "C"
+{
+  // Real-time clock interrupt handler.
+  __attribute__((interrupt(RTC_VECTOR)))
+  void RTC_ISR(void)
+  {
+    if ((RTCIV & RTCIV_RTCRDYIFG) != 0)
+    {
+      RTC.updateReading();
+    }
+  }
 }
 
 RealTimeClock RTC;
