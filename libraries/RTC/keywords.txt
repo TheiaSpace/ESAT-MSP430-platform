@@ -25,7 +25,8 @@
 # Datatypes (KEYWORD1)
 #######################################
 
-RealTimeClockClass	KEYWORD1
+RTCClass	KEYWORD1
+RtcTimestamp	KEYWORD1
 
 #######################################
 # Methods and Functions (KEYWORD2)
