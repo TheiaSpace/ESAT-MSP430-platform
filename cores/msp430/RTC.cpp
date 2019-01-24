@@ -132,19 +132,6 @@ RtcTimestamp RealTimeClock::read(void)
   return readTime;
 }
 
-RtcTimestamp RealTimeClock::readUnreliable(void)
-{
-  RtcTimestamp readTime;
-  readTime.seconds = RTCSEC;
-  readTime.minutes = RTCMIN;
-  readTime.hours = RTCHOUR;
-  readTime.dayOfWeek = RTCDOW;
-  readTime.dayOfMonth = RTCDAY;
-  readTime.month = RTCMON;
-  readTime.year = (RTCYEAR & 0x0FFF);
-  return readTime;
-}
-
 uint8_t RealTimeClock::available()
 {
   if (RTCCTL01 & RTCRDY)

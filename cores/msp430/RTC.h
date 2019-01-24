@@ -59,9 +59,6 @@ class RealTimeClock
     // registers are changing.
     RtcTimestamp read();
 
-    // Retrieves tiemstamp without checking if the registers are changing.
-    RtcTimestamp readUnreliable();
-
     // Checks if RTC can be read safely.
     uint8_t available();
 
