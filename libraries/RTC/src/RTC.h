@@ -55,6 +55,7 @@ class RTCClass
     void begin();
 
     // Turns RTC off.
+    // Call RTC.begin() to start again the clock.
     void disable();
 
     // Disable the calibration output signal.
