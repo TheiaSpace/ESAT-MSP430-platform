@@ -105,7 +105,7 @@ void RealTimeClock::setBinaryMode()
   RTCCTL01 = RTCCTL01 & (~RTCBCD);
 }
 
-void RealTimeClock::setCalibration(int8_t calibrationValue)
+void RealTimeClock::setCalibration(const int8_t calibrationValue)
 {
   // This way allows you to set the desired calibration value directly.
   // If value is negative, a decrement is desired (if it is zero,
@@ -114,7 +114,6 @@ void RealTimeClock::setCalibration(int8_t calibrationValue)
   {
     // Change to positive, disable positive sign bit, mask and divide
     // by two because each step is -2 ppm.
-    calibrationValue *= -1;
     RTCCTL23_L =
       (RTCCAL5_L
        | RTCCAL4_L
@@ -122,7 +121,7 @@ void RealTimeClock::setCalibration(int8_t calibrationValue)
        | RTCCAL2_L
        | RTCCAL1_L
        | RTCCAL0_L)
-      & (((uint8_t) calibrationValue) / 2);
+      & (((uint8_t) (-calibrationValue)) / 2);
   }
   else
   {
@@ -174,7 +173,7 @@ void RealTimeClock::updateReading()
   currentTime.year = (RTCYEAR & 0x0FFF);
 }
 
-void RealTimeClock::write(RtcTimestamp timeToSet)
+void RealTimeClock::write(const RtcTimestamp timeToSet)
 {
   const boolean clockWasRunning = running();
   // The clock must be stopped while we set the time in order to avoid
