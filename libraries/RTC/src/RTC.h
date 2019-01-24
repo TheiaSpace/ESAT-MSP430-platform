@@ -64,8 +64,7 @@ class RTCClass
     // on pin P2.6 (RTCCLK).
     void enableCalibrationOutput(CalibrationOutputFrequency frequency);
 
-    // Retrieves timestamp from RTC registers, checking if no
-    // registers are changing.
+    // Return the current timestamp.
     RtcTimestamp read();
 
     // Set the clock in BCD mode.
