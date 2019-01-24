@@ -33,6 +33,19 @@ void RealTimeClock::enableTickInterrupt()
   RTCCTL01 = RTCCTL01 | RTCRDYIE;
 }
 
+boolean RealTimeClock::running()
+{
+  // The clock runs when the RTCHOLD bit is clear.
+  if (RTCCTL1 & (~RTCHOLD))
+  {
+    return true;
+  }
+  else
+  {
+    return false;
+  }
+}
+
 void RealTimeClock::start()
 {
   // The clock runs when the RTCHOLD bit is clear.
@@ -71,7 +84,7 @@ void RealTimeClock::updateReading()
 
 void RealTimeClock::write(RtcTimestamp timeToSet)
 {
-  const boolean clockWasRunning = !!(status());
+  const boolean clockWasRunning = running();
   // The clock must be stopped while we set the time in order to avoid
   // it from ticking and leaving us with a potentially incorrect time.
   stop();
@@ -139,15 +152,6 @@ uint8_t RealTimeClock::available()
     return RTC_SAFE_TO_READ;
   }
   return RTC_UNSAFE_TO_READ;
-}
-
-uint8_t RealTimeClock::status()
-{
-  if (RTCCTL01 & RTCHOLD)
-  {
-    return 0;
-  }
-  return 1;
 }
 
 void RealTimeClock::disable()

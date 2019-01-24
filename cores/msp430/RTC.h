@@ -65,9 +65,6 @@ class RealTimeClock
     // Checks if RTC can be read safely.
     uint8_t available();
 
-    // Checks if RTC is enabled.
-    uint8_t status();
-
     // Turns RTC off.
     void disable();
 
@@ -100,6 +97,10 @@ class RealTimeClock
 
     // Enable the clock tick interrupt.
     void enableTickInterrupt();
+
+    // Return true if the real-time clock is running; otherwise return
+    // false.
+    boolean running();
 
     // Start the clock.
     void start();
