@@ -36,7 +36,7 @@ struct RtcTimestamp
   uint8_t seconds;
 };
 
-class RealTimeClock
+class RTCClass
 {
   public:
     // Calibration output frequency used by RTC.enableCalibrationOutput()
@@ -117,6 +117,6 @@ class RealTimeClock
     boolean tickInterruptEnabled();
 };
 
-extern RealTimeClock RTC;
+extern RTCClass RTC;
 
 #endif

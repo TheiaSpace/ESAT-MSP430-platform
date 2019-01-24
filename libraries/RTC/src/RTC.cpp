@@ -21,19 +21,19 @@
 #include "RTC.h"
 #include <Arduino.h>
 
-void RealTimeClock::begin()
+void RTCClass::begin()
 {
   UCSCTL6_L &= (~XCAP_3); // Sets minimum capacitance for XT1 RTC crystal oscillator.
   RTCCTL01 = RTCMODE; // Also clears RTCHOLD to enable RTC.
   enableTickInterrupt();
 }
 
-void RealTimeClock::disable()
+void RTCClass::disable()
 {
   RTCCTL01 = RTCHOLD; // Sets whole RTCCTL01 to reset state.
 }
 
-void RealTimeClock::disableCalibrationOutput()
+void RTCClass::disableCalibrationOutput()
 {
   // Pin peripheral selection shared with ESP0 GPIO0 on OBC.
   bitClear(P2DIR, 6);
@@ -41,13 +41,13 @@ void RealTimeClock::disableCalibrationOutput()
   RTCCTL23_H = 0;
 }
 
-void RealTimeClock::disableTickInterrupt()
+void RTCClass::disableTickInterrupt()
 {
   // The clock tick interrupt is disabled when the RTCRDYIE bit is clear.
   RTCCTL01 = RTCCTL01 & (~RTCRDYIE);
 }
 
-void RealTimeClock::enableCalibrationOutput(const RealTimeClock::CalibrationOutputFrequency frequency)
+void RTCClass::enableCalibrationOutput(const RTCClass::CalibrationOutputFrequency frequency)
 {
   // Pin peripheral selection shared with ESP0 GPIO0 on OBC.
   bitSet(P2DIR, 6);
@@ -55,13 +55,13 @@ void RealTimeClock::enableCalibrationOutput(const RealTimeClock::CalibrationOutp
   RTCCTL23_H = byte(frequency & 0xFF);
 }
 
-void RealTimeClock::enableTickInterrupt()
+void RTCClass::enableTickInterrupt()
 {
   // The clock tick interrupt is enabled when the RTCRDYIE bit is set.
   RTCCTL01 = RTCCTL01 | RTCRDYIE;
 }
 
-RtcTimestamp RealTimeClock::read()
+RtcTimestamp RTCClass::read()
 {
   const boolean tickInterruptWasEnabled = tickInterruptEnabled();
   // The tick interrupt must be stopped while we copy the current time
@@ -87,7 +87,7 @@ RtcTimestamp RealTimeClock::read()
   return readTime;
 }
 
-boolean RealTimeClock::running()
+boolean RTCClass::running()
 {
   // The clock runs when the RTCHOLD bit is clear.
   if (RTCCTL1 & (~RTCHOLD))
@@ -100,19 +100,19 @@ boolean RealTimeClock::running()
   }
 }
 
-void RealTimeClock::setBCDMode()
+void RTCClass::setBCDMode()
 {
   // The clock is in BCD mode when the RTCBCD bit is set.
   RTCCTL01 = RTCCTL01 | RTCBCD;
 }
 
-void RealTimeClock::setBinaryMode()
+void RTCClass::setBinaryMode()
 {
   // The clock is in binary mode when the RTCBCD bit is clear.
   RTCCTL01 = RTCCTL01 & (~RTCBCD);
 }
 
-void RealTimeClock::setCalibration(const int8_t calibrationValue)
+void RTCClass::setCalibration(const int8_t calibrationValue)
 {
   // This way allows you to set the desired calibration value directly.
   // If value is negative, a decrement is desired (if it is zero,
@@ -144,19 +144,19 @@ void RealTimeClock::setCalibration(const int8_t calibrationValue)
   }
 }
 
-void RealTimeClock::start()
+void RTCClass::start()
 {
   // The clock runs when the RTCHOLD bit is clear.
   RTCCTL01 = RTCCTL01 & (~RTCHOLD);
 }
 
-void RealTimeClock::stop()
+void RTCClass::stop()
 {
   // The clock halts when the RTCHOLD bit is set.
   RTCCTL01 = RTCCTL01 | RTCHOLD;
 }
 
-boolean RealTimeClock::tickInterruptEnabled()
+boolean RTCClass::tickInterruptEnabled()
 {
   // The clock tick interrupt is enabled when the RTCRDYIE bit is set.
   if (RTCCTL01 & RTCRDYIE)
@@ -169,7 +169,7 @@ boolean RealTimeClock::tickInterruptEnabled()
   }
 }
 
-void RealTimeClock::updateReading()
+void RTCClass::updateReading()
 {
   currentTime.seconds = RTCSEC;
   currentTime.minutes = RTCMIN;
@@ -180,7 +180,7 @@ void RealTimeClock::updateReading()
   currentTime.year = (RTCYEAR & 0x0FFF);
 }
 
-void RealTimeClock::write(const RtcTimestamp timeToSet)
+void RTCClass::write(const RtcTimestamp timeToSet)
 {
   const boolean clockWasRunning = running();
   // The clock must be stopped while we set the time in order to avoid
@@ -217,4 +217,4 @@ extern "C"
   }
 }
 
-RealTimeClock RTC;
+RTCClass RTC;
