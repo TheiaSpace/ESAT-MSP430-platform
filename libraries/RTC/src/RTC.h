@@ -21,10 +21,10 @@
 #ifndef RTC_h
 #define RTC_h
 
-#include <Energia.h>
-#include <inttypes.h>
-#include <msp430.h>
+#include <Arduino.h>
 
+// Timestamp used by the real-time clock.
+// It can hold either binary numbers or BCD numbers.
 struct RtcTimestamp
 {
   uint16_t year;
@@ -36,6 +36,8 @@ struct RtcTimestamp
   uint8_t seconds;
 };
 
+// Driver for the real-time clock found in MSP430 processors.
+// Use the global instance RTC.
 class RTCClass
 {
   public:
@@ -117,6 +119,7 @@ class RTCClass
     boolean tickInterruptEnabled();
 };
 
+// Global instance of RTCClass.
 extern RTCClass RTC;
 
 #endif /* RTC_h */

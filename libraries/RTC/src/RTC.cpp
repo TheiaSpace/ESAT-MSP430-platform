@@ -19,7 +19,6 @@
  */
 
 #include "RTC.h"
-#include <Arduino.h>
 
 void RTCClass::begin()
 {
