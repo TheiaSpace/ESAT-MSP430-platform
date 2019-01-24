@@ -119,4 +119,4 @@ class RTCClass
 
 extern RTCClass RTC;
 
-#endif
+#endif /* RTC_h */
