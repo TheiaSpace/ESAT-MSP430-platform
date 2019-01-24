@@ -16,14 +16,6 @@
 #include <inttypes.h>
 #include <msp430.h>
 
-#define DEFAULT_YEAR    2019
-#define DEFAULT_MONTH   1
-#define DEFAULT_DAY     1
-#define DEFAULT_DOW     0
-#define DEFAULT_HOURS   0
-#define DEFAULT_MINUTES 0
-#define DEFAULT_SECONDS 0
-
 #define RTC_CALIBRATION_SIGNAL_DISABLED 0
 #define RTC_CALIBRATION_SIGNAL_512HZ    1
 #define RTC_CALIBRATION_SIGNAL_256HZ    2
