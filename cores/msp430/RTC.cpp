@@ -24,7 +24,6 @@ void RealTimeClock::begin()
 void RealTimeClock::disable()
 {
   RTCCTL01 = RTCHOLD; // Sets whole RTCCTL01 to reset state.
-  return;
 }
 
 void RealTimeClock::disableTickInterrupt()
@@ -121,7 +120,6 @@ void RealTimeClock::setCalibration(int8_t calibrationValue)
                     | RTCCAL0_L)
                    & (((uint8_t) calibrationValue) / 4));
   }
-  return;
 }
 
 void RealTimeClock::setCalibrationOutput(uint8_t frequency)
@@ -135,14 +133,15 @@ void RealTimeClock::setCalibrationOutput(uint8_t frequency)
     P2DIR |= (1 << 6);
     P2SEL |= (1 << 6);
     RTCCTL23_H = frequency;
-    return;
   }
-  // Pin peripheral disable
-  // Shared with ESP0 GPIO0 on OBC.
-  P2SEL &= ~(1<<6);
-  P2DIR &= ~(1<<6);
-  RTCCTL23_H = 0;
-  return;
+  else
+  {
+    // Pin peripheral disable
+    // Shared with ESP0 GPIO0 on OBC.
+    P2SEL &= ~(1 << 6);
+    P2DIR &= ~(1 << 6);
+    RTCCTL23_H = 0;
+  }
 }
 
 void RealTimeClock::start()
