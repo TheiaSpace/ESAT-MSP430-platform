@@ -26,10 +26,26 @@ void RealTimeClock::disable()
   RTCCTL01 = RTCHOLD; // Sets whole RTCCTL01 to reset state.
 }
 
+void RealTimeClock::disableCalibrationOutput()
+{
+  // Pin peripheral selection shared with ESP0 GPIO0 on OBC.
+  bitClear(P2DIR, 6);
+  bitClear(P2SEL, 6);
+  RTCCTL23_H = 0;
+}
+
 void RealTimeClock::disableTickInterrupt()
 {
   // The clock tick interrupt is disabled when the RTCRDYIE bit is clear.
   RTCCTL01 = RTCCTL01 & (~RTCRDYIE);
+}
+
+void RealTimeClock::enableCalibrationOutput(const RealTimeClock::CalibrationOutputFrequency frequency)
+{
+  // Pin peripheral selection shared with ESP0 GPIO0 on OBC.
+  bitSet(P2DIR, 6);
+  bitSet(P2SEL, 6);
+  RTCCTL23_H = byte(frequency & 0xFF);
 }
 
 void RealTimeClock::enableTickInterrupt()
@@ -119,28 +135,6 @@ void RealTimeClock::setCalibration(int8_t calibrationValue)
                     | RTCCAL1_L
                     | RTCCAL0_L)
                    & (((uint8_t) calibrationValue) / 4));
-  }
-}
-
-void RealTimeClock::setCalibrationOutput(uint8_t frequency)
-{
-  if ((frequency == RTC_CALIBRATION_SIGNAL_512HZ)
-      || (frequency == RTC_CALIBRATION_SIGNAL_256HZ)
-      || (frequency == RTC_CALIBRATION_SIGNAL_1HZ))
-  {
-    // Pin peripheral selection
-    // shared with ESP0 GPIO0 on OBC.
-    P2DIR |= (1 << 6);
-    P2SEL |= (1 << 6);
-    RTCCTL23_H = frequency;
-  }
-  else
-  {
-    // Pin peripheral disable
-    // Shared with ESP0 GPIO0 on OBC.
-    P2SEL &= ~(1 << 6);
-    P2DIR &= ~(1 << 6);
-    RTCCTL23_H = 0;
   }
 }
 

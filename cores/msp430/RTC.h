@@ -16,11 +16,6 @@
 #include <inttypes.h>
 #include <msp430.h>
 
-#define RTC_CALIBRATION_SIGNAL_DISABLED 0
-#define RTC_CALIBRATION_SIGNAL_512HZ    1
-#define RTC_CALIBRATION_SIGNAL_256HZ    2
-#define RTC_CALIBRATION_SIGNAL_1HZ      3
-
 struct RtcTimestamp
 {
   uint16_t year;
@@ -35,6 +30,14 @@ struct RtcTimestamp
 class RealTimeClock
 {
   public:
+    // Calibration output frequency used by RTC.enableCalibrationOutput()
+    enum CalibrationOutputFrequency
+    {
+      CALIBRATION_OUTPUT_512HZ = 1,
+      CALIBRATION_OUTPUT_256HZ = 2,
+      CALIBRATION_OUTPUT_1HZ = 3
+    };
+
     // Start the clock.
     // The clock runs in binary mode by default; use RTC.setBCDMode()
     // if you need it to run in BCD mode.
@@ -42,6 +45,13 @@ class RealTimeClock
 
     // Turns RTC off.
     void disable();
+
+    // Disable the calibration output signal.
+    void disableCalibrationOutput();
+
+    // Enable the calibration output signal at the given frequency
+    // on pin P2.6 (RTCCLK).
+    void enableCalibrationOutput(CalibrationOutputFrequency frequency);
 
     // Retrieves timestamp from RTC registers, checking if no
     // registers are changing.
@@ -58,9 +68,6 @@ class RealTimeClock
 
     // Allows user to trim RTC frequency.
     void setCalibration(int8_t calibrationValue);
-
-    // Enables or disables calibration output waverform.
-    void setCalibrationOutput(uint8_t frequency);
 
     // Update the reading of the real-time clock driver in
     // response to real-time clock tick interrupts.  User code
