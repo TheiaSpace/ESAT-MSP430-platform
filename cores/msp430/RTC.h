@@ -40,15 +40,12 @@ class RealTimeClock
     // if you need it to run in BCD mode.
     void begin();
 
-    // Writes timestamp into RTC registers.
-    void write(RtcTimestamp timeToSet);
+    // Turns RTC off.
+    void disable();
 
     // Retrieves timestamp from RTC registers, checking if no
     // registers are changing.
     RtcTimestamp read();
-
-    // Turns RTC off.
-    void disable();
 
     // Set the clock in BCD mode.
     // Time will be encoded as BCD numbers.
@@ -69,6 +66,9 @@ class RealTimeClock
     // response to real-time clock tick interrupts.  User code
     // shouldn't care about this.
     void updateReading();
+
+    // Writes timestamp into RTC registers.
+    void write(RtcTimestamp timeToSet);
 
   private:
     // Current timestamp.

@@ -21,6 +21,12 @@ void RealTimeClock::begin()
   enableTickInterrupt();
 }
 
+void RealTimeClock::disable()
+{
+  RTCCTL01 = RTCHOLD; // Sets whole RTCCTL01 to reset state.
+  return;
+}
+
 void RealTimeClock::disableTickInterrupt()
 {
   // The clock tick interrupt is disabled when the RTCRDYIE bit is clear.
@@ -31,6 +37,32 @@ void RealTimeClock::enableTickInterrupt()
 {
   // The clock tick interrupt is enabled when the RTCRDYIE bit is set.
   RTCCTL01 = RTCCTL01 | RTCRDYIE;
+}
+
+RtcTimestamp RealTimeClock::read(void)
+{
+  const boolean tickInterruptWasEnabled = tickInterruptEnabled();
+  // The tick interrupt must be stopped while we copy the current time
+  // in order to avoid it from changing and leaving us with a
+  // potentially incorrect time.
+  disableTickInterrupt();
+  // We can safely copy the current time when the clock tick interrupt
+  // is disabled.
+  RtcTimestamp readTime;
+  readTime.seconds = currentTime.seconds;
+  readTime.minutes = currentTime.minutes;
+  readTime.hours = currentTime.hours;
+  readTime.dayOfWeek = currentTime.dayOfWeek;
+  readTime.dayOfMonth = currentTime.dayOfMonth;
+  readTime.month = currentTime.month;
+  readTime.year = currentTime.year;
+  // The tick interrupt must be enabled again if it was enabled
+  // before.
+  if (tickInterruptWasEnabled)
+  {
+    enableTickInterrupt();
+  }
+  return readTime;
 }
 
 boolean RealTimeClock::running()
@@ -56,6 +88,61 @@ void RealTimeClock::setBinaryMode()
 {
   // The clock is in binary mode when the RTCBCD bit is clear.
   RTCCTL01 = RTCCTL01 & (~RTCBCD);
+}
+
+void RealTimeClock::setCalibration(int8_t calibrationValue)
+{
+  // This way allows you to set the desired calibration value directly.
+  // If value is negative, a decrement is desired (if it is zero,
+  // calibration is disabled).
+  if (calibrationValue <= 0)
+  {
+    // Change to positive, disable positive sign bit, mask and divide
+    // by two because each step is -2 ppm.
+    calibrationValue *= -1;
+    RTCCTL23_L =
+      (RTCCAL5_L
+       | RTCCAL4_L
+       | RTCCAL3_L
+       | RTCCAL2_L
+       | RTCCAL1_L
+       | RTCCAL0_L)
+      & (((uint8_t) calibrationValue) / 2);
+  }
+  else
+  {
+    // Enable positive bit, mask and divide by 4 because each step is +4 ppm.
+    RTCCTL23_L =
+      RTCCALS_L | ((RTCCAL5_L
+                    | RTCCAL4_L
+                    | RTCCAL3_L
+                    | RTCCAL2_L
+                    | RTCCAL1_L
+                    | RTCCAL0_L)
+                   & (((uint8_t) calibrationValue) / 4));
+  }
+  return;
+}
+
+void RealTimeClock::setCalibrationOutput(uint8_t frequency)
+{
+  if ((frequency == RTC_CALIBRATION_SIGNAL_512HZ)
+      || (frequency == RTC_CALIBRATION_SIGNAL_256HZ)
+      || (frequency == RTC_CALIBRATION_SIGNAL_1HZ))
+  {
+    // Pin peripheral selection
+    // shared with ESP0 GPIO0 on OBC.
+    P2DIR |= (1 << 6);
+    P2SEL |= (1 << 6);
+    RTCCTL23_H = frequency;
+    return;
+  }
+  // Pin peripheral disable
+  // Shared with ESP0 GPIO0 on OBC.
+  P2SEL &= ~(1<<6);
+  P2DIR &= ~(1<<6);
+  RTCCTL23_H = 0;
+  return;
 }
 
 void RealTimeClock::start()
@@ -116,93 +203,6 @@ void RealTimeClock::write(RtcTimestamp timeToSet)
   {
     start();
   }
-}
-
-RtcTimestamp RealTimeClock::read(void)
-{
-  const boolean tickInterruptWasEnabled = tickInterruptEnabled();
-  // The tick interrupt must be stopped while we copy the current time
-  // in order to avoid it from changing and leaving us with a
-  // potentially incorrect time.
-  disableTickInterrupt();
-  // We can safely copy the current time when the clock tick interrupt
-  // is disabled.
-  RtcTimestamp readTime;
-  readTime.seconds = currentTime.seconds;
-  readTime.minutes = currentTime.minutes;
-  readTime.hours = currentTime.hours;
-  readTime.dayOfWeek = currentTime.dayOfWeek;
-  readTime.dayOfMonth = currentTime.dayOfMonth;
-  readTime.month = currentTime.month;
-  readTime.year = currentTime.year;
-  // The tick interrupt must be enabled again if it was enabled
-  // before.
-  if (tickInterruptWasEnabled)
-  {
-    enableTickInterrupt();
-  }
-  return readTime;
-}
-
-void RealTimeClock::disable()
-{
-  RTCCTL01 = RTCHOLD; // Sets whole RTCCTL01 to reset state.
-  return;
-}
-
-void RealTimeClock::setCalibration(int8_t calibrationValue)
-{
-  // This way allows you to set the desired calibration value directly.
-  // If value is negative, a decrement is desired (if it is zero,
-  // calibration is disabled).
-  if (calibrationValue <= 0)
-  {
-    // Change to positive, disable positive sign bit, mask and divide
-    // by two because each step is -2 ppm.
-    calibrationValue *= -1;
-    RTCCTL23_L =
-      (RTCCAL5_L
-       | RTCCAL4_L
-       | RTCCAL3_L
-       | RTCCAL2_L
-       | RTCCAL1_L
-       | RTCCAL0_L)
-      & (((uint8_t) calibrationValue) / 2);
-  }
-  else
-  {
-    // Enable positive bit, mask and divide by 4 because each step is +4 ppm.
-    RTCCTL23_L =
-      RTCCALS_L | ((RTCCAL5_L
-                    | RTCCAL4_L
-                    | RTCCAL3_L
-                    | RTCCAL2_L
-                    | RTCCAL1_L
-                    | RTCCAL0_L)
-                   & (((uint8_t) calibrationValue) / 4));
-  }
-  return;
-}
-
-void RealTimeClock::setCalibrationOutput(uint8_t frequency)
-{
-  if ((frequency == RTC_CALIBRATION_SIGNAL_512HZ)
-      || (frequency == RTC_CALIBRATION_SIGNAL_256HZ)
-      || (frequency == RTC_CALIBRATION_SIGNAL_1HZ))
-  {
-    // Pin peripheral selection
-    // shared with ESP0 GPIO0 on OBC.
-    P2DIR |= (1 << 6);
-    P2SEL |= (1 << 6);
-    RTCCTL23_H = frequency;
-    return;
-  }
-  // Pin peripheral disable
-  // Shared with ESP0 GPIO0 on OBC.
-  P2SEL &= ~(1<<6);
-  P2DIR &= ~(1<<6);
-  RTCCTL23_H = 0;
-  return;
 }
 
 extern "C"
