@@ -27,9 +27,6 @@
 #define RTC_DECIMAL 0
 #define RTC_BCD     1
 
-#define RTC_UNSAFE_TO_READ 0
-#define RTC_SAFE_TO_READ   1
-
 #define RTC_CALIBRATION_SIGNAL_DISABLED 0
 #define RTC_CALIBRATION_SIGNAL_512HZ    1
 #define RTC_CALIBRATION_SIGNAL_256HZ    2
@@ -58,9 +55,6 @@ class RealTimeClock
     // Retrieves timestamp from RTC registers, checking if no
     // registers are changing.
     RtcTimestamp read();
-
-    // Checks if RTC can be read safely.
-    uint8_t available();
 
     // Turns RTC off.
     void disable();

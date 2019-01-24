@@ -132,15 +132,6 @@ RtcTimestamp RealTimeClock::read(void)
   return readTime;
 }
 
-uint8_t RealTimeClock::available()
-{
-  if (RTCCTL01 & RTCRDY)
-  {
-    return RTC_SAFE_TO_READ;
-  }
-  return RTC_UNSAFE_TO_READ;
-}
-
 void RealTimeClock::disable()
 {
   RTCCTL01 = RTCHOLD; // Sets whole RTCCTL01 to reset state.
