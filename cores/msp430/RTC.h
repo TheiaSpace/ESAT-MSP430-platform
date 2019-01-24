@@ -89,4 +89,6 @@ class RealTimeClock
 				   
 };
 
+extern RealTimeClock RTC;
+
 #endif

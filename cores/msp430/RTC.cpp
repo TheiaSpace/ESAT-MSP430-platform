@@ -142,3 +142,5 @@ void RealTimeClock::setCalibrationOutput(uint8_t frequency)
 	RTCCTL23_H = 0;
 	return;
 }
+
+RealTimeClock RTC;
