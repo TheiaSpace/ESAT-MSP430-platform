@@ -68,6 +68,10 @@ class RTCClass
     // Return the current timestamp.
     RtcTimestamp read();
 
+    // Return true if the real-time clock is running; otherwise return
+    // false.
+    boolean running();
+
     // Set the clock in BCD mode.
     // Time will be encoded as BCD numbers.
     void setBCDMode();
@@ -103,10 +107,6 @@ class RTCClass
 
     // Enable the clock tick interrupt.
     void enableTickInterrupt();
-
-    // Return true if the real-time clock is running; otherwise return
-    // false.
-    boolean running();
 
     // Start the clock.
     void start();
