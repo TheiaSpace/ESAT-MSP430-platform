@@ -232,7 +232,7 @@ extern "C"
     // We have a clock tick interrupt when the RTCIV_RTCRDYIFG bit is
     // set.  We must update the time reading buffer when the clock
     // ticks.
-    if ((RTCIV & RTCIV_RTCRDYIFG) != 0)
+    if (RTCIV & RTCIV_RTCRDYIFG)
     {
       RTC.updateReading();
     }
