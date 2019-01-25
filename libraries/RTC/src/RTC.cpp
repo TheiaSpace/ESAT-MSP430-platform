@@ -229,6 +229,9 @@ extern "C"
   __attribute__((interrupt(RTC_VECTOR)))
   void RTC_ISR(void)
   {
+    // We have a clock tick interrupt when the RTCIV_RTCRDYIFG bit is
+    // set.  We must update the time reading buffer when the clock
+    // ticks.
     if ((RTCIV & RTCIV_RTCRDYIFG) != 0)
     {
       RTC.updateReading();
