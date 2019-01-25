@@ -20,6 +20,26 @@
 
 #include "RTC.h"
 
+// This library provides read and write access to the real-time clock
+// time registers, but with a small level of indirection and
+// complexity:
+// * Naive direct reads of the real-time clock time registers work
+//   most of the time, but they are not atomic (there are several time
+//   registers: one for the seconds, one for the minutes, one for the
+//   hour...), so they can result in a mangled timestamp if the clock
+//   ticks in the middle of a read.  We could poll the clock-is-ready
+//   bit, but naive polling will fail too with wrong timing.  There
+//   are several strategies for getting reliable reads; we opted for
+//   double-buffering the time, which is a well-known method for
+//   achieving this end.  The buffered time is updated once every
+//   clock tick.  Also, during time reads, we postpone possible
+//   updates until the read finishes, so the user always sees a
+//   correct time.
+// * Setting the time is simpler: to avoid clock ticks while in the
+//   middle of the process, we just stop the clock while we
+//   change the time registers and update the buffered time, and
+//   then start the clock back again.
+
 void RTCClass::begin()
 {
   UCSCTL6_L &= (~XCAP_3); // Sets minimum capacitance for XT1 RTC crystal oscillator.
@@ -209,7 +229,10 @@ extern "C"
   __attribute__((interrupt(RTC_VECTOR)))
   void RTC_ISR(void)
   {
-    if ((RTCIV & RTCIV_RTCRDYIFG) != 0)
+    // We have a clock tick interrupt when the RTCIV_RTCRDYIFG bit is
+    // set.  We must update the time reading buffer when the clock
+    // ticks.
+    if (RTCIV & RTCIV_RTCRDYIFG)
     {
       RTC.updateReading();
     }
