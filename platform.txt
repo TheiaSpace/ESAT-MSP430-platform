@@ -5,7 +5,7 @@
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
 
 name=Theia Space's ESAT boards (MSP430)
-version=3.0.0
+version=3.0.1
 
 # Compile variables
 # -----------------
