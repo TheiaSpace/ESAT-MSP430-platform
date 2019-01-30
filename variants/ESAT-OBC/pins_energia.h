@@ -2,7 +2,7 @@
   pins_energia.h - Pin definition functions for Energia.
   Part of Theia Space's ESAT OBC (MSP430) core for Energia.
   Modified for Theia Space's ESAT OBC (MSP430) by Theia Space.
-  Copyright (c) 2017, 2018 Theia Space.
+  Copyright (c) 2017, 2018, 2019 Theia Space.
 
   Original file: pins_energia.h, part of the Energia platform.
   Copyright (c) 2012 Robert Wessels.
@@ -34,9 +34,9 @@
 #define BV(x) (1 << (x))
 #endif
 
-static const uint8_t SCK     = 48;  /* P3.2 */
-static const uint8_t MOSI    = 46;  /* P3.0 */
-static const uint8_t MISO    = 47;  /* P3.1 */
+static const uint8_t SCK     = 48;  /* P4.3 */
+static const uint8_t MOSI    = 46;  /* P4.1 */
+static const uint8_t MISO    = 47;  /* P4.2 */
 static const uint8_t TWISDA0 = 37;  /* P3.0 */
 static const uint8_t TWISCL0 = 38;  /* P3.1 */
 static const uint8_t AUX_UARTRXD = 52;  /* Receive  Data (RXD) at P4.5 */
@@ -225,339 +225,338 @@ const uintptr_t port_to_pmap[] = {
 
 const uint8_t digital_pin_to_timer[] = {
   NOT_ON_TIMER, /*  dummy */
-  NOT_ON_TIMER, /*  1 -  */
-  NOT_ON_TIMER, /*  2 - P5.6 */
-  NOT_ON_TIMER, /*  3 - P3.4 */
-  NOT_ON_TIMER, /*  4 - P3.3 */
-  NOT_ON_TIMER, /*  5 - P1.6 */
-  NOT_ON_TIMER, /*  6 - P6.6 */
-  NOT_ON_TIMER, /*  7 - P3.2 */
-  NOT_ON_TIMER, /*  8 - P2.7 */
-  NOT_ON_TIMER, /*  9 - P4.2 */
-  NOT_ON_TIMER, /* 10 - P4.1 */
-  NOT_ON_TIMER, /* 11 - P8.1 */
-  NOT_ON_TIMER, /* 12 - P2.3 */
-  NOT_ON_TIMER, /* 13 - P2.6 */
-  NOT_ON_TIMER, /* 14 - P3.2 */
-  NOT_ON_TIMER, /* 15 - P3.0 */
-  NOT_ON_TIMER, /* 16 - RST */
-  NOT_ON_TIMER, /* 17 - P7.4 */
-  NOT_ON_TIMER, /* 18 - P2.2 */
-  NOT_ON_TIMER, /* 19 - P2.0 */
-  NOT_ON_TIMER, /* 20 - GND  */
-  NOT_ON_TIMER, /* 21 - 5.0v */
-  T0A0,         /* 22 - GND */
-  T0A1,         /* 23 - P6.0 */
-  T0A2,         /* 24 - P6.1 */
-  T0A3,         /* 25 - P6.2 */
-  T0A4,         /* 26 - P6.3 */
-  NOT_ON_TIMER, /* 27 - P6.4 */
-  T1A0,         /* 28 - P7.0 */
-  T1A1,         /* 29 - P3.6 */
-  T1A2,         /* 30 - P3.5 */
-  NOT_ON_TIMER, /* 31 - P8.2 */
-  T2A0,         /* 32 - P3.7 */
-  T2A1,         /* 33 - P4.0 */
-  T2A2,         /* 34 - P4.3 */
-  NOT_ON_TIMER, /* 35 - P1.2 */
-  NOT_ON_TIMER, /* 36 - P1.3 */
-  NOT_ON_TIMER, /* 37 - P1.4 */
-  NOT_ON_TIMER, /* 38 - P1.5 */
-  NOT_ON_TIMER, /* 39 - P2.4 */
-  NOT_ON_TIMER, /* 40 - P2.5 */
-  NOT_ON_TIMER, /* 41 - P2.1 */
-  T0B5,         /* 42 - P1.1 */
-  T0B6,         /* 43 - P1.0 */
-  NOT_ON_TIMER, /* 44 - P4.7 */
-  NOT_ON_TIMER, /* 45 */
-  NOT_ON_TIMER, /* 46 */
-  NOT_ON_TIMER, /* 47 */
-  NOT_ON_TIMER, /* 48 */
-  NOT_ON_TIMER, /* 49 */
-  NOT_ON_TIMER, /* 50 */
-  NOT_ON_TIMER, /* 51 */
-  NOT_ON_TIMER, /* 52 */
-  NOT_ON_TIMER, /* 53 */
-  NOT_ON_TIMER, /* 54 */
-  T0B0,         /* 55 */
-  T0B1,         /* 56 */
-  T0B2,         /* 57 */
-  T0B3,         /* 58 */
-  T0B4,         /* 59 */
-  NOT_ON_TIMER, /* 60 */
-  NOT_ON_TIMER, /* 61 */
-  NOT_ON_TIMER, /* 62 */
-  NOT_ON_TIMER, /* 63 */
-  NOT_ON_TIMER, /* 64 */
-  NOT_ON_TIMER, /* 65 */
-  NOT_ON_TIMER, /* 66 */
-  NOT_ON_TIMER, /* 67 */
-  NOT_ON_TIMER, /* 68 */
-  NOT_ON_TIMER, /* 69 */
-  NOT_ON_TIMER, /* 70 */
-  NOT_ON_TIMER, /* 71 */
-  NOT_ON_TIMER, /* 72 */
-  NOT_ON_TIMER, /* 73 */
-  NOT_ON_TIMER, /* 74 */
-  NOT_ON_TIMER, /* 75 */
-  NOT_ON_TIMER, /* 76 */
-  NOT_ON_TIMER, /* 76 */
-  NOT_ON_TIMER, /* 77 */
-  NOT_ON_TIMER, /* 78 */
-  NOT_ON_TIMER, /* 79 */
-  NOT_ON_TIMER  /* 80 */
+  NOT_ON_TIMER, /*  1 - P6.4/CB4/A4 */
+  NOT_ON_TIMER, /*  2 - P6.5/CB5/A5 */
+  NOT_ON_TIMER, /*  3 - P6.6/CB6/A6 */
+  NOT_ON_TIMER, /*  4 - P6.7/CB7/A7 */
+  NOT_ON_TIMER, /*  5 - P7.0/CB8/A12 */
+  NOT_ON_TIMER, /*  6 - P7.1/CB9/A13 */
+  NOT_ON_TIMER, /*  7 - P7.2/CB10/A14 */
+  NOT_ON_TIMER, /*  8 - P7.3/CB11/A15 */
+  NOT_ON_TIMER, /*  9 - P5.0/A8/VREF+/VeRERF+ */
+  NOT_ON_TIMER, /* 10 - P5.1/A9/VREF-/VeREF- */
+  NOT_ON_TIMER, /* 11 - AVCC1 */
+  NOT_ON_TIMER, /* 12 - P5.4/XIN */
+  NOT_ON_TIMER, /* 13 - P5.5/XOUT */
+  NOT_ON_TIMER, /* 14 - AVSS1 */
+  NOT_ON_TIMER, /* 15 - P8.0 */
+  NOT_ON_TIMER, /* 16 - P8.1 */
+  NOT_ON_TIMER, /* 17 - P8.2 */
+  NOT_ON_TIMER, /* 18 - DVCC1 */
+  NOT_ON_TIMER, /* 19 - DVSS1 */
+  NOT_ON_TIMER, /* 20 - VCORE  */
+  NOT_ON_TIMER, /* 21 - P1.0/TA0CLK/ACLK */
+  T0A0,         /* 22 - P1.1/TA0.0 */
+  T0A1,         /* 23 - P1.2/TA0.1 */
+  T0A2,         /* 24 - P1.3/TA0.2 */
+  T0A3,         /* 25 - P1.4/TA0.3 */
+  T0A4,         /* 26 - P1.5/TA0.4 */
+  NOT_ON_TIMER, /* 27 - P1.6/TA1CLK/CBOUT */
+  T1A0,         /* 28 - P1.7/TA1.0 */
+  T1A1,         /* 29 - P2.0/TA1.1 */
+  T1A2,         /* 30 - P2.1/TA1.2 */
+  NOT_ON_TIMER, /* 31 - P2.2/TA2CLK/SMCLK */
+  T2A0,         /* 32 - P2.3/TA2.0 */
+  T2A1,         /* 33 - P2.4/TA2.1 */
+  T2A2,         /* 34 - P2.5/TA2.2 */
+  NOT_ON_TIMER, /* 35 - P2.6/RTCCLK/DMAE0 */
+  NOT_ON_TIMER, /* 36 - P2.7/UCB0STE/UCA0CLK */
+  NOT_ON_TIMER, /* 37 - P3.0/UCB0SIMO/UCB0SDA */
+  NOT_ON_TIMER, /* 38 - P3.1/UCB0SOMI/UCB0SCL */
+  NOT_ON_TIMER, /* 39 - P3.2/UCB0CLK/UCA0STE */
+  NOT_ON_TIMER, /* 40 - P3.3/UCA0TXD/UCA0SIMO */
+  NOT_ON_TIMER, /* 41 - P3.4/UCA0RXD/UCA0SOMI */
+  T0B5,         /* 42 - P3.5/TB0.5 */
+  T0B6,         /* 43 - P3.6/TB0.6 */
+  NOT_ON_TIMER, /* 44 - P3.7/TB0OUTH/SVMOUT */
+  NOT_ON_TIMER, /* 45 - P4.0/PM_UCB1STE/PM_UCA1CLK */
+  NOT_ON_TIMER, /* 46 - P4.1/PM_UCB1SIMO/PM_UCB1SDA */
+  NOT_ON_TIMER, /* 47 - P4.2/PM_UCB1SOMI/PM_UCB1SCL */
+  NOT_ON_TIMER, /* 48 - P4.3/PM_UCB1CLK/PM_UCA1STE */
+  NOT_ON_TIMER, /* 49 - DVSS2 */
+  NOT_ON_TIMER, /* 50 - DVCC2 */
+  NOT_ON_TIMER, /* 51 - P4.4/PM_UCA1TXD/PM_UCA1SIMO */
+  NOT_ON_TIMER, /* 52 - P4.5/PM_UCA1RXD/PM_UCA1SOMI */
+  NOT_ON_TIMER, /* 53 - P4.6/PM_NONE */
+  NOT_ON_TIMER, /* 54 - P4.7/PM_NONE */
+  T0B0,         /* 55 - P5.6/TB0.0 */
+  T0B1,         /* 56 - P5.7/TB0.1 */
+  T0B2,         /* 57 - P7.4/TB0.2 */
+  T0B3,         /* 58 - P7.5/TB0.3 */
+  T0B4,         /* 59 - P7.6/TB0.4 */
+  NOT_ON_TIMER, /* 60 - P7.7/TB0CLK/MCLK */
+  NOT_ON_TIMER, /* 61 - VSSU */
+  NOT_ON_TIMER, /* 62 - PU.0/DP */
+  NOT_ON_TIMER, /* 63 - PUR */
+  NOT_ON_TIMER, /* 64 - PU.1/DM */
+  NOT_ON_TIMER, /* 65 - VBUS */
+  NOT_ON_TIMER, /* 66 - VUSB */
+  NOT_ON_TIMER, /* 67 - V18 */
+  NOT_ON_TIMER, /* 68 - AVSS2 */
+  NOT_ON_TIMER, /* 69 - P5.2/XT2IN */
+  NOT_ON_TIMER, /* 70 - P5.3/XT2OUT */
+  NOT_ON_TIMER, /* 71 - TEST/SBWTCK */
+  NOT_ON_TIMER, /* 72 - PJ.0/TD0 */
+  NOT_ON_TIMER, /* 73 - PJ.1/TDI/TCLK */
+  NOT_ON_TIMER, /* 74 - PJ.2/TMS */
+  NOT_ON_TIMER, /* 75 - PJ.3/TCK */
+  NOT_ON_TIMER, /* 76 - RST/NMI/SBWTDIO */
+  NOT_ON_TIMER, /* 77 - P6.0/CB0/A0  */
+  NOT_ON_TIMER, /* 78 - P6.1/CB1/A1 */
+  NOT_ON_TIMER, /* 79 - P6.2/CB2/A2 */
+  NOT_ON_TIMER, /* 80 - P6.3/CB3/A3 */
 };
 
 const uint8_t digital_pin_to_port[] = {
-  NOT_A_PIN, /* dummy */
-  P6,        /* 1 */
-  P6,        /* 2 */
-  P6,        /* 3 */
-  P6,        /* 4 */
-  P7,        /* 5 */
-  P7,        /* 6 */
-  P7,        /* 7 */
-  P7,        /* 8 */
-  P5,        /* 9 */
-  P5,        /* 10 */
-  NOT_A_PIN, /* 11 */
-  P5,        /* 12 */
-  P5,        /* 13 */
-  NOT_A_PIN, /* 14 */
-  P8,        /* 15 */
-  P8,        /* 16 */
-  P8,        /* 17 */
-  NOT_A_PIN, /* 18 */
-  NOT_A_PIN, /* 19 */
-  NOT_A_PIN, /* 20 */
-  P1,        /* 21 */
-  P1,        /* 22 */
-  P1,        /* 23 */
-  P1,        /* 24 */
-  P1,        /* 25 */
-  P1,        /* 26 */
-  P1,        /* 27 */
-  P1,        /* 28 */
-  P2,        /* 29 */
-  P2,        /* 30 */
-  P2,        /* 31 */
-  P2,        /* 32 */
-  P2,        /* 33 */
-  P2,        /* 34 */
-  P2,        /* 35 */
-  P2,        /* 36 */
-  P3,        /* 37 */
-  P3,        /* 38 */
-  P3,        /* 39 */
-  P3,        /* 40 */
-  P3,        /* 41 */
-  P3,        /* 42 */
-  P3,        /* 43 */
-  P3,        /* 44 */
-  P4,        /* 45 */
-  P4,        /* 46 */
-  P4,        /* 47 */
-  P4,        /* 48 */
-  NOT_A_PIN, /* 49 */
-  NOT_A_PIN, /* 50 */
-  P4,        /* 51 */
-  P4,        /* 52 */
-  P4,        /* 53 */
-  P4,        /* 54 */
-  P5,        /* 55 */
-  P5,        /* 56 */
-  P7,        /* 57 */
-  P7,        /* 58 */
-  P7,        /* 59 */
-  P7,        /* 60 */
-  NOT_A_PIN, /* 61 */
-  NOT_A_PIN, /* 62 */
-  NOT_A_PIN, /* 63 */
-  NOT_A_PIN, /* 64 */
-  NOT_A_PIN, /* 65 */
-  NOT_A_PIN, /* 66 */
-  NOT_A_PIN, /* 67 */
-  NOT_A_PIN, /* 68 */
-  P5,        /* 69 */
-  P5,        /* 70 */
-  NOT_A_PIN, /* 71 */
-  NOT_A_PIN, /* 72 */
-  NOT_A_PIN, /* 73 */
-  NOT_A_PIN, /* 74 */
-  NOT_A_PIN, /* 75 */
-  NOT_A_PIN, /* 76 */
-  P6,        /* 77 */
-  P6,        /* 78 */
-  P6,        /* 79 */
-  P6         /* 80 */
+  NOT_A_PIN, /*  dummy */
+  P6,        /*  1 - P6.4/CB4/A4 */
+  P6,        /*  2 - P6.5/CB5/A5 */
+  P6,        /*  3 - P6.6/CB6/A6 */
+  P6,        /*  4 - P6.7/CB7/A7 */
+  P7,        /*  5 - P7.0/CB8/A12 */
+  P7,        /*  6 - P7.1/CB9/A13 */
+  P7,        /*  7 - P7.2/CB10/A14 */
+  P7,        /*  8 - P7.3/CB11/A15 */
+  P5,        /*  9 - P5.0/A8/VREF+/VeRERF+ */
+  P5,        /* 10 - P5.1/A9/VREF-/VeREF- */
+  NOT_A_PIN, /* 11 - AVCC1 */
+  P5,        /* 12 - P5.4/XIN */
+  P5,        /* 13 - P5.5/XOUT */
+  NOT_A_PIN, /* 14 - AVSS1 */
+  P8,        /* 15 - P8.0 */
+  P8,        /* 16 - P8.1 */
+  P8,        /* 17 - P8.2 */
+  NOT_A_PIN, /* 18 - DVCC1 */
+  NOT_A_PIN, /* 19 - DVSS1 */
+  NOT_A_PIN, /* 20 - VCORE  */
+  P1,        /* 21 - P1.0/TA0CLK/ACLK */
+  P1,        /* 22 - P1.1/TA0.0 */
+  P1,        /* 23 - P1.2/TA0.1 */
+  P1,        /* 24 - P1.3/TA0.2 */
+  P1,        /* 25 - P1.4/TA0.3 */
+  P1,        /* 26 - P1.5/TA0.4 */
+  P1,        /* 27 - P1.6/TA1CLK/CBOUT */
+  P1,        /* 28 - P1.7/TA1.0 */
+  P2,        /* 29 - P2.0/TA1.1 */
+  P2,        /* 30 - P2.1/TA1.2 */
+  P2,        /* 31 - P2.2/TA2CLK/SMCLK */
+  P2,        /* 32 - P2.3/TA2.0 */
+  P2,        /* 33 - P2.4/TA2.1 */
+  P2,        /* 34 - P2.5/TA2.2 */
+  P2,        /* 35 - P2.6/RTCCLK/DMAE0 */
+  P2,        /* 36 - P2.7/UCB0STE/UCA0CLK */
+  P3,        /* 37 - P3.0/UCB0SIMO/UCB0SDA */
+  P3,        /* 38 - P3.1/UCB0SOMI/UCB0SCL */
+  P3,        /* 39 - P3.2/UCB0CLK/UCA0STE */
+  P3,        /* 40 - P3.3/UCA0TXD/UCA0SIMO */
+  P3,        /* 41 - P3.4/UCA0RXD/UCA0SOMI */
+  P3,        /* 42 - P3.5/TB0.5 */
+  P3,        /* 43 - P3.6/TB0.6 */
+  P3,        /* 44 - P3.7/TB0OUTH/SVMOUT */
+  P4,        /* 45 - P4.0/PM_UCB1STE/PM_UCA1CLK */
+  P4,        /* 46 - P4.1/PM_UCB1SIMO/PM_UCB1SDA */
+  P4,        /* 47 - P4.2/PM_UCB1SOMI/PM_UCB1SCL */
+  P4,        /* 48 - P4.3/PM_UCB1CLK/PM_UCA1STE */
+  NOT_A_PIN, /* 49 - DVSS2 */
+  NOT_A_PIN, /* 50 - DVCC2 */
+  P4,        /* 51 - P4.4/PM_UCA1TXD/PM_UCA1SIMO */
+  P4,        /* 52 - P4.5/PM_UCA1RXD/PM_UCA1SOMI */
+  P4,        /* 53 - P4.6/PM_NONE */
+  P4,        /* 54 - P4.7/PM_NONE */
+  P5,        /* 55 - P5.6/TB0.0 */
+  P5,        /* 56 - P5.7/TB0.1 */
+  P7,        /* 57 - P7.4/TB0.2 */
+  P7,        /* 58 - P7.5/TB0.3 */
+  P7,        /* 59 - P7.6/TB0.4 */
+  P7,        /* 60 - P7.7/TB0CLK/MCLK */
+  NOT_A_PIN, /* 61 - VSSU */
+  NOT_A_PIN, /* 62 - PU.0/DP */
+  NOT_A_PIN, /* 63 - PUR */
+  NOT_A_PIN, /* 64 - PU.1/DM */
+  NOT_A_PIN, /* 65 - VBUS */
+  NOT_A_PIN, /* 66 - VUSB */
+  NOT_A_PIN, /* 67 - V18 */
+  NOT_A_PIN, /* 68 - AVSS2 */
+  P5,        /* 69 - P5.2/XT2IN */
+  P5,        /* 70 - P5.3/XT2OUT */
+  NOT_A_PIN, /* 71 - TEST/SBWTCK */
+  NOT_A_PIN, /* 72 - PJ.0/TD0 */
+  NOT_A_PIN, /* 73 - PJ.1/TDI/TCLK */
+  NOT_A_PIN, /* 74 - PJ.2/TMS */
+  NOT_A_PIN, /* 75 - PJ.3/TCK */
+  NOT_A_PIN, /* 76 - RST/NMI/SBWTDIO */
+  P6,        /* 77 - P6.0/CB0/A0  */
+  P6,        /* 78 - P6.1/CB1/A1 */
+  P6,        /* 79 - P6.2/CB2/A2 */
+  P6         /* 80 - P6.3/CB3/A3 */
 };
 
 const uint8_t digital_pin_to_bit_mask[] = {
-  NOT_A_PIN, /* 0, pin count starts at 1 */
-  BV(4),     /* 1 */
-  BV(5),     /* 2 */
-  BV(6),     /* 3 */
-  BV(7),     /* 4 */
-  BV(0),     /* 5 */
-  BV(1),     /* 6 */
-  BV(2),     /* 7 */
-  BV(3),     /* 8 */
-  BV(0),     /* 9 */
-  BV(1),     /* 10 */
-  NOT_A_PIN, /* 11 */
-  BV(4),     /* 12 */
-  BV(5),     /* 13 */
-  NOT_A_PIN, /* 14 */
-  BV(0),     /* 15 */
-  BV(1),     /* 16 */
-  BV(2),     /* 17 */
-  NOT_A_PIN, /* 18 */
-  NOT_A_PIN, /* 19 */
-  NOT_A_PIN, /* 20 */
-  BV(0),     /* 21 */
-  BV(1),     /* 22 */
-  BV(2),     /* 23 */
-  BV(3),     /* 24 */
-  BV(4),     /* 25 */
-  BV(5),     /* 26 */
-  BV(6),     /* 27 */
-  BV(7),     /* 28 */
-  BV(0),     /* 29 */
-  BV(1),     /* 30 */
-  BV(2),     /* 31 */
-  BV(3),     /* 32 */
-  BV(4),     /* 33 */
-  BV(5),     /* 34 */
-  BV(6),     /* 35 */
-  BV(7),     /* 36 */
-  BV(0),     /* 37 */
-  BV(1),     /* 38 */
-  BV(2),     /* 39 */
-  BV(3),     /* 40 */
-  BV(4),     /* 41 */
-  BV(5),     /* 42 */
-  BV(6),     /* 43 */
-  BV(7),     /* 44 */
-  BV(0),     /* 45 */
-  BV(1),     /* 46 */
-  BV(2),     /* 47 */
-  BV(3),     /* 48 */
-  NOT_A_PIN, /* 49 */
-  NOT_A_PIN, /* 50 */
-  BV(4),     /* 51 */
-  BV(5),     /* 52 */
-  BV(6),     /* 53 */
-  BV(7),     /* 54 */
-  BV(6),     /* 55 */
-  BV(7),     /* 56 */
-  BV(4),     /* 57 */
-  BV(5),     /* 58 */
-  BV(6),     /* 59 */
-  BV(7),     /* 60 */
-  NOT_A_PIN, /* 61 */
-  NOT_A_PIN, /* 62 */
-  NOT_A_PIN, /* 63 */
-  NOT_A_PIN, /* 64 */
-  NOT_A_PIN, /* 65 */
-  NOT_A_PIN, /* 66 */
-  NOT_A_PIN, /* 67 */
-  NOT_A_PIN, /* 68 */
-  BV(2),     /* 69 */
-  BV(3),     /* 70 */
-  NOT_A_PIN, /* 71 */
-  NOT_A_PIN, /* 72 */
-  NOT_A_PIN, /* 73 */
-  NOT_A_PIN, /* 74 */
-  NOT_A_PIN, /* 75 */
-  NOT_A_PIN, /* 76 */
-  BV(0),     /* 77 */
-  BV(1),     /* 78 */
-  BV(2),     /* 79 */
-  BV(3)      /* 80 */
+  NOT_A_PIN, /*  dummy */
+  BV(4),     /*  1 - P6.4/CB4/A4 */
+  BV(5),     /*  2 - P6.5/CB5/A5 */
+  BV(6),     /*  3 - P6.6/CB6/A6 */
+  BV(7),     /*  4 - P6.7/CB7/A7 */
+  BV(0),     /*  5 - P7.0/CB8/A12 */
+  BV(1),     /*  6 - P7.1/CB9/A13 */
+  BV(2),     /*  7 - P7.2/CB10/A14 */
+  BV(3),     /*  8 - P7.3/CB11/A15 */
+  BV(0),     /*  9 - P5.0/A8/VREF+/VeRERF+ */
+  BV(1),     /* 10 - P5.1/A9/VREF-/VeREF- */
+  NOT_A_PIN, /* 11 - AVCC1 */
+  BV(4),     /* 12 - P5.4/XIN */
+  BV(5),     /* 13 - P5.5/XOUT */
+  NOT_A_PIN, /* 14 - AVSS1 */
+  BV(0),     /* 15 - P8.0 */
+  BV(1),     /* 16 - P8.1 */
+  BV(2),     /* 17 - P8.2 */
+  NOT_A_PIN, /* 18 - DVCC1 */
+  NOT_A_PIN, /* 19 - DVSS1 */
+  NOT_A_PIN, /* 20 - VCORE  */
+  BV(0),     /* 21 - P1.0/TA0CLK/ACLK */
+  BV(1),     /* 22 - P1.1/TA0.0 */
+  BV(2),     /* 23 - P1.2/TA0.1 */
+  BV(3),     /* 24 - P1.3/TA0.2 */
+  BV(4),     /* 25 - P1.4/TA0.3 */
+  BV(5),     /* 26 - P1.5/TA0.4 */
+  BV(6),     /* 27 - P1.6/TA1CLK/CBOUT */
+  BV(7),     /* 28 - P1.7/TA1.0 */
+  BV(0),     /* 29 - P2.0/TA1.1 */
+  BV(1),     /* 30 - P2.1/TA1.2 */
+  BV(2),     /* 31 - P2.2/TA2CLK/SMCLK */
+  BV(3),     /* 32 - P2.3/TA2.0 */
+  BV(4),     /* 33 - P2.4/TA2.1 */
+  BV(5),     /* 34 - P2.5/TA2.2 */
+  BV(6),     /* 35 - P2.6/RTCCLK/DMAE0 */
+  BV(7),     /* 36 - P2.7/UCB0STE/UCA0CLK */
+  BV(0),     /* 37 - P3.0/UCB0SIMO/UCB0SDA */
+  BV(1),     /* 38 - P3.1/UCB0SOMI/UCB0SCL */
+  BV(2),     /* 39 - P3.2/UCB0CLK/UCA0STE */
+  BV(3),     /* 40 - P3.3/UCA0TXD/UCA0SIMO */
+  BV(4),     /* 41 - P3.4/UCA0RXD/UCA0SOMI */
+  BV(5),     /* 42 - P3.5/TB0.5 */
+  BV(6),     /* 43 - P3.6/TB0.6 */
+  BV(7),     /* 44 - P3.7/TB0OUTH/SVMOUT */
+  BV(0),     /* 45 - P4.0/PM_UCB1STE/PM_UCA1CLK */
+  BV(1),     /* 46 - P4.1/PM_UCB1SIMO/PM_UCB1SDA */
+  BV(2),     /* 47 - P4.2/PM_UCB1SOMI/PM_UCB1SCL */
+  BV(3),     /* 48 - P4.3/PM_UCB1CLK/PM_UCA1STE */
+  NOT_A_PIN, /* 49 - DVSS2 */
+  NOT_A_PIN, /* 50 - DVCC2 */
+  BV(4),     /* 51 - P4.4/PM_UCA1TXD/PM_UCA1SIMO */
+  BV(5),     /* 52 - P4.5/PM_UCA1RXD/PM_UCA1SOMI */
+  BV(6),     /* 53 - P4.6/PM_NONE */
+  BV(7),     /* 54 - P4.7/PM_NONE */
+  BV(6),     /* 55 - P5.6/TB0.0 */
+  BV(7),     /* 56 - P5.7/TB0.1 */
+  BV(4),     /* 57 - P7.4/TB0.2 */
+  BV(5),     /* 58 - P7.5/TB0.3 */
+  BV(6),     /* 59 - P7.6/TB0.4 */
+  BV(7),     /* 60 - P7.7/TB0CLK/MCLK */
+  NOT_A_PIN, /* 61 - VSSU */
+  NOT_A_PIN, /* 62 - PU.0/DP */
+  NOT_A_PIN, /* 63 - PUR */
+  NOT_A_PIN, /* 64 - PU.1/DM */
+  NOT_A_PIN, /* 65 - VBUS */
+  NOT_A_PIN, /* 66 - VUSB */
+  NOT_A_PIN, /* 67 - V18 */
+  NOT_A_PIN, /* 68 - AVSS2 */
+  BV(2),     /* 69 - P5.2/XT2IN */
+  BV(3),     /* 70 - P5.3/XT2OUT */
+  NOT_A_PIN, /* 71 - TEST/SBWTCK */
+  NOT_A_PIN, /* 72 - PJ.0/TD0 */
+  NOT_A_PIN, /* 73 - PJ.1/TDI/TCLK */
+  NOT_A_PIN, /* 74 - PJ.2/TMS */
+  NOT_A_PIN, /* 75 - PJ.3/TCK */
+  NOT_A_PIN, /* 76 - RST/NMI/SBWTDIO */
+  BV(0),     /* 77 - P6.0/CB0/A0  */
+  BV(1),     /* 78 - P6.1/CB1/A1 */
+  BV(2),     /* 79 - P6.2/CB2/A2 */
+  BV(3)      /* 80 - P6.3/CB3/A3 */
 };
 
 const uint32_t digital_pin_to_analog_in[] = {
-  NOT_ON_ADC, /* dummy */
-  4,          /* 1 - */
-  5,          /* 2 - A5 */
-  6,          /* 3 - P3.4 */
-  7,          /* 4 - P3.3 */
-  12,         /* 5 - P1.6 */
-  13,         /* 6 - A6 */
-  14,         /* 7 - P3.2 */
-  15,         /* 8 - P2.7 */
-  8,          /* 9 - P4.2 */
-  9,          /* 10 - P4.1 */
-  NOT_ON_ADC, /* 11 - P8.1 */
-  NOT_ON_ADC, /* 12 - P2.3 */
-  NOT_ON_ADC, /* 13 - P2.6 */
-  NOT_ON_ADC, /* 14 - P3.1 */
-  NOT_ON_ADC, /* 15 - P3.0 */
-  NOT_ON_ADC, /* 16 - RST */
-  NOT_ON_ADC, /* 17 - P7.4 */
-  NOT_ON_ADC, /* 18 - P2.2 */
-  NOT_ON_ADC, /* 19 - P2.0 */
-  NOT_ON_ADC, /* 20 - GND */
-  NOT_ON_ADC, /* 21 - 5V */
-  NOT_ON_ADC, /* 22 - GND */
-  NOT_ON_ADC, /* 23 - A0 */
-  NOT_ON_ADC, /* 24 - A1 */
-  NOT_ON_ADC, /* 25 - A2 */
-  NOT_ON_ADC, /* 26 - A3 */
-  NOT_ON_ADC, /* 27 - A4 */
-  NOT_ON_ADC, /* 28 - A12 */
-  NOT_ON_ADC, /* 29 - P3.6 */
-  NOT_ON_ADC, /* 30 - P3.5 */
-  NOT_ON_ADC, /* 31 - P8.2 */
-  NOT_ON_ADC, /* 32 - P3.7 */
-  NOT_ON_ADC, /* 33 - P4.0 */
-  NOT_ON_ADC, /* 34 - P4.3 */
-  NOT_ON_ADC, /* 35 - P1.2 */
-  NOT_ON_ADC, /* 36 - P1.3 */
-  NOT_ON_ADC, /* 37 - P1.4 */
-  NOT_ON_ADC, /* 38 - P1.5 */
-  NOT_ON_ADC, /* 39 - P2.4 */
-  NOT_ON_ADC, /* 40 - P2.5 */
-  NOT_ON_ADC, /* 41 - GND */
-  NOT_ON_ADC, /* 42 - 5V */
-  NOT_ON_ADC, /* 43 - GND */
-  NOT_ON_ADC, /* 44 - A0 */
-  NOT_ON_ADC, /* 45 - A1 */
-  NOT_ON_ADC, /* 46 - A2 */
-  NOT_ON_ADC, /* 47 - A3 */
-  NOT_ON_ADC, /* 48 - A4 */
-  NOT_ON_ADC, /* 49 - A12 */
-  NOT_ON_ADC, /* 50 - P3.6 */
-  NOT_ON_ADC, /* 51 - P3.5 */
-  NOT_ON_ADC, /* 52 - P8.2 */
-  NOT_ON_ADC, /* 53 - P3.7 */
-  NOT_ON_ADC, /* 54 - P4.0 */
-  NOT_ON_ADC, /* 55 - P4.3 */
-  NOT_ON_ADC, /* 56 - P1.2 */
-  NOT_ON_ADC, /* 57 - P1.3 */
-  NOT_ON_ADC, /* 58 - P1.4 */
-  NOT_ON_ADC, /* 59 - P1.5 */
-  NOT_ON_ADC, /* 60 - P2.4 */
-  NOT_ON_ADC, /* 61 - P2.5 */
-  NOT_ON_ADC, /* 62 - GND */
-  NOT_ON_ADC, /* 63 - 5V */
-  NOT_ON_ADC, /* 64 - GND */
-  NOT_ON_ADC, /* 65 - A0 */
-  NOT_ON_ADC, /* 66 - A1 */
-  NOT_ON_ADC, /* 67 - A2 */
-  NOT_ON_ADC, /* 68 - A3 */
-  NOT_ON_ADC, /* 69 - A4 */
-  NOT_ON_ADC, /* 70 - A12 */
-  NOT_ON_ADC, /* 71 - P3.6 */
-  NOT_ON_ADC, /* 72 - P3.5 */
-  NOT_ON_ADC, /* 73 - P8.2 */
-  NOT_ON_ADC, /* 74 - P3.7 */
-  NOT_ON_ADC, /* 75 - P4.0 */
-  NOT_ON_ADC, /* 76 - P4.3 */
-  0,          /* 77 - P1.2 */
-  1,          /* 78 - P1.3 */
-  2,          /* 79 - P1.4 */
-  3           /* 80 - P1.5 */
+  NOT_ON_ADC, /*  dummy */
+  4,          /*  1 - P6.4/CB4/A4 */
+  5,          /*  2 - P6.5/CB5/A5 */
+  6,          /*  3 - P6.6/CB6/A6 */
+  7,          /*  4 - P6.7/CB7/A7 */
+  12,         /*  5 - P7.0/CB8/A12 */
+  13,         /*  6 - P7.1/CB9/A13 */
+  14,         /*  7 - P7.2/CB10/A14 */
+  15,         /*  8 - P7.3/CB11/A15 */
+  8,          /*  9 - P5.0/A8/VREF+/VeRERF+ */
+  9,          /* 10 - P5.1/A9/VREF-/VeREF- */
+  NOT_ON_ADC, /* 11 - AVCC1 */
+  NOT_ON_ADC, /* 12 - P5.4/XIN */
+  NOT_ON_ADC, /* 13 - P5.5/XOUT */
+  NOT_ON_ADC, /* 14 - AVSS1 */
+  NOT_ON_ADC, /* 15 - P8.0 */
+  NOT_ON_ADC, /* 16 - P8.1 */
+  NOT_ON_ADC, /* 17 - P8.2 */
+  NOT_ON_ADC, /* 18 - DVCC1 */
+  NOT_ON_ADC, /* 19 - DVSS1 */
+  NOT_ON_ADC, /* 20 - VCORE  */
+  NOT_ON_ADC, /* 21 - P1.0/TA0CLK/ACLK */
+  NOT_ON_ADC, /* 22 - P1.1/TA0.0 */
+  NOT_ON_ADC, /* 23 - P1.2/TA0.1 */
+  NOT_ON_ADC, /* 24 - P1.3/TA0.2 */
+  NOT_ON_ADC, /* 25 - P1.4/TA0.3 */
+  NOT_ON_ADC, /* 26 - P1.5/TA0.4 */
+  NOT_ON_ADC, /* 27 - P1.6/TA1CLK/CBOUT */
+  NOT_ON_ADC, /* 28 - P1.7/TA1.0 */
+  NOT_ON_ADC, /* 29 - P2.0/TA1.1 */
+  NOT_ON_ADC, /* 30 - P2.1/TA1.2 */
+  NOT_ON_ADC, /* 31 - P2.2/TA2CLK/SMCLK */
+  NOT_ON_ADC, /* 32 - P2.3/TA2.0 */
+  NOT_ON_ADC, /* 33 - P2.4/TA2.1 */
+  NOT_ON_ADC, /* 34 - P2.5/TA2.2 */
+  NOT_ON_ADC, /* 35 - P2.6/RTCCLK/DMAE0 */
+  NOT_ON_ADC, /* 36 - P2.7/UCB0STE/UCA0CLK */
+  NOT_ON_ADC, /* 37 - P3.0/UCB0SIMO/UCB0SDA */
+  NOT_ON_ADC, /* 38 - P3.1/UCB0SOMI/UCB0SCL */
+  NOT_ON_ADC, /* 39 - P3.2/UCB0CLK/UCA0STE */
+  NOT_ON_ADC, /* 40 - P3.3/UCA0TXD/UCA0SIMO */
+  NOT_ON_ADC, /* 41 - P3.4/UCA0RXD/UCA0SOMI */
+  NOT_ON_ADC, /* 42 - P3.5/TB0.5 */
+  NOT_ON_ADC, /* 43 - P3.6/TB0.6 */
+  NOT_ON_ADC, /* 44 - P3.7/TB0OUTH/SVMOUT */
+  NOT_ON_ADC, /* 45 - P4.0/PM_UCB1STE/PM_UCA1CLK */
+  NOT_ON_ADC, /* 46 - P4.1/PM_UCB1SIMO/PM_UCB1SDA */
+  NOT_ON_ADC, /* 47 - P4.2/PM_UCB1SOMI/PM_UCB1SCL */
+  NOT_ON_ADC, /* 48 - P4.3/PM_UCB1CLK/PM_UCA1STE */
+  NOT_ON_ADC, /* 49 - DVSS2 */
+  NOT_ON_ADC, /* 50 - DVCC2 */
+  NOT_ON_ADC, /* 51 - P4.4/PM_UCA1TXD/PM_UCA1SIMO */
+  NOT_ON_ADC, /* 52 - P4.5/PM_UCA1RXD/PM_UCA1SOMI */
+  NOT_ON_ADC, /* 53 - P4.6/PM_NONE */
+  NOT_ON_ADC, /* 54 - P4.7/PM_NONE */
+  NOT_ON_ADC, /* 55 - P5.6/TB0.0 */
+  NOT_ON_ADC, /* 56 - P5.7/TB0.1 */
+  NOT_ON_ADC, /* 57 - P7.4/TB0.2 */
+  NOT_ON_ADC, /* 58 - P7.5/TB0.3 */
+  NOT_ON_ADC, /* 59 - P7.6/TB0.4 */
+  NOT_ON_ADC, /* 60 - P7.7/TB0CLK/MCLK */
+  NOT_ON_ADC, /* 61 - VSSU */
+  NOT_ON_ADC, /* 62 - PU.0/DP */
+  NOT_ON_ADC, /* 63 - PUR */
+  NOT_ON_ADC, /* 64 - PU.1/DM */
+  NOT_ON_ADC, /* 65 - VBUS */
+  NOT_ON_ADC, /* 66 - VUSB */
+  NOT_ON_ADC, /* 67 - V18 */
+  NOT_ON_ADC, /* 68 - AVSS2 */
+  NOT_ON_ADC, /* 69 - P5.2/XT2IN */
+  NOT_ON_ADC, /* 70 - P5.3/XT2OUT */
+  NOT_ON_ADC, /* 71 - TEST/SBWTCK */
+  NOT_ON_ADC, /* 72 - PJ.0/TD0 */
+  NOT_ON_ADC, /* 73 - PJ.1/TDI/TCLK */
+  NOT_ON_ADC, /* 74 - PJ.2/TMS */
+  NOT_ON_ADC, /* 75 - PJ.3/TCK */
+  NOT_ON_ADC, /* 76 - RST/NMI/SBWTDIO */
+  0,          /* 77 - P6.0/CB0/A0  */
+  1,          /* 78 - P6.1/CB1/A1 */
+  2,          /* 79 - P6.2/CB2/A2 */
+  3           /* 80 - P6.3/CB3/A3 */
 };
 #endif // #ifdef ARDUINO_MAIN
 #endif // #ifndef Pins_Energia_h
