@@ -2,7 +2,7 @@
   pins_energia.h - Pin definition functions for Energia.
   Part of Theia Space's ESAT EPS (MSP430) core for Energia.
   Modified for Theia Space's ESAT EPS (MSP430) by Theia Space.
-  Copyright (c) 2017, 2018 Theia Space.
+  Copyright (c) 2017, 2018, 2019 Theia Space.
 
   Original file: pins_energia.h, part of the Energia platform.
   Copyright (c) 2012 Robert Wessels.
@@ -85,8 +85,8 @@ static const uint8_t PWM1 = 23; /* PWM signal for MPPT 1 */
 static const uint8_t PWM2 = 24; /* PWM signal for MPPT 2 */
 
 /* Overcurrent detection */
-static const uint8_t OC5V = 33;  /* Overcurrent on the 5V line */
-static const uint8_t OC3V3 = 34; /* Overcurrent on the 3V3 line */
+static const uint8_t OC5V = 34;  /* Overcurrent on the 5V line */
+static const uint8_t OC3V3 = 33; /* Overcurrent on the 3V3 line */
 
 /* EPS interrupt line */
 static const uint8_t EMG = 28;
