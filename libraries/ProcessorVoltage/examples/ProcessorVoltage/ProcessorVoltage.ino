@@ -36,4 +36,6 @@ void loop()
   (void) Serial.print("Processor voltage: ");
   (void) Serial.print(ProcessorVoltage.read());
   (void) Serial.println(" V");
+  (void) Serial.print("Processor voltage (raw): ");
+  (void) Serial.println(ProcessorVoltage.readRaw());
 }

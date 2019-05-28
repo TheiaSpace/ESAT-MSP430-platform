@@ -33,6 +33,12 @@ class ProcessorTemperatureClass
   public:
     // Return the processor temperature in degrees Celsius.
     float read();
+
+    // Return the raw (uncalibrated) reading of the processor
+    // temperature analog-to-digital conversion.  This is an unsigned
+    // integer number ranging from 0 to 4095.  The raw reading versus
+    // actual temperature plot is a straight line.
+    word readRaw();
 };
 
 // Global instance of the library.

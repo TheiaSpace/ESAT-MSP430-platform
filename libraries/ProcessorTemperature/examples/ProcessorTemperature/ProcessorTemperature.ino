@@ -36,4 +36,6 @@ void loop()
   (void) Serial.print("Processor temperature: ");
   (void) Serial.print(ProcessorTemperature.read());
   (void) Serial.println(" degC");
+  (void) Serial.print("Processor temperature (raw): ");
+  (void) Serial.println(ProcessorTemperature.readRaw());
 }
