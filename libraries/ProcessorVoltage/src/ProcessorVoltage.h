@@ -33,6 +33,11 @@ class ProcessorVoltageClass
   public:
     // Return the processor supply voltage in volts.
     float read();
+
+    // Return the raw (uncalibrated) reading of the processor voltage
+    // analog-to-digital conversion.  This is half the supply voltage
+    // 2.0 volts, ranging from 0 to 4095.
+    word readRaw();
 };
 
 // Global instance of the library.

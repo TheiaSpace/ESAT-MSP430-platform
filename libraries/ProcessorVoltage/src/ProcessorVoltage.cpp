@@ -25,11 +25,16 @@
 
 float ProcessorVoltageClass::read()
 {
-  // Calling analogRead(VCC_2) returns the raw reading of half the
+  // Calling readRaw() returns the raw reading of half the
   // supply voltage referenced to 2.0 volts.
-  const float rawVoltage = 2 * float(analogRead(VCC_2));
+  const float rawVoltage = 2 * float(readRaw());
   const float scale = 2.0f / 4095.f;
   return scale * rawVoltage;
+}
+
+word ProcessorVoltageClass::readRaw()
+{
+  return analogRead(VCC_2);
 }
 
 // Global instance of the library.
