@@ -25,10 +25,10 @@
 
 float ProcessorTemperatureClass::read()
 {
-  // Calling analogRead(TEMPSENSOR) returns the raw reading of the
-  // internal thermometer.  This raw reading can be converted to
-  // degrees Celsius with a simple linear interpolation between the
-  // raw reading at 30 degress Celsius (stored as a 16-bit unsigned
+  // Calling readRaw() returns the raw reading of the internal
+  // thermometer.  This raw reading can be converted to degrees
+  // Celsius with a simple linear interpolation between the raw
+  // reading at 30 degress Celsius (stored as a 16-bit unsigned
   // integer number in memory address 0x1A1A) and the raw reading
   // reading at 85 degrees Celsius (stored as a 16-bit unsigned
   // integer number in memory address 0x1A1C).
@@ -37,6 +37,11 @@ float ProcessorTemperatureClass::read()
   const float scale = (85.f - 30.f) / (calibration85 - calibration30);
   const float rawTemperatureReading = float(analogRead(TEMPSENSOR));
   return 30.f + scale * (rawTemperatureReading - calibration30);
+}
+
+word ProcessorTemperatureClass::readRaw()
+{
+  return analogRead(TEMPSENSOR);
 }
 
 // Global instance of the library.
