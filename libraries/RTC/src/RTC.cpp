@@ -106,7 +106,7 @@ RtcTimestamp RTCClass::read()
   return readTime;
 }
 
-boolean RTCClass::running()
+boolean RTCClass::running() const
 {
   // The clock runs when the RTCHOLD bit is clear.
   if (RTCCTL1 & (~RTCHOLD))

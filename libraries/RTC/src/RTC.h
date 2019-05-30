@@ -70,7 +70,7 @@ class RTCClass
 
     // Return true if the real-time clock is running; otherwise return
     // false.
-    boolean running();
+    boolean running() const;
 
     // Set the clock in BCD mode.
     // Time will be encoded as BCD numbers.
