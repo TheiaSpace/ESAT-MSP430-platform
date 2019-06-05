@@ -42,7 +42,6 @@
 
 void RTCClass::begin()
 {
-  UCSCTL6_L &= (~XCAP_3); // Sets minimum capacitance for XT1 RTC crystal oscillator.
   RTCCTL01 = RTCMODE; // Also clears RTCHOLD to enable RTC.
   enableTickInterrupt();
 }
