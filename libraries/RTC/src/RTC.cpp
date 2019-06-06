@@ -70,7 +70,30 @@ void RTCClass::enableCalibrationOutput(const RTCClass::CalibrationOutputFrequenc
   // Pin peripheral selection shared with ESP0 GPIO0 on OBC.
   bitSet(P2DIR, 6);
   bitSet(P2SEL, 6);
-  RTCCTL23_H = byte(frequency & 0xFF);
+  switch (frequency)
+  {
+	case CALIBRATION_OUTPUT_512HZ:
+	{
+	RTCCTL23_H = 0x01;
+	return;
+	}
+	case CALIBRATION_OUTPUT_256HZ:
+	{
+	RTCCTL23_H = 0x02;
+	return;
+	}
+	case CALIBRATION_OUTPUT_1HZ:
+	{
+	RTCCTL23_H = 0x03;
+	return;
+	}
+	default:
+	{
+	disableCalibrationOutput();
+	return;
+	}
+  }
+  return;
 }
 
 void RTCClass::enableTickInterrupt()
