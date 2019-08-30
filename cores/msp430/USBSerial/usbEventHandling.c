@@ -59,6 +59,7 @@
 #endif
 
 //These variables are only example, they are not needed for stack
+extern volatile BYTE bCDCControlLineState;      //control line state
 extern volatile BYTE bCDCDataReceived_event;    //data received event
 
 /*
@@ -208,9 +209,9 @@ BYTE USBCDC_handleSetLineCoding (BYTE intfNum, ULONG lBaudrate)
  */
 BYTE USBCDC_handleSetControlLineState (BYTE intfNum, BYTE lineState)
 {
-	(void) intfNum;
-	(void) lineState;
-	return FALSE;
+    (void) intfNum;
+    bCDCControlLineState = lineState;
+    return FALSE;
 }
 
 #endif //_CDC_

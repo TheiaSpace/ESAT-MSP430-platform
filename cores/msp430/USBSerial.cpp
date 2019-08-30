@@ -53,6 +53,7 @@ USBSerial.cpp (formerly NewSoftSerial.cpp) -
 // Private methods
 //
 
+volatile BYTE bCDCControlLineState = 0;
 volatile BYTE bCDCDataReceived_event = FALSE;   //Flag set by event handler to indicate data has been received into USB buffer
 
 #define BUFFER_SIZE 256
