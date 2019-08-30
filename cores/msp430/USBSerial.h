@@ -52,6 +52,9 @@ public:
 
   using Print::write;
 
+  boolean readDTR();
+  boolean readRTS();
+
   operator bool();
 
   // public only for easy access by interrupt handlers
