@@ -59,6 +59,7 @@
 #endif
 
 //These variables are only example, they are not needed for stack
+extern volatile ULONG lCDCBaudrate;             //baud rate
 extern volatile BYTE bCDCControlLineState;      //control line state
 extern volatile BYTE bCDCDataReceived_event;    //data received event
 
@@ -197,9 +198,7 @@ BYTE USBCDC_handleReceiveCompleted (BYTE intfNum)
 BYTE USBCDC_handleSetLineCoding (BYTE intfNum, ULONG lBaudrate)
 {
     (void) intfNum;
-    (void) lBaudrate;
-    //TO DO: You can place your code here
-
+    lCDCBaudrate = lBaudrate;
     return (FALSE);                             //return FALSE to go asleep after interrupt (in the case the CPU slept before
                                                 //interrupt)
 }
