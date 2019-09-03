@@ -209,6 +209,13 @@ BYTE USBCDC_handleSetLineCoding (BYTE intfNum, ULONG lBaudrate)
 BYTE USBCDC_handleSetControlLineState (BYTE intfNum, BYTE lineState)
 {
     (void) intfNum;
+    // Arduino 1200bps touch
+    if ((lCDCBaudrate == 1200) && ((lineState & 0x01) == 0))
+    {
+      __disable_interrupt();
+      (void) USB_disable();
+      ((void (*)()) 0x1000)(); // jump to BSL
+    }
     bCDCControlLineState = lineState;
     return FALSE;
 }
