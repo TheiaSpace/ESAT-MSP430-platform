@@ -200,12 +200,12 @@ int USBSerial::peek()
   return USBCDC_bytesInUSBBuffer(CDC0_INTFNUM);
 }
 
-boolean USBSerial::readDTR()
+bool USBSerial::dtr()
 {
   return bitRead(bCDCControlLineState, 0);
 }
 
-boolean USBSerial::readRTS()
+bool USBSerial::rts()
 {
   return bitRead(bCDCControlLineState, 1);
 }
