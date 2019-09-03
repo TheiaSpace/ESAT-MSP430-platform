@@ -42,7 +42,6 @@
 
 void RTCClass::begin()
 {
-  UCSCTL6_L &= (~XCAP_3); // Sets minimum capacitance for XT1 RTC crystal oscillator.
   RTCCTL01 = RTCMODE; // Also clears RTCHOLD to enable RTC.
   enableTickInterrupt();
 }
@@ -71,7 +70,30 @@ void RTCClass::enableCalibrationOutput(const RTCClass::CalibrationOutputFrequenc
   // Pin peripheral selection shared with ESP0 GPIO0 on OBC.
   bitSet(P2DIR, 6);
   bitSet(P2SEL, 6);
-  RTCCTL23_H = byte(frequency & 0xFF);
+  switch (frequency)
+  {
+	case CALIBRATION_OUTPUT_512HZ:
+	{
+	RTCCTL23_H = 0x01;
+	return;
+	}
+	case CALIBRATION_OUTPUT_256HZ:
+	{
+	RTCCTL23_H = 0x02;
+	return;
+	}
+	case CALIBRATION_OUTPUT_1HZ:
+	{
+	RTCCTL23_H = 0x03;
+	return;
+	}
+	default:
+	{
+	disableCalibrationOutput();
+	return;
+	}
+  }
+  return;
 }
 
 void RTCClass::enableTickInterrupt()
@@ -106,7 +128,7 @@ RtcTimestamp RTCClass::read()
   return readTime;
 }
 
-boolean RTCClass::running()
+boolean RTCClass::running() const
 {
   // The clock runs when the RTCHOLD bit is clear.
   if (RTCCTL1 & (~RTCHOLD))
