@@ -52,6 +52,10 @@ public:
 
   using Print::write;
 
+  uint32_t baudrate();
+  bool dtr();
+  bool rts();
+
   operator bool();
 
   // public only for easy access by interrupt handlers

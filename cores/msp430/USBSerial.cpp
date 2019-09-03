@@ -53,6 +53,8 @@ USBSerial.cpp (formerly NewSoftSerial.cpp) -
 // Private methods
 //
 
+volatile LONG lCDCBaudrate = 0;
+volatile BYTE bCDCControlLineState = 0;
 volatile BYTE bCDCDataReceived_event = FALSE;   //Flag set by event handler to indicate data has been received into USB buffer
 
 #define BUFFER_SIZE 256
@@ -191,6 +193,21 @@ int USBSerial::peek()
 
   // Read from "head"
   return USBCDC_bytesInUSBBuffer(CDC0_INTFNUM);
+}
+
+uint32_t USBSerial::baudrate()
+{
+  return lCDCBaudrate;
+}
+
+bool USBSerial::dtr()
+{
+  return bitRead(bCDCControlLineState, 0);
+}
+
+bool USBSerial::rts()
+{
+  return bitRead(bCDCControlLineState, 1);
 }
 
 USBSerial::operator bool()
