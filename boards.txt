@@ -23,6 +23,7 @@ ESAT-OBC.upload.tool=msp430-tool
 ESAT-OBC.upload.protocol=msp430-tool
 ESAT-OBC.upload.maximum_size=130943
 ESAT-OBC.upload.maximum_ram_size=8192
+ESAT-OBC.upload.use_1200bps_touch=true
 
 ESAT-OBC.menu.ADCS.OBC=OBC
 ESAT-OBC.menu.ADCS.ADCS=ADCS
@@ -62,6 +63,7 @@ ESAT-EPS.upload.tool=msp430-tool
 ESAT-EPS.upload.protocol=msp430-tool
 ESAT-EPS.upload.maximum_size=130943
 ESAT-EPS.upload.maximum_ram_size=8192
+ESAT-EPS.upload.use_1200bps_touch=true
 
 ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.512=512
 ESAT-EPS.menu.SERIAL1_INPUT_BUFFER_SIZE.512.build.serial1_input_buffer_size_flags=-DARDUINO_SERIAL1_INPUT_BUFFER_SIZE=512
