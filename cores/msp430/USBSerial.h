@@ -52,6 +52,7 @@ public:
 
   using Print::write;
 
+  uint32_t baudrate();
   boolean readDTR();
   boolean readRTS();
 

@@ -170,6 +170,11 @@ int USBSerial::available()
   return 0;
 }
 
+uint32_t USBSerial::baudrate()
+{
+  return lCDCBaudrate;
+}
+
 size_t USBSerial::write(uint8_t b)
 {
 
