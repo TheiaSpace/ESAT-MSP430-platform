@@ -8,6 +8,9 @@ menu.SERIAL1_INPUT_BUFFER_SIZE=Serial1 input buffer size
 #ESAT-OBC
 
 ESAT-OBC.name=ESAT-OBC
+ESAT-OBC.vid.0=0x1d50
+ESAT-OBC.pid.0=0x6135
+
 ESAT-OBC.build.mcu=msp430f5529
 ESAT-OBC.build.core=msp430
 ESAT-OBC.build.f_cpu=25000000L
@@ -44,6 +47,9 @@ ESAT-OBC.menu.SERIAL1_INPUT_BUFFER_SIZE.2048.build.serial1_input_buffer_size_fla
 #ESAT-EPS
 
 ESAT-EPS.name=ESAT-EPS
+ESAT-EPS.vid.0=0x1d50
+ESAT-EPS.pid.0=0x6136
+
 ESAT-EPS.build.mcu=msp430f5529
 ESAT-EPS.build.core=msp430
 ESAT-EPS.build.f_cpu=25000000L
