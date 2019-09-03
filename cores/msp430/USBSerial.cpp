@@ -170,11 +170,6 @@ int USBSerial::available()
   return 0;
 }
 
-uint32_t USBSerial::baudrate()
-{
-  return lCDCBaudrate;
-}
-
 size_t USBSerial::write(uint8_t b)
 {
 
@@ -198,6 +193,11 @@ int USBSerial::peek()
 
   // Read from "head"
   return USBCDC_bytesInUSBBuffer(CDC0_INTFNUM);
+}
+
+uint32_t USBSerial::baudrate()
+{
+  return lCDCBaudrate;
 }
 
 bool USBSerial::dtr()
