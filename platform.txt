@@ -100,7 +100,7 @@ tools.msp430-tool.path={runtime.tools.msp430-tool.path}
 tools.msp430-tool.cmd.path={path}/msp430-tool
 tools.msp430-tool.upload.params.quiet=
 tools.msp430-tool.upload.params.verbose=--verbose
-tools.msp430-tool.upload.pattern={cmd.path} bsl5.hid {upload.verbose} -e {build.path}/{build.project_name}.hex
+tools.msp430-tool.upload.pattern={cmd.path} {upload.verbose} -e {build.path}/{build.project_name}.hex
 
 ## ESAT MSP430 programmer
 tools.esat-msp430-programmer.path={runtime.tools.esat-msp430-programmer.path}
