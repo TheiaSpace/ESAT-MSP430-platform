@@ -59,6 +59,8 @@
 #endif
 
 //These variables are only example, they are not needed for stack
+extern volatile ULONG lCDCBaudrate;             //baud rate
+extern volatile BYTE bCDCControlLineState;      //control line state
 extern volatile BYTE bCDCDataReceived_event;    //data received event
 
 /*
@@ -196,9 +198,7 @@ BYTE USBCDC_handleReceiveCompleted (BYTE intfNum)
 BYTE USBCDC_handleSetLineCoding (BYTE intfNum, ULONG lBaudrate)
 {
     (void) intfNum;
-    (void) lBaudrate;
-    //TO DO: You can place your code here
-
+    lCDCBaudrate = lBaudrate;
     return (FALSE);                             //return FALSE to go asleep after interrupt (in the case the CPU slept before
                                                 //interrupt)
 }
@@ -208,9 +208,16 @@ BYTE USBCDC_handleSetLineCoding (BYTE intfNum, ULONG lBaudrate)
  */
 BYTE USBCDC_handleSetControlLineState (BYTE intfNum, BYTE lineState)
 {
-	(void) intfNum;
-	(void) lineState;
-	return FALSE;
+    (void) intfNum;
+    // Arduino 1200bps touch
+    if ((lCDCBaudrate == 1200) && ((lineState & 0x01) == 0))
+    {
+      __disable_interrupt();
+      (void) USB_disable();
+      ((void (*)()) 0x1000)(); // jump to BSL
+    }
+    bCDCControlLineState = lineState;
+    return FALSE;
 }
 
 #endif //_CDC_

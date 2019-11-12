@@ -5,7 +5,7 @@
 # https://github.com/arduino/Arduino/wiki/Arduino-IDE-1.5-3rd-party-Hardware-specification
 
 name=Theia Space's ESAT boards (MSP430)
-version=3.0.1
+version=3.1.0
 
 # Compile variables
 # -----------------
@@ -99,8 +99,8 @@ recipe.preproc.macros="{compiler.path}{compiler.cpp.cmd}" {compiler.cpp.flags} {
 tools.msp430-tool.path={runtime.tools.msp430-tool.path}
 tools.msp430-tool.cmd.path={path}/msp430-tool
 tools.msp430-tool.upload.params.quiet=
-tools.msp430-tool.upload.params.verbose=
-tools.msp430-tool.upload.pattern={cmd.path} bsl5.hid -e {build.path}/{build.project_name}.hex
+tools.msp430-tool.upload.params.verbose=--verbose
+tools.msp430-tool.upload.pattern={cmd.path} {upload.verbose} -e {build.path}/{build.project_name}.hex
 
 ## ESAT MSP430 programmer
 tools.esat-msp430-programmer.path={runtime.tools.esat-msp430-programmer.path}

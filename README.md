@@ -1,4 +1,4 @@
-Copyright (C) 2017, 2018 Theia Space, Universidad Politécnica de Madrid
+Copyright (C) 2017, 2018, 2019 Theia Space, Universidad Politécnica de Madrid
 
 This file is part of Theia Space's ESAT core for Arduino for
 MSP430-based ESAT boards (Theia Space's ESAT Boards (MSP430)), which
@@ -24,7 +24,7 @@ published by the Free Software Foundation; either version 3 of the
 License, or (at your option) any later version.
 
 
-# Theia Space's ESAT Boards (MSP430)
+# Theia Space's ESAT Boards (MSP430) version 3.1.0
 
 These are the support files needed to use Theia Space's ESAT boards (MSP430) with Arduino.
 
